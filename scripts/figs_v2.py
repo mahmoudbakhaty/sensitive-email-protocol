@@ -114,17 +114,17 @@ def fig_folds(path):
     all-positive floor is drawn because a method below it has shown nothing.
     """
     panels = [
-        ("STRICT  (250 positives)", 0.3064,
+        ("STRICT  (250 positives)", 0.3064, 0.744,
          [("LinearSVM", 0.2685, 0.2065, 0.3307),
           ("LogReg",    0.3456, 0.2850, 0.4043),
           ("RoBERTa",   0.3587, 0.3086, 0.4077)]),
-        ("BROAD  (422 positives)", 0.4678,
+        ("BROAD  (422 positives)", 0.4678, None,
          [("LinearSVM", 0.4591, 0.4082, 0.5057),
           ("LogReg",    0.5160, 0.4710, 0.5601),
           ("RoBERTa",   0.5451, 0.5031, 0.5843)]),
     ]
     fig, axes = plt.subplots(1, 2, figsize=(6.9, 1.95))
-    for ax, (title, triv, rows) in zip(axes, panels):
+    for ax, (title, triv, ceiling, rows) in zip(axes, panels):
         ys = np.arange(len(rows))
         for y, (name, pt, lo, hi) in zip(ys, rows):
             ax.plot([lo, hi], [y, y], color=MID, linewidth=1.3,
@@ -138,6 +138,10 @@ def fig_folds(path):
                     va="center", ha="left")
         ax.axvline(triv, color=INK, linewidth=1.0, linestyle=(0, (4, 2)),
                    zorder=1)
+        if ceiling is not None:
+            ax.axvline(ceiling, color=ACCENT, linewidth=1.2, zorder=1)
+            ax.text(ceiling, -0.52, " human %.3f" % ceiling,
+                    fontsize=6.8, color=ACCENT, ha="left", va="bottom")
         # below the lowest row, where nothing else is drawn
         ax.text(triv, -0.52, " trivial %.3f" % triv, fontsize=6.8,
                 color=INK, ha="left", va="bottom")
@@ -146,7 +150,8 @@ def fig_folds(path):
         ax.set_ylim(-0.6, len(rows) - 0.25)
         lo_all = min(r[2] for r in rows)
         hi_all = max(r[3] for r in rows)
-        ax.set_xlim(min(lo_all, triv) - 0.03, hi_all + 0.075)
+        right = max(hi_all, ceiling or 0)
+        ax.set_xlim(min(lo_all, triv) - 0.03, right + 0.075)
         ax.set_xlabel("F1 (pooled out-of-fold, 95% CI)", fontsize=7)
         ax.set_title(title, fontsize=7.5, color=INK, pad=4)
         ax.spines["left"].set_visible(False)

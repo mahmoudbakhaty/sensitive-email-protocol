@@ -15,13 +15,17 @@ These artifacts exist so both can be checked rather than taken on trust.
 | Sensitive, strict (both annotators) / broad (either) | 250 (18.1%) / 422 (30.5%) |
 | **Cohen's kappa** | **0.662** (observed agreement 0.876) |
 | Trivial all-positive floor | F1 0.306 strict, 0.468 broad |
+| **Human ceiling** (second annotator as a classifier) | **F1 0.744**, MCC 0.662 |
 | Strongest single term of 8,984 | `'in'`, F1 0.321 |
 | Best method, strict | RoBERTa F1 0.359, 95% CI [0.309, 0.408] |
 | Best method, broad | RoBERTa F1 0.545, 95% CI [0.503, 0.584] |
 
 Nothing here is near-perfect, every confidence interval overlaps its
-neighbours, and that is the result rather than a disappointment. Quote every
-figure against the trivial floor.
+neighbours, and that is the result rather than a disappointment. Quote
+every figure against both bounds: the trivial floor below and the human
+ceiling above. The best model reaches 48% of what a second annotator
+achieves, and a published F1 of 1.000 on this task would claim to exceed
+the agreement of the people who defined the labels.
 
 ## Reproduce it
 

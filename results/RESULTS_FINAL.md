@@ -12,6 +12,14 @@ trivial floor: strict 0.3064, broad 0.4678
 duplicates 0 | multi-message threads 173 | mixed-label 55
 strongest of 8984 terms: 'in' F1 0.3210 (trivial 0.3064, margin +0.0146)
 
+## Human ceiling, derived from the same agreement counts
+One annotator scored as a classifier predicting the other:
+  TP 250 | FP 86 | FN 86 | TN 960   (the 172 disagreements split evenly)
+  precision 0.7440 | recall 0.7440 | F1 0.7440 | MCC 0.6618
+The MCC equals Cohen's kappa exactly - for a two-class problem with symmetric
+disagreement the two statistics reduce to the same quantity.
+=> the task's ceiling is F1 0.744, not 1.000. RoBERTa's 0.359 is 48% of it.
+
 ## STRICT labels, thread-grouped 5-fold
 model         F1      P       R      MCC     ROC     PR      mean+-sd        CI95
 LinearSVM     0.2685  0.4261  0.1960  0.1919  0.7183  0.3439  0.2658+-0.0760 [0.2065,0.3307]
