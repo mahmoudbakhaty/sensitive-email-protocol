@@ -23,12 +23,15 @@ Sources used for verification (per entry, in VERIFIED below):
 """
 
 REFS = [
-    # [1] Section I - the commercial state of practice
+    # [1] Section I - the operational motivation
+    "Verizon Business, “2026 Data Breach Investigations Report,” Verizon, 2026. [Online]. Available: https://www.verizon.com/business/resources/reports/dbir/",
+
+    # [2] Section I - the commercial state of practice
     "Microsoft, “Microsoft Purview Data Loss Prevention documentation,” "
     "Microsoft Learn, 2026. [Online]. Available: "
     "https://learn.microsoft.com/purview/dlp-learn-about-dlp",
 
-    # [2]-[8] Section II-A, explicit sensitive information (PII/NER)
+    # [3]-[9] Section II-A, explicit sensitive information (PII/NER)
     "L. Mainetti and A. Elia, “Detecting personally identifiable "
     "information through natural language processing: A step forward,” "
     "Applied System Innovation, vol. 8, no. 2, art. 55, 2025, "
@@ -53,7 +56,7 @@ REFS = [
     "T. Lindström Tiedemann and E. Volodina, “Detecting personal "
     "identifiable information in Swedish learner essays,” in Proc. "
     "Workshop on Computational Approaches to Language Data Pseudonymization "
-    "(CALD-pseudo), ACL, 2024, pp. 54-63.",
+    "(CALD-pseudo), ACL, 2024, pp. 54-63, doi:10.18653/v1/2024.caldpseudo-1.7.",
 
     "H. Rajgarhia, S. Gupta, A. Shaik, G. P. Kumar, Y. Santhoshraj, "
     "S. N. T. Nishitha and A. Mukherji, “An evaluation study of hybrid "
@@ -64,7 +67,7 @@ REFS = [
     "Egypt,” International Journal of Safety and Security Engineering, "
     "vol. 15, no. 6, pp. 1103-1109, 2025, doi:10.18280/ijsse.150602.",
 
-    # [9]-[14] Section II-B, context-dependent sensitive data
+    # [10]-[15] Section II-B, context-dependent sensitive data
     "H. Ahmed, I. Traore, S. Saad and M. Mamun, “Automated detection of "
     "unstructured context-dependent sensitive information using deep "
     "learning,” Internet of Things, vol. 16, art. 100444, 2021, "
@@ -84,13 +87,14 @@ REFS = [
 
     "S. Anand, M. Shukla and S. Lodha, “Detecting sensitive information "
     "from unstructured text in a data-constrained environment,” in Proc. "
-    "15th Int. Conf. COMmunication Systems & NETworkS (COMSNETS), IEEE, 2023.",
+    "15th Int. Conf. COMmunication Systems & NETworkS (COMSNETS), IEEE, 2023, "
+    "doi:10.1109/COMSNETS56262.2023.10041388.",
 
     "G. Gambarelli, A. Gangemi and R. Tripodi, “Is your model sensitive? "
     "SPeDaC: A new benchmark for detecting and classifying sensitive personal "
     "data,” arXiv:2208.06216, 2022.",
 
-    # [15]-[18] Section II-C, sensitivity review
+    # [16]-[19] Section II-C, sensitivity review
     "G. McDonald, C. Macdonald and I. Ounis, “How the accuracy and "
     "confidence of sensitivity classification affects digital sensitivity "
     "review,” ACM Trans. Information Systems, vol. 39, no. 1, art. 4, "
@@ -111,11 +115,12 @@ REFS = [
     "text in government records,” Artificial Intelligence and Law, "
     "vol. 33, no. 1, pp. 171-197, 2025, doi:10.1007/s10506-023-09383-6.",
 
-    # [19]-[23] Section II-D, LLMs and contextual privacy
+    # [20]-[24] Section II-D, LLMs and contextual privacy
     "N. Mireshghallah, H. Kim, X. Zhou, Y. Tsvetkov, Y. Choi, M. Sap and "
     "T. Berg-Kirkpatrick, “Can LLMs keep a secret? Testing privacy "
     "implications of language models via contextual integrity theory,” "
-    "in Proc. Int. Conf. Learning Representations (ICLR), 2024.",
+    "in Proc. Int. Conf. Learning Representations (ICLR), 2024. [Online]. "
+    "Available: https://openreview.net/forum?id=gmg7t8b4s0",
 
     "H. Li, W. Hu, H. Jing, Y. Chen, Q. Hu, S. Han, T. Chu, P. Hu and "
     "Y. Song, “PrivaCI-Bench: Evaluating privacy with contextual "
@@ -135,7 +140,17 @@ REFS = [
     "leakage and unethical outputs in enterprise LLM use,” "
     "arXiv:2601.06366, 2026.",
 
-    # [24]-[26] Section II-E, evaluation methodology
+    # [25]-[26] Sections V and VII-C, agreement and its relation to MCC
+    "J. R. Landis and G. G. Koch, “The measurement of observer agreement "
+    "for categorical data,” Biometrics, vol. 33, no. 1, pp. 159-174, "
+    "1977, doi:10.2307/2529310.",
+
+    "D. Chicco, M. J. Warrens and G. Jurman, “The Matthews correlation "
+    "coefficient (MCC) is more informative than Cohen’s kappa and Brier "
+    "score in binary classification assessment,” IEEE Access, vol. 9, "
+    "pp. 78368-78381, 2021, doi:10.1109/ACCESS.2021.3084050.",
+
+    # [27]-[29] Section II-E, evaluation methodology
     "S. Kapoor and A. Narayanan, “Leakage and the reproducibility crisis "
     "in machine-learning-based science,” Patterns, vol. 4, no. 9, "
     "art. 100804, 2023, doi:10.1016/j.patter.2023.100804.",
@@ -149,15 +164,17 @@ REFS = [
     "“Fine-tuning large language models with limited data: A survey and "
     "practical guide,” arXiv:2411.09539, 2024.",
 
-    # [27] Section III, model
+    # [29] Section III, model
     "J. Devlin, M.-W. Chang, K. Lee and K. Toutanova, “BERT: "
     "Pre-training of deep bidirectional transformers for language "
-    "understanding,” in Proc. NAACL-HLT, 2019, pp. 4171-4186.",
+    "understanding,” in Proc. NAACL-HLT, 2019, pp. 4171-4186, "
+    "doi:10.18653/v1/N19-1423.",
 
-    # [28]-[30] Section IV, data
+    # [30]-[32] Section IV, data
     "B. Klimt and Y. Yang, “The Enron corpus: A new dataset for email "
     "classification research,” in Proc. 15th European Conf. Machine "
-    "Learning (ECML), LNCS 3201, Springer, 2004, pp. 217-226.",
+    "Learning (ECML), LNCS 3201, Springer, 2004, pp. 217-226, "
+    "doi:10.1007/978-3-540-30115-8_22.",
 
     "D. Noever, “The Enron corpus: Where the email bodies are "
     "buried?,” arXiv:2001.10374, 2020.",
@@ -166,9 +183,10 @@ REFS = [
     "test collection for search among personal information,” "
     "arXiv:2606.27559, 2026.",
 
-    # [31]-[32] Section V, baselines
+    # [33]-[34] Section V, baselines
     "Meta AI, “Llama 3.2: Revolutionizing edge AI and vision with open, "
-    "customizable models,” Meta AI Blog, 2024.",
+    "customizable models,” Meta AI Blog, 2024. [Online]. Available: "
+    "https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/",
 
     # CORRECTED: v1 truncated the title before "on Reddit".
     "J. Lee, L. Tian, A. Brillantes, A.-S. Mihăiţă and "
@@ -176,17 +194,18 @@ REFS = [
     "outperform zero-shot LLMs for misinformation response classification on "
     "Reddit,” arXiv:2606.04274, 2026.",
 
-    # [33] Section VII-E, the reproducibility finding
+    # [35] Section VII-F, the reproducibility finding
     "scikit-learn developers, “GroupKFold now uses stable sorting when "
     "doing the group distribution; this ensures that the splits are "
     "consistent across runs,” in Release Notes for scikit-learn 1.9, "
     "pull request #28464, 2025. [Online]. Available: "
     "https://scikit-learn.org/stable/whats_new/v1.9.html",
 
-    # [34]-[35] Section VIII, the cross-lingual extension
+    # [36]-[37] Section VIII, the cross-lingual extension
     "W. Antoun, F. Baly and H. Hajj, “AraBERT: Transformer-based model for "
     "Arabic language understanding,” in Proc. 12th Int. Conf. Language "
-    "Resources and Evaluation (LREC), Marseille, France, 2020.",
+    "Resources and Evaluation (LREC), Marseille, France, 2020. [Online]. "
+    "Available: https://aclanthology.org/2020.osact-1.2/",
 
     "NLLB Team, M. R. Costa-jussà, J. Cross, O. Çelebi, M. Elbayad, "
     "K. Heafield, K. Heffernan, E. Kalbassi, J. Lam, D. Licht, J. Maillard, "
@@ -195,31 +214,49 @@ REFS = [
     "2022.",
 ]
 
-# How each entry was checked, for the artifact release.
+# How each entry was checked, for the artifact release. One key per line,
+# because the previous shared-line layout silently lost entries to duplicate
+# keys when the list was renumbered.
 VERIFIED = {
-    1: "vendor documentation - URL added, no authors expected",
-    2: "crossref 10.3390/asi8020055", 3: "crossref 10.1007/978-3-031-68312-1_14",
-    4: "crossref 10.1007/s00521-024-09707-w", 5: "arxiv 2108.08483",
-    6: "acl 2024.caldpseudo-1.7", 7: "arxiv 2510.07551",
-    8: "crossref 10.18280/ijsse.150602", 9: "crossref 10.1016/j.iot.2021.100444",
-    10: "crossref 10.3390/info17070663", 11: "crossref 10.1016/j.eswa.2023.119924",
-    12: "arxiv 2008.10863", 13: "ieee 10041388", 14: "arxiv 2208.06216",
-    15: "acm 10.1145/3417334",
-    16: "crossref 10.1007/978-3-030-99739-7_25 - ATTRIBUTION CORRECTED",
-    17: "arxiv 1907.02956",
-    18: "crossref 10.1007/s10506-023-09383-6 - YEAR CORRECTED 2023->2025",
-    19: "ICLR 2024 proceedings", 20: "arxiv 2502.17041", 21: "arxiv 2408.05212",
-    22: "crossref 10.1007/s44443-025-00177-1", 23: "arxiv 2601.06366",
-    24: "crossref 10.1016/j.patter.2023.100804",
-    25: "crossref 10.1186/s12864-019-6413-7", 26: "arxiv 2411.09539",
-    27: "NAACL-HLT 2019 proceedings", 28: "ECML 2004 LNCS 3201",
-    29: "arxiv 2001.10374", 30: "arxiv 2606.27559",
-    31: "vendor blog - no authors expected",
-    32: "arxiv 2606.04274 - TITLE COMPLETED",
-    33: "scikit-learn 1.9 release notes, quoted verbatim; PR #28464",
-    34: "arxiv 2003.00104 / LREC 2020 proceedings",
-    35: "arxiv 2207.04672 - collective authorship, first 15 named then et al.",
+    1: "industry report - Verizon DBIR 2026, corporate author",
+    2: "vendor documentation - Microsoft Learn, corporate author",
+    3: "crossref 10.3390/asi8020055",
+    4: "crossref 10.1007/978-3-031-68312-1_14",
+    5: "crossref 10.1007/s00521-024-09707-w",
+    6: "arxiv 2108.08483",
+    7: "acl 2024.caldpseudo-1.7",
+    8: "arxiv 2510.07551",
+    9: "crossref 10.18280/ijsse.150602",
+    10: "crossref 10.1016/j.iot.2021.100444",
+    11: "crossref 10.3390/info17070663",
+    12: "crossref 10.1016/j.eswa.2023.119924",
+    13: "arxiv 2008.10863",
+    14: "ieee 10041388",
+    15: "arxiv 2208.06216",
+    16: "acm 10.1145/3417334",
+    17: "crossref 10.1007/978-3-030-99739-7_25 - ATTRIBUTION CORRECTED",
+    18: "arxiv 1907.02956",
+    19: "crossref 10.1007/s10506-023-09383-6 - YEAR CORRECTED 2023->2025",
+    20: "ICLR 2024 proceedings",
+    21: "arxiv 2502.17041",
+    22: "arxiv 2408.05212",
+    23: "crossref 10.1007/s44443-025-00177-1",
+    24: "arxiv 2601.06366",
+    25: "crossref 10.2307/2529310 - Landis & Koch 1977",
+    26: "crossref 10.1109/ACCESS.2021.3084050 - MCC vs kappa",
+    27: "crossref 10.1016/j.patter.2023.100804",
+    28: "crossref 10.1186/s12864-019-6413-7",
+    29: "arxiv 2411.09539",
+    30: "NAACL-HLT 2019 proceedings",
+    31: "ECML 2004 LNCS 3201",
+    32: "arxiv 2001.10374",
+    33: "arxiv 2606.27559",
+    34: "vendor blog - Meta AI, corporate author",
+    35: "arxiv 2606.04274 - TITLE COMPLETED",
+    36: "scikit-learn 1.9 release notes, quoted verbatim; PR #28464",
+    37: "arxiv 2003.00104 / LREC 2020 proceedings",
+    38: "arxiv 2207.04672 - collective authorship, first 15 named then et al.",
 }
 
-assert len(REFS) == 35, len(REFS)
-assert len(VERIFIED) == 35, len(VERIFIED)
+assert len(REFS) == 38, len(REFS)
+assert len(VERIFIED) == 38, len(VERIFIED)

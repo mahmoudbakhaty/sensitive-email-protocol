@@ -56,7 +56,7 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `results/RESULTS_arabic_v2.md` | The same, annotated with what the section should and should not claim. |
 | `results/FINDING_sklearn_groupkfold.md` | The full record of the version-dependence investigation behind Section VII-E. |
 | `results/superseded/` | Earlier runs. Kept because Section VII-E compares against them; **do not quote these as results.** |
-| `paper_refs_v2.py` | The 35 references plus `VERIFIED`, recording how each was resolved. |
+| `paper_refs_v2.py` | The 38 references plus `VERIFIED`, recording how each was resolved. Every entry carries a DOI, an arXiv id or a stable URL. |
 | `fig_v2_*.png` | The two paper figures. |
 
 **Not yet included:** `RESULTS_FINAL.json`, the raw record of the definitive
@@ -128,4 +128,4 @@ Stated in the paper and repeated here so nobody is surprised.
 
 Auditing our own reference list found one work attributed to the wrong
 authors, one incorrect publication year and one truncated title. All corrected;
-`VERIFIED` in `paper_refs_v2.py` records the source used for each of the 35.
+`VERIFIED` in `paper_refs_v2.py` records the source used for each of the 38.
