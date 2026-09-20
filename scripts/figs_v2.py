@@ -102,59 +102,59 @@ def fig_keywords(path):
 
 
 def fig_folds(path):
-    """Per-fold spread for both label definitions, NOT a trend.
+    """Dot-and-whisker: pooled F1 with its 95% interval, both label sets.
 
-    Fold order is arbitrary, so points are left unconnected: joining them
-    would draw a decline that does not exist. The two panels share a y-axis
-    so the reader can see that the encoder's whole broad-label spread sits
-    above its whole strict-label spread, and that only in the broad panel
-    does every fold clear the logistic-regression line.
+    This replaced a per-fold scatter. The scatter showed dispersion, which is
+    worth knowing, but the question the paper actually asks is whether the
+    methods are separable - and an interval plot answers that by eye. The
+    intervals are the thread-level bootstrap intervals from Tables III and IV,
+    so the figure and the tables cannot drift apart.
+
+    Ordering is by point estimate within each panel, and the trivial
+    all-positive floor is drawn because a method below it has shown nothing.
     """
     panels = [
-        ("STRICT  (trivial 0.306)",
-         [0.4474, 0.3804, 0.3717, 0.3902, 0.2892],
-         [("LogReg", 0.346), ("LinearSVM", 0.264), ("trivial", 0.3064)]),
-        ("BROAD  (trivial 0.468)",
-         [0.5741, 0.5556, 0.5746, 0.5398, 0.5189],
-         [("LogReg", 0.505), ("LinearSVM", 0.472), ("trivial", 0.4678)]),
+        ("STRICT  (250 positives)", 0.3064,
+         [("LinearSVM", 0.2685, 0.2065, 0.3307),
+          ("LogReg",    0.3456, 0.2850, 0.4043),
+          ("RoBERTa",   0.3587, 0.3086, 0.4077)]),
+        ("BROAD  (422 positives)", 0.4678,
+         [("LinearSVM", 0.4591, 0.4082, 0.5057),
+          ("LogReg",    0.5160, 0.4710, 0.5601),
+          ("RoBERTa",   0.5451, 0.5031, 0.5843)]),
     ]
-    fig, axes = plt.subplots(1, 2, figsize=(6.9, 2.3), sharey=True)
-    for ax, (title, folds, refs) in zip(axes, panels):
-        m, sd = float(np.mean(folds)), float(np.std(folds))
-        ax.axhspan(m - sd, m + sd, color=ACCENT, alpha=0.09, zorder=1,
-                   linewidth=0)
-        ax.axhline(m, color=ACCENT, linewidth=1.0, zorder=3)
-        # Label positions are nudged apart when two reference lines are
-        # close together (broad: LinearSVM 0.472 vs trivial 0.468), so the
-        # line stays at its true value while its label stays readable.
-        GAP = 0.022
-        placed = []
-        for name, v in sorted(refs, key=lambda r: r[1]):
-            col = INK if name == "trivial" else MID
-            ax.axhline(v, xmax=0.68, color=col, linewidth=0.9,
-                       linestyle=(0, (4, 2)), zorder=2)
-            ly = v
-            while any(abs(ly - q) < GAP for q in placed):
-                ly += GAP / 2
-            placed.append(ly)
-            ax.text(5.7, ly, name, fontsize=6.5, color=col, va="center",
-                    ha="left")
-        ax.scatter(np.arange(1, 6), folds, s=24, color=ACCENT, zorder=5,
-                   edgecolor="white", linewidth=0.8)
-        ax.set_title("%s   mean %.3f $\pm$ %.3f" % (title, m, sd),
-                     fontsize=7.5, color=INK, pad=4)
-        ax.set_xticks(np.arange(1, 6))
-        ax.set_xlabel("fold (order arbitrary)", fontsize=7)
-        ax.set_xlim(0.55, 6.6)
-        ax.spines["bottom"].set_bounds(1, 5)
-    axes[0].set_ylabel("F1")
-    axes[0].set_ylim(0.22, 0.62)
-    fig.tight_layout(pad=0.3)
+    fig, axes = plt.subplots(1, 2, figsize=(6.9, 1.95))
+    for ax, (title, triv, rows) in zip(axes, panels):
+        ys = np.arange(len(rows))
+        for y, (name, pt, lo, hi) in zip(ys, rows):
+            ax.plot([lo, hi], [y, y], color=MID, linewidth=1.3,
+                    solid_capstyle="butt", zorder=2)
+            for x in (lo, hi):
+                ax.plot([x, x], [y - 0.13, y + 0.13], color=MID,
+                        linewidth=1.3, zorder=2)
+            ax.scatter([pt], [y], s=30, color=ACCENT, zorder=4,
+                       edgecolor="white", linewidth=0.8)
+            ax.text(hi + 0.012, y, "%.3f" % pt, fontsize=6.8, color=INK,
+                    va="center", ha="left")
+        ax.axvline(triv, color=INK, linewidth=1.0, linestyle=(0, (4, 2)),
+                   zorder=1)
+        # below the lowest row, where nothing else is drawn
+        ax.text(triv, -0.52, " trivial %.3f" % triv, fontsize=6.8,
+                color=INK, ha="left", va="bottom")
+        ax.set_yticks(ys)
+        ax.set_yticklabels([r[0] for r in rows], fontsize=7.5)
+        ax.set_ylim(-0.6, len(rows) - 0.25)
+        lo_all = min(r[2] for r in rows)
+        hi_all = max(r[3] for r in rows)
+        ax.set_xlim(min(lo_all, triv) - 0.03, hi_all + 0.075)
+        ax.set_xlabel("F1 (pooled out-of-fold, 95% CI)", fontsize=7)
+        ax.set_title(title, fontsize=7.5, color=INK, pad=4)
+        ax.spines["left"].set_visible(False)
+        ax.tick_params(axis="y", length=0)
+    fig.tight_layout(pad=0.4)
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
-    print("%s  (strict %.3f, broad %.3f)"
-          % (os.path.basename(path), np.mean(panels[0][1]),
-             np.mean(panels[1][1])))
+    print("%s  (interval plot, both label sets)" % os.path.basename(path))
 
 
 if __name__ == "__main__":
