@@ -1,0 +1,5 @@
+enron_with_categories/
+enron_with_categories.tar.gz
+__pycache__/
+*.pyc
+word_f1_cache.json

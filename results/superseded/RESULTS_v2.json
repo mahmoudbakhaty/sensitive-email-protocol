@@ -1,0 +1,234 @@
+{
+  "dataset": {
+    "messages": 1382,
+    "sensitive_strict": 250,
+    "sensitive_broad": 422,
+    "sensitive_pct": 18.1,
+    "threads": 1069,
+    "median_words": 229
+  },
+  "trivial_all_positive": {
+    "strict_f1": 0.3064,
+    "broad_f1": 0.4678
+  },
+  "annotation": {
+    "both_sensitive": 250,
+    "one_sensitive": 172,
+    "neither": 960,
+    "observed_agreement": 0.8755,
+    "chance_agreement": 0.632,
+    "cohens_kappa": 0.6618
+  },
+  "leakage_audit": {
+    "exact_duplicates": 0,
+    "threads_with_multiple_messages": 173,
+    "threads_with_mixed_labels": 55,
+    "best_single_word": "in",
+    "best_single_word_f1": 0.321,
+    "trivial_f1_for_comparison": 0.3064
+  },
+  "LogReg_stratified_strict": {
+    "f1": 0.3571,
+    "precision": 0.3761,
+    "recall": 0.34,
+    "mcc": 0.2242,
+    "tp": 85,
+    "fp": 141,
+    "fn": 165,
+    "tn": 991,
+    "roc_auc": 0.7193,
+    "pr_auc": 0.3524
+  },
+  "LinearSVM_stratified_strict": {
+    "f1": 0.3002,
+    "precision": 0.3804,
+    "recall": 0.248,
+    "mcc": 0.1895,
+    "tp": 62,
+    "fp": 101,
+    "fn": 188,
+    "tn": 1031,
+    "roc_auc": 0.7106,
+    "pr_auc": 0.3399
+  },
+  "LogReg_thread_grouped_strict": {
+    "f1": 0.3458,
+    "precision": 0.4157,
+    "recall": 0.296,
+    "mcc": 0.2346,
+    "tp": 74,
+    "fp": 104,
+    "fn": 176,
+    "tn": 1028,
+    "roc_auc": 0.71,
+    "pr_auc": 0.3371
+  },
+  "LinearSVM_thread_grouped_strict": {
+    "f1": 0.2637,
+    "precision": 0.4211,
+    "recall": 0.192,
+    "mcc": 0.1871,
+    "tp": 48,
+    "fp": 66,
+    "fn": 202,
+    "tn": 1066,
+    "roc_auc": 0.7128,
+    "pr_auc": 0.3342
+  },
+  "LogReg_stratified_broad": {
+    "f1": 0.5239,
+    "precision": 0.5149,
+    "recall": 0.5332,
+    "mcc": 0.3094,
+    "tp": 225,
+    "fp": 212,
+    "fn": 197,
+    "tn": 748,
+    "roc_auc": 0.7498,
+    "pr_auc": 0.5458
+  },
+  "LinearSVM_stratified_broad": {
+    "f1": 0.4936,
+    "precision": 0.5361,
+    "recall": 0.4573,
+    "mcc": 0.2974,
+    "tp": 193,
+    "fp": 167,
+    "fn": 229,
+    "tn": 793,
+    "roc_auc": 0.7486,
+    "pr_auc": 0.5383
+  },
+  "LogReg_thread_grouped_broad": {
+    "f1": 0.5048,
+    "precision": 0.5122,
+    "recall": 0.4976,
+    "mcc": 0.2917,
+    "tp": 210,
+    "fp": 200,
+    "fn": 212,
+    "tn": 760,
+    "roc_auc": 0.7162,
+    "pr_auc": 0.5042
+  },
+  "LinearSVM_thread_grouped_broad": {
+    "f1": 0.4723,
+    "precision": 0.5327,
+    "recall": 0.4242,
+    "mcc": 0.2798,
+    "tp": 179,
+    "fp": 157,
+    "fn": 243,
+    "tn": 803,
+    "roc_auc": 0.7186,
+    "pr_auc": 0.5058
+  },
+  "transformer_strict_progress": {
+    "folds_f1": [
+      0.4474,
+      0.3804,
+      0.3717,
+      0.3902,
+      0.2892
+    ],
+    "folds_auc": [
+      0.7294,
+      0.69,
+      0.6887,
+      0.7897,
+      0.6924
+    ]
+  },
+  "transformer_strict": {
+    "f1": 0.3916,
+    "precision": 0.3126,
+    "recall": 0.524,
+    "mcc": 0.2258,
+    "tp": 131,
+    "fp": 288,
+    "fn": 119,
+    "tn": 844,
+    "roc_auc": 0.6815,
+    "pr_auc": 0.3448,
+    "fold_mean_f1": 0.3758,
+    "fold_std_f1": 0.0507,
+    "fold_mean_auc": 0.718,
+    "fold_std_auc": 0.0389,
+    "folds_f1": [
+      0.4474,
+      0.3804,
+      0.3717,
+      0.3902,
+      0.2892
+    ],
+    "folds_auc": [
+      0.7294,
+      0.69,
+      0.6887,
+      0.7897,
+      0.6924
+    ],
+    "thresholds": [
+      0.15,
+      0.32,
+      0.45,
+      0.59,
+      0.77
+    ],
+    "model": "roberta-base"
+  },
+  "transformer_broad_progress": {
+    "folds_f1": [
+      0.5741,
+      0.5556,
+      0.5746,
+      0.5398,
+      0.5189
+    ],
+    "folds_auc": [
+      0.7225,
+      0.7638,
+      0.7542,
+      0.7633,
+      0.7224
+    ]
+  },
+  "transformer_broad": {
+    "f1": 0.5544,
+    "precision": 0.4516,
+    "recall": 0.718,
+    "mcc": 0.3084,
+    "tp": 303,
+    "fp": 368,
+    "fn": 119,
+    "tn": 592,
+    "roc_auc": 0.7025,
+    "pr_auc": 0.5243,
+    "fold_mean_f1": 0.5526,
+    "fold_std_f1": 0.0212,
+    "fold_mean_auc": 0.7452,
+    "fold_std_auc": 0.0189,
+    "folds_f1": [
+      0.5741,
+      0.5556,
+      0.5746,
+      0.5398,
+      0.5189
+    ],
+    "folds_auc": [
+      0.7225,
+      0.7638,
+      0.7542,
+      0.7633,
+      0.7224
+    ],
+    "thresholds": [
+      0.42,
+      0.65,
+      0.05,
+      0.65,
+      0.05
+    ],
+    "model": "roberta-base"
+  }
+}
