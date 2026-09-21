@@ -57,7 +57,8 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `results/FINDING_sklearn_groupkfold.md` | The full record of the version-dependence investigation behind Section VII-F. |
 | `results/superseded/` | Earlier runs. Kept because Section VII-F compares against them; **do not quote these as results.** |
 | `paper_refs_v2.py` | The 45 references plus `VERIFIED`, recording how each was resolved. Every entry carries a DOI, an arXiv id or a stable URL. |
-| `fig_v2_*.png` | The two paper figures. |
+| `fig_v2_*.png` | The three paper figures. |
+| `scripts/fig_ladder.py` | Builds Fig. 3 straight from the results file, so the figure cannot drift from the numbers. |
 | `scripts/strengthen.py` | The leakage ladder, the permutation null, the repeated cross-validation and the agreement interval. Runs on CPU. |
 | `scripts/compare_versions.py` | Builds the scikit-learn 1.8.0 against 1.9.1 comparison from the two result files. |
 | `scripts/llm_protocol.py` | An instruction-tuned LLM under the same protocol. Written and tested; **not yet run** - see the limitation in Section IX. |
