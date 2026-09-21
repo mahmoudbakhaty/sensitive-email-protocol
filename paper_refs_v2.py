@@ -23,240 +23,103 @@ Sources used for verification (per entry, in VERIFIED below):
 """
 
 REFS = [
-    # [1] Section I - the operational motivation
-    "Verizon Business, “2026 Data Breach Investigations Report,” Verizon, 2026. [Online]. Available: https://www.verizon.com/business/resources/reports/dbir/",
-
-    # [2] Section I - the commercial state of practice
-    "Microsoft, “Microsoft Purview Data Loss Prevention documentation,” "
-    "Microsoft Learn, 2026. [Online]. Available: "
-    "https://learn.microsoft.com/purview/dlp-learn-about-dlp",
-
-    # [3]-[9] Section II-A, explicit sensitive information (PII/NER)
-    "L. Mainetti and A. Elia, “Detecting personally identifiable "
-    "information through natural language processing: A step forward,” "
-    "Applied System Innovation, vol. 8, no. 2, art. 55, 2025, "
-    "doi:10.3390/asi8020055.",
-
-    "M. H. Shahriar, A. V. D. M. Kayem, D. Reich and C. Meinel, "
-    "“Identifying personal identifiable information (PII) in unstructured "
-    "text: A comparative study on transformers,” in Database and Expert "
-    "Systems Applications (DEXA), LNCS, Springer, 2024, pp. 174-181, "
-    "doi:10.1007/978-3-031-68312-1_14.",
-
-    "J. Muralitharan and C. Arumugam, “Privacy BERT-LSTM: A novel NLP "
-    "algorithm for sensitive information detection in textual documents,” "
-    "Neural Computing and Applications, vol. 36, no. 25, pp. 15439-15454, "
-    "2024, doi:10.1007/s00521-024-09707-w.",
-
-    "A. K. M. N. Mehdy and H. Mehrpouyan, “A multi-input multi-output "
-    "transformer-based hybrid neural network for multi-class privacy "
-    "disclosure detection,” arXiv:2108.08483, 2021.",
-
-    "M. I. Szawerna, S. Dobnik, R. Muñoz Sánchez, "
-    "T. Lindström Tiedemann and E. Volodina, “Detecting personal "
-    "identifiable information in Swedish learner essays,” in Proc. "
-    "Workshop on Computational Approaches to Language Data Pseudonymization "
-    "(CALD-pseudo), ACL, 2024, pp. 54-63, doi:10.18653/v1/2024.caldpseudo-1.7.",
-
-    "H. Rajgarhia, S. Gupta, A. Shaik, G. P. Kumar, Y. Santhoshraj, "
-    "S. N. T. Nishitha and A. Mukherji, “An evaluation study of hybrid "
-    "methods for multilingual PII detection,” arXiv:2510.07551, 2025.",
-
-    "O. Elbarbary, M. Rasslan, A. El Bolock and C. Sabty, “Hybrid AI for "
-    "Arabic sensitive data detection: Enhancing privacy compliance in "
-    "Egypt,” International Journal of Safety and Security Engineering, "
-    "vol. 15, no. 6, pp. 1103-1109, 2025, doi:10.18280/ijsse.150602.",
-
-    # [10]-[15] Section II-B, context-dependent sensitive data
-    "H. Ahmed, I. Traore, S. Saad and M. Mamun, “Automated detection of "
-    "unstructured context-dependent sensitive information using deep "
-    "learning,” Internet of Things, vol. 16, art. 100444, 2021, "
-    "doi:10.1016/j.iot.2021.100444.",
-
-    "H. M. Qawara and H. Alhindi, “Detecting context-dependent sensitive "
-    "data in unstructured text,” Information, vol. 17, no. 7, art. 663, "
-    "2026, doi:10.3390/info17070663.",
-
-    "V. Kužina, A.-M. Petrić, M. Barišić and A. Jović, "
-    "“CASSED: Context-based approach for structured sensitive data "
-    "detection,” Expert Systems with Applications, vol. 223, art. 119924, "
-    "2023, doi:10.1016/j.eswa.2023.119924.",
-
-    "J. Neerbek, “Sensitive information detection: Recursive neural "
-    "networks for encoding context,” arXiv:2008.10863, 2020.",
-
-    "S. Anand, M. Shukla and S. Lodha, “Detecting sensitive information "
-    "from unstructured text in a data-constrained environment,” in Proc. "
-    "15th Int. Conf. COMmunication Systems & NETworkS (COMSNETS), IEEE, 2023, "
-    "doi:10.1109/COMSNETS56262.2023.10041388.",
-
-    "G. Gambarelli, A. Gangemi and R. Tripodi, “Is your model sensitive? "
-    "SPeDaC: A new benchmark for detecting and classifying sensitive personal "
-    "data,” arXiv:2208.06216, 2022.",
-
-    # [16]-[19] Section II-C, sensitivity review
-    "G. McDonald, C. Macdonald and I. Ounis, “How the accuracy and "
-    "confidence of sensitivity classification affects digital sensitivity "
-    "review,” ACM Trans. Information Systems, vol. 39, no. 1, art. 4, "
-    "2020, doi:10.1145/3417334.",
-
-    # CORRECTED: v1 credited this to McDonald, Macdonald and Ounis.
-    "M. F. Sayed, N. Mallekav and D. W. Oard, “Comparing intrinsic and "
-    "extrinsic evaluation of sensitivity classification,” in Advances in "
-    "Information Retrieval (ECIR), LNCS, Springer, 2022, pp. 215-222, "
-    "doi:10.1007/978-3-030-99739-7_25.",
-
-    "G. McDonald, C. Macdonald and I. Ounis, “The FACTS of "
-    "technology-assisted sensitivity review,” arXiv:1907.02956, 2019.",
-
-    # CORRECTED: v1 gave the year as 2023 (online-first).
-    "K. Branting, B. Brown, C. Giannella, J. Van Guilder, J. Harrold, "
-    "S. Howell and J. R. Baron, “Decision support for detecting sensitive "
-    "text in government records,” Artificial Intelligence and Law, "
-    "vol. 33, no. 1, pp. 171-197, 2025, doi:10.1007/s10506-023-09383-6.",
-
-    # [20]-[24] Section II-D, LLMs and contextual privacy
-    "N. Mireshghallah, H. Kim, X. Zhou, Y. Tsvetkov, Y. Choi, M. Sap and "
-    "T. Berg-Kirkpatrick, “Can LLMs keep a secret? Testing privacy "
-    "implications of language models via contextual integrity theory,” "
-    "in Proc. Int. Conf. Learning Representations (ICLR), 2024. [Online]. "
-    "Available: https://openreview.net/forum?id=gmg7t8b4s0",
-
-    "H. Li, W. Hu, H. Jing, Y. Chen, Q. Hu, S. Han, T. Chu, P. Hu and "
-    "Y. Song, “PrivaCI-Bench: Evaluating privacy with contextual "
-    "integrity and legal compliance,” arXiv:2502.17041, 2025.",
-
-    "M. Miranda, E. S. Ruzzetti, A. Santilli, F. M. Zanzotto, "
-    "S. Bratières and E. Rodolà, “Preserving privacy in large "
-    "language models: A survey on current threats and solutions,” "
-    "arXiv:2408.05212, 2024.",
-
-    "K. Chen, X. Zhou, Y. Lin, S. Feng, L. Shen and P. Wu, “A survey on "
-    "privacy risks and protection in large language models,” J. King Saud "
-    "Univ. - Computer and Information Sciences, vol. 37, no. 7, art. 163, "
-    "2025, doi:10.1007/s44443-025-00177-1.",
-
-    "P. Desai, L. Tang, Y. Meng and Z. Xi, “SafeGPT: Preventing data "
-    "leakage and unethical outputs in enterprise LLM use,” "
-    "arXiv:2601.06366, 2026.",
-
-    # [25]-[26] Sections V and VII-C, agreement and its relation to MCC
-    "J. R. Landis and G. G. Koch, “The measurement of observer agreement "
-    "for categorical data,” Biometrics, vol. 33, no. 1, pp. 159-174, "
-    "1977, doi:10.2307/2529310.",
-
-    "D. Chicco, M. J. Warrens and G. Jurman, “The Matthews correlation "
-    "coefficient (MCC) is more informative than Cohen’s kappa and Brier "
-    "score in binary classification assessment,” IEEE Access, vol. 9, "
-    "pp. 78368-78381, 2021, doi:10.1109/ACCESS.2021.3084050.",
-
-    # [27]-[29] Section II-E, evaluation methodology
-    "S. Kapoor and A. Narayanan, “Leakage and the reproducibility crisis "
-    "in machine-learning-based science,” Patterns, vol. 4, no. 9, "
-    "art. 100804, 2023, doi:10.1016/j.patter.2023.100804.",
-
-    "D. Chicco and G. Jurman, “The advantages of the Matthews correlation "
-    "coefficient (MCC) over F1 score and accuracy in binary classification "
-    "evaluation,” BMC Genomics, vol. 21, art. 6, 2020, "
-    "doi:10.1186/s12864-019-6413-7.",
-
-    "M. Szep, D. Rueckert, R. von Eisenhart-Rothe and F. Hinterwimmer, "
-    "“Fine-tuning large language models with limited data: A survey and "
-    "practical guide,” arXiv:2411.09539, 2024.",
-
-    # [29] Section III, model
-    "J. Devlin, M.-W. Chang, K. Lee and K. Toutanova, “BERT: "
-    "Pre-training of deep bidirectional transformers for language "
-    "understanding,” in Proc. NAACL-HLT, 2019, pp. 4171-4186, "
-    "doi:10.18653/v1/N19-1423.",
-
-    # [30]-[32] Section IV, data
-    "B. Klimt and Y. Yang, “The Enron corpus: A new dataset for email "
-    "classification research,” in Proc. 15th European Conf. Machine "
-    "Learning (ECML), LNCS 3201, Springer, 2004, pp. 217-226, "
-    "doi:10.1007/978-3-540-30115-8_22.",
-
-    "D. Noever, “The Enron corpus: Where the email bodies are "
-    "buried?,” arXiv:2001.10374, 2020.",
-
-    "J. McKechnie, G. McDonald and C. Macdonald, “A sensitivity-aware "
-    "test collection for search among personal information,” "
-    "arXiv:2606.27559, 2026.",
-
-    # [33]-[34] Section V, baselines
-    "Meta AI, “Llama 3.2: Revolutionizing edge AI and vision with open, "
-    "customizable models,” Meta AI Blog, 2024. [Online]. Available: "
-    "https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/",
-
-    # CORRECTED: v1 truncated the title before "on Reddit".
-    "J. Lee, L. Tian, A. Brillantes, A.-S. Mihăiţă and "
-    "M.-A. Rizoiu, “Long live fine-tuning: Task-specific transformers "
-    "outperform zero-shot LLMs for misinformation response classification on "
-    "Reddit,” arXiv:2606.04274, 2026.",
-
-    # [35] Section VII-F, the reproducibility finding
-    "scikit-learn developers, “GroupKFold now uses stable sorting when "
-    "doing the group distribution; this ensures that the splits are "
-    "consistent across runs,” in Release Notes for scikit-learn 1.9, "
-    "pull request #28464, 2025. [Online]. Available: "
-    "https://scikit-learn.org/stable/whats_new/v1.9.html",
-
-    # [36]-[37] Section VIII, the cross-lingual extension
-    "W. Antoun, F. Baly and H. Hajj, “AraBERT: Transformer-based model for "
-    "Arabic language understanding,” in Proc. 12th Int. Conf. Language "
-    "Resources and Evaluation (LREC), Marseille, France, 2020. [Online]. "
-    "Available: https://aclanthology.org/2020.osact-1.2/",
-
-    "NLLB Team, M. R. Costa-jussà, J. Cross, O. Çelebi, M. Elbayad, "
-    "K. Heafield, K. Heffernan, E. Kalbassi, J. Lam, D. Licht, J. Maillard, "
-    "A. Sun, S. Wang, G. Wenzek, A. Youngblood et al., “No language left "
-    "behind: Scaling human-centered machine translation,” arXiv:2207.04672, "
-    "2022.",
+    'Verizon Business, “2026 Data Breach Investigations Report,” Verizon, 2026. [Online]. Available: https://www.verizon.com/business/resources/reports/dbir/',
+    'Microsoft, “Microsoft Purview Data Loss Prevention documentation,” Microsoft Learn, 2026. [Online]. Available: https://learn.microsoft.com/purview/dlp-learn-about-dlp',
+    'L. Mainetti and A. Elia, “Detecting personally identifiable information through natural language processing: A step forward,” Applied System Innovation, vol. 8, no. 2, art. 55, 2025, doi:10.3390/asi8020055.',
+    'M. H. Shahriar, A. V. D. M. Kayem, D. Reich and C. Meinel, “Identifying personal identifiable information (PII) in unstructured text: A comparative study on transformers,” in Database and Expert Systems Applications (DEXA), LNCS, Springer, 2024, pp. 174-181, doi:10.1007/978-3-031-68312-1_14.',
+    'J. Muralitharan and C. Arumugam, “Privacy BERT-LSTM: A novel NLP algorithm for sensitive information detection in textual documents,” Neural Computing and Applications, vol. 36, no. 25, pp. 15439-15454, 2024, doi:10.1007/s00521-024-09707-w.',
+    'A. K. M. N. Mehdy and H. Mehrpouyan, “A multi-input multi-output transformer-based hybrid neural network for multi-class privacy disclosure detection,” arXiv:2108.08483, 2021.',
+    'M. I. Szawerna, S. Dobnik, R. Muñoz Sánchez, T. Lindström Tiedemann and E. Volodina, “Detecting personal identifiable information in Swedish learner essays,” in Proc. Workshop on Computational Approaches to Language Data Pseudonymization (CALD-pseudo), ACL, 2024, pp. 54-63, doi:10.18653/v1/2024.caldpseudo-1.7.',
+    'H. Rajgarhia, S. Gupta, A. Shaik, G. P. Kumar, Y. Santhoshraj, S. N. T. Nishitha and A. Mukherji, “An evaluation study of hybrid methods for multilingual PII detection,” arXiv:2510.07551, 2025.',
+    'O. Elbarbary, M. Rasslan, A. El Bolock and C. Sabty, “Hybrid AI for Arabic sensitive data detection: Enhancing privacy compliance in Egypt,” International Journal of Safety and Security Engineering, vol. 15, no. 6, pp. 1103-1109, 2025, doi:10.18280/ijsse.150602.',
+    'H. Ahmed, I. Traore, S. Saad and M. Mamun, “Automated detection of unstructured context-dependent sensitive information using deep learning,” Internet of Things, vol. 16, art. 100444, 2021, doi:10.1016/j.iot.2021.100444.',
+    'H. M. Qawara and H. Alhindi, “Detecting context-dependent sensitive data in unstructured text,” Information, vol. 17, no. 7, art. 663, 2026, doi:10.3390/info17070663.',
+    'V. Kužina, A.-M. Petrić, M. Barišić and A. Jović, “CASSED: Context-based approach for structured sensitive data detection,” Expert Systems with Applications, vol. 223, art. 119924, 2023, doi:10.1016/j.eswa.2023.119924.',
+    'J. Neerbek, “Sensitive information detection: Recursive neural networks for encoding context,” arXiv:2008.10863, 2020.',
+    'S. Anand, M. Shukla and S. Lodha, “Detecting sensitive information from unstructured text in a data-constrained environment,” in Proc. 15th Int. Conf. COMmunication Systems & NETworkS (COMSNETS), IEEE, 2023, doi:10.1109/COMSNETS56262.2023.10041388.',
+    'G. Gambarelli, A. Gangemi and R. Tripodi, “Is your model sensitive? SPeDaC: A new benchmark for detecting and classifying sensitive personal data,” arXiv:2208.06216, 2022.',
+    'G. McDonald, C. Macdonald and I. Ounis, “How the accuracy and confidence of sensitivity classification affects digital sensitivity review,” ACM Trans. Information Systems, vol. 39, no. 1, art. 4, 2020, doi:10.1145/3417334.',
+    'M. F. Sayed, N. Mallekav and D. W. Oard, “Comparing intrinsic and extrinsic evaluation of sensitivity classification,” in Advances in Information Retrieval (ECIR), LNCS, Springer, 2022, pp. 215-222, doi:10.1007/978-3-030-99739-7_25.',
+    'G. McDonald, C. Macdonald and I. Ounis, “The FACTS of technology-assisted sensitivity review,” arXiv:1907.02956, 2019.',
+    'K. Branting, B. Brown, C. Giannella, J. Van Guilder, J. Harrold, S. Howell and J. R. Baron, “Decision support for detecting sensitive text in government records,” Artificial Intelligence and Law, vol. 33, no. 1, pp. 171-197, 2025, doi:10.1007/s10506-023-09383-6.',
+    'N. Mireshghallah, H. Kim, X. Zhou, Y. Tsvetkov, Y. Choi, M. Sap and T. Berg-Kirkpatrick, “Can LLMs keep a secret? Testing privacy implications of language models via contextual integrity theory,” in Proc. Int. Conf. Learning Representations (ICLR), 2024. [Online]. Available: https://openreview.net/forum?id=gmg7t8b4s0',
+    'H. Li, W. Hu, H. Jing, Y. Chen, Q. Hu, S. Han, T. Chu, P. Hu and Y. Song, “PrivaCI-Bench: Evaluating privacy with contextual integrity and legal compliance,” arXiv:2502.17041, 2025.',
+    'M. Miranda, E. S. Ruzzetti, A. Santilli, F. M. Zanzotto, S. Bratières and E. Rodolà, “Preserving privacy in large language models: A survey on current threats and solutions,” arXiv:2408.05212, 2024.',
+    'K. Chen, X. Zhou, Y. Lin, S. Feng, L. Shen and P. Wu, “A survey on privacy risks and protection in large language models,” J. King Saud Univ. - Computer and Information Sciences, vol. 37, no. 7, art. 163, 2025, doi:10.1007/s44443-025-00177-1.',
+    'P. Desai, L. Tang, Y. Meng and Z. Xi, “SafeGPT: Preventing data leakage and unethical outputs in enterprise LLM use,” arXiv:2601.06366, 2026.',
+    'J. R. Landis and G. G. Koch, “The measurement of observer agreement for categorical data,” Biometrics, vol. 33, no. 1, pp. 159-174, 1977, doi:10.2307/2529310.',
+    'D. Chicco, M. J. Warrens and G. Jurman, “The Matthews correlation coefficient (MCC) is more informative than Cohen’s kappa and Brier score in binary classification assessment,” IEEE Access, vol. 9, pp. 78368-78381, 2021, doi:10.1109/ACCESS.2021.3084050.',
+    'S. Kapoor and A. Narayanan, “Leakage and the reproducibility crisis in machine-learning-based science,” Patterns, vol. 4, no. 9, art. 100804, 2023, doi:10.1016/j.patter.2023.100804.',
+    'D. Chicco and G. Jurman, “The advantages of the Matthews correlation coefficient (MCC) over F1 score and accuracy in binary classification evaluation,” BMC Genomics, vol. 21, art. 6, 2020, doi:10.1186/s12864-019-6413-7.',
+    'M. Szep, D. Rueckert, R. von Eisenhart-Rothe and F. Hinterwimmer, “Fine-tuning large language models with limited data: A survey and practical guide,” arXiv:2411.09539, 2024.',
+    'J. Devlin, M.-W. Chang, K. Lee and K. Toutanova, “BERT: Pre-training of deep bidirectional transformers for language understanding,” in Proc. NAACL-HLT, 2019, pp. 4171-4186, doi:10.18653/v1/N19-1423.',
+    'B. Klimt and Y. Yang, “The Enron corpus: A new dataset for email classification research,” in Proc. 15th European Conf. Machine Learning (ECML), LNCS 3201, Springer, 2004, pp. 217-226, doi:10.1007/978-3-540-30115-8_22.',
+    'D. Noever, “The Enron corpus: Where the email bodies are buried?,” arXiv:2001.10374, 2020.',
+    'J. McKechnie, G. McDonald and C. Macdonald, “A sensitivity-aware test collection for search among personal information,” arXiv:2606.27559, 2026.',
+    'Meta AI, “Llama 3.2: Revolutionizing edge AI and vision with open, customizable models,” Meta AI Blog, 2024. [Online]. Available: https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/',
+    'J. Lee, L. Tian, A. Brillantes, A.-S. Mihăiţă and M.-A. Rizoiu, “Long live fine-tuning: Task-specific transformers outperform zero-shot LLMs for misinformation response classification on Reddit,” arXiv:2606.04274, 2026.',
+    'scikit-learn developers, “GroupKFold now uses stable sorting when doing the group distribution; this ensures that the splits are consistent across runs,” in Release Notes for scikit-learn 1.9, pull request #28464, 2025. [Online]. Available: https://scikit-learn.org/stable/whats_new/v1.9.html',
+    'A. Zainab, M. A. Khalid, F. U. Khan and A. Khan, “Benchmarking classical and transformer-based models for document sensitivity classification,” arXiv:2608.16928, Aug. 2026. [Online]. Available: https://arxiv.org/abs/2608.16928',
+    'A. Ivchenko, “CTSCAN: Evaluation leakage in chest CT segmentation and a reproducible patient-disjoint benchmark,” arXiv:2604.15561, Apr. 2026. [Online]. Available: https://arxiv.org/abs/2604.15561',
+    'A. A. Ntwali, L. Rück and M. Heckmann, “Detection of personal data in structured datasets using a large language model,” in Proc. Workshop on Large Language Models for Data Protection and Management (LLM-DPM), Berlin, Germany, Jun. 2025, arXiv:2506.22305. [Online]. Available: https://arxiv.org/abs/2506.22305',
+    'R. Richie, S. Grover and F. Tsui, “Inter-annotator agreement is not the ceiling of machine learning performance: Evidence from a comprehensive set of simulations,” in Proc. 21st Workshop on Biomedical Language Processing (BioNLP), Dublin, Ireland, 2022, pp. 275–284, doi:10.18653/v1/2022.bionlp-1.26.',
+    'L. Telkamp and M. Hulsebos, “Towards contextual sensitive data detection,” arXiv:2512.04120, Dec. 2025. [Online]. Available: https://arxiv.org/abs/2512.04120',
+    'D. Antypas, I. Sen, C. Perez-Almendros, J. Camacho-Collados and F. Barbieri, “Sensitive content classification in social media: A holistic resource and evaluation,” in Proc. 9th Workshop on Online Abuse and Harms (WOAH), Aug. 2025, pp. 17–31. [Online]. Available: https://aclanthology.org/2025.woah-1.2/',
+    'M. Ojala and G. C. Garriga, “Permutation tests for studying classifier performance,” J. Mach. Learn. Res., vol. 11, no. 62, pp. 1833–1863, 2010. [Online]. Available: https://www.jmlr.org/papers/v11/ojala10a.html',
+    'W. Antoun, F. Baly and H. Hajj, “AraBERT: Transformer-based model for Arabic language understanding,” in Proc. 12th Int. Conf. Language Resources and Evaluation (LREC), Marseille, France, 2020. [Online]. Available: https://aclanthology.org/2020.osact-1.2/',
+    'NLLB Team, M. R. Costa-jussà, J. Cross, O. Çelebi, M. Elbayad, K. Heafield, K. Heffernan, E. Kalbassi, J. Lam, D. Licht, J. Maillard, A. Sun, S. Wang, G. Wenzek, A. Youngblood et al., “No language left behind: Scaling human-centered machine translation,” arXiv:2207.04672, 2022.',
 ]
 
 # How each entry was checked, for the artifact release. One key per line,
-# because the previous shared-line layout silently lost entries to duplicate
-# keys when the list was renumbered.
+# because the previous shared-line layout silently lost entries to
+# duplicate keys when the list was renumbered.
 VERIFIED = {
-    1: "industry report - Verizon DBIR 2026, corporate author",
-    2: "vendor documentation - Microsoft Learn, corporate author",
-    3: "crossref 10.3390/asi8020055",
-    4: "crossref 10.1007/978-3-031-68312-1_14",
-    5: "crossref 10.1007/s00521-024-09707-w",
-    6: "arxiv 2108.08483",
-    7: "acl 2024.caldpseudo-1.7",
-    8: "arxiv 2510.07551",
-    9: "crossref 10.18280/ijsse.150602",
-    10: "crossref 10.1016/j.iot.2021.100444",
-    11: "crossref 10.3390/info17070663",
-    12: "crossref 10.1016/j.eswa.2023.119924",
-    13: "arxiv 2008.10863",
-    14: "ieee 10041388",
-    15: "arxiv 2208.06216",
-    16: "acm 10.1145/3417334",
-    17: "crossref 10.1007/978-3-030-99739-7_25 - ATTRIBUTION CORRECTED",
-    18: "arxiv 1907.02956",
-    19: "crossref 10.1007/s10506-023-09383-6 - YEAR CORRECTED 2023->2025",
-    20: "ICLR 2024 proceedings",
-    21: "arxiv 2502.17041",
-    22: "arxiv 2408.05212",
-    23: "crossref 10.1007/s44443-025-00177-1",
-    24: "arxiv 2601.06366",
-    25: "crossref 10.2307/2529310 - Landis & Koch 1977",
-    26: "crossref 10.1109/ACCESS.2021.3084050 - MCC vs kappa",
-    27: "crossref 10.1016/j.patter.2023.100804",
-    28: "crossref 10.1186/s12864-019-6413-7",
-    29: "arxiv 2411.09539",
-    30: "NAACL-HLT 2019 proceedings",
-    31: "ECML 2004 LNCS 3201",
-    32: "arxiv 2001.10374",
-    33: "arxiv 2606.27559",
-    34: "vendor blog - Meta AI, corporate author",
-    35: "arxiv 2606.04274 - TITLE COMPLETED",
-    36: "scikit-learn 1.9 release notes, quoted verbatim; PR #28464",
-    37: "arxiv 2003.00104 / LREC 2020 proceedings",
-    38: "arxiv 2207.04672 - collective authorship, first 15 named then et al.",
+    1: 'industry report - Verizon DBIR 2026, corporate author',
+    2: 'vendor documentation - Microsoft Learn, corporate author',
+    3: 'crossref 10.3390/asi8020055',
+    4: 'crossref 10.1007/978-3-031-68312-1_14',
+    5: 'crossref 10.1007/s00521-024-09707-w',
+    6: 'arxiv 2108.08483',
+    7: 'acl 2024.caldpseudo-1.7',
+    8: 'arxiv 2510.07551',
+    9: 'crossref 10.18280/ijsse.150602',
+    10: 'crossref 10.1016/j.iot.2021.100444',
+    11: 'crossref 10.3390/info17070663',
+    12: 'crossref 10.1016/j.eswa.2023.119924',
+    13: 'arxiv 2008.10863',
+    14: 'ieee 10041388',
+    15: 'arxiv 2208.06216',
+    16: 'acm 10.1145/3417334',
+    17: 'crossref 10.1007/978-3-030-99739-7_25 - ATTRIBUTION CORRECTED',
+    18: 'arxiv 1907.02956',
+    19: 'crossref 10.1007/s10506-023-09383-6 - YEAR CORRECTED 2023->2025',
+    20: 'ICLR 2024 proceedings',
+    21: 'arxiv 2502.17041',
+    22: 'arxiv 2408.05212',
+    23: 'crossref 10.1007/s44443-025-00177-1',
+    24: 'arxiv 2601.06366',
+    25: 'crossref 10.2307/2529310 - Landis & Koch 1977',
+    26: 'crossref 10.1109/ACCESS.2021.3084050 - MCC vs kappa',
+    27: 'crossref 10.1016/j.patter.2023.100804',
+    28: 'crossref 10.1186/s12864-019-6413-7',
+    29: 'arxiv 2411.09539',
+    30: 'NAACL-HLT 2019 proceedings',
+    31: 'ECML 2004 LNCS 3201',
+    32: 'arxiv 2001.10374',
+    33: 'arxiv 2606.27559',
+    34: 'vendor blog - Meta AI, corporate author',
+    35: 'arxiv 2606.04274 - TITLE COMPLETED',
+    36: 'scikit-learn 1.9 release notes, quoted verbatim; PR #28464',
+    37: 'arxiv 2608.16928 - abstract read 2026-09-21; 4 authors, 5 Aug 2026',
+    38: 'arxiv 2604.15561 - abstract read 2026-09-21; 1 author, 16 Apr 2026',
+    39: 'arxiv 2506.22305 - abstract + HTML Table 2 read 2026-09-21',
+    40: 'acl 2022.bionlp-1.26 - page read 2026-09-21; pp. 275-284 confirmed',
+    41: 'arxiv 2512.04120 - abstract read 2026-09-21; 2 Dec 2025 NOT 2026',
+    42: 'acl 2025.woah-1.2 - PDF read 2026-09-21; pp. 17-31; gpt-4o 75.7',
+    43: 'jmlr v11 ojala10a - page read 2026-09-21; vol. 11, pp. 1833-1863',
+    44: 'arxiv 2003.00104 / LREC 2020 proceedings',
+    45: 'arxiv 2207.04672 - collective authorship, first 15 named then et al.',
 }
 
-assert len(REFS) == 38, len(REFS)
-assert len(VERIFIED) == 38, len(VERIFIED)
+assert len(REFS) == 45, len(REFS)
+assert len(VERIFIED) == 45, len(VERIFIED)

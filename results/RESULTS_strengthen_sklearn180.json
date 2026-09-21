@@ -1,0 +1,176 @@
+{
+  "environment": {
+    "python": "3.14.0",
+    "scikit_learn": "1.8.0",
+    "numpy": "2.4.2"
+  },
+  "purpose": "quantitative strengthening of the leakage claim",
+  "ladder_strict": [
+    {
+      "f1": 0.3704,
+      "mcc": 0.2302,
+      "fold_mean_f1": 0.3701,
+      "fold_std_f1": 0.0447,
+      "n": 1481,
+      "positives": 264,
+      "rung": "R0",
+      "control": "none (duplicates kept, random split)",
+      "drop_from_R0": 0.0,
+      "trivial_floor": 0.3026
+    },
+    {
+      "f1": 0.3571,
+      "mcc": 0.2242,
+      "fold_mean_f1": 0.3559,
+      "fold_std_f1": 0.0426,
+      "n": 1382,
+      "positives": 250,
+      "rung": "R1",
+      "control": "+ exact deduplication",
+      "drop_from_R0": 0.0133,
+      "trivial_floor": 0.3064
+    },
+    {
+      "f1": 0.3762,
+      "mcc": 0.2581,
+      "fold_mean_f1": 0.3762,
+      "fold_std_f1": 0.0421,
+      "n": 1234,
+      "positives": 224,
+      "rung": "R2",
+      "control": "+ near-duplicate removal",
+      "near_duplicates_dropped": 148,
+      "drop_from_R0": -0.0058,
+      "trivial_floor": 0.3073
+    },
+    {
+      "f1": 0.3073,
+      "mcc": 0.1968,
+      "fold_mean_f1": 0.3059,
+      "fold_std_f1": 0.0266,
+      "n": 1234,
+      "positives": 224,
+      "rung": "R3",
+      "control": "+ thread-disjoint split (full protocol)",
+      "drop_from_R0": 0.0631,
+      "trivial_floor": 0.3073
+    }
+  ],
+  "repeated_cv_strict": {
+    "repeats": 20,
+    "fold_mean_f1_mean": 0.3354,
+    "fold_mean_f1_std": 0.0134,
+    "fold_mean_f1_range": [
+      0.3078,
+      0.3657
+    ],
+    "pooled_f1_mean": 0.3375,
+    "pooled_f1_std": 0.013,
+    "pooled_f1_range": [
+      0.3118,
+      0.3665
+    ],
+    "note": "each repeat is a different thread-to-fold assignment"
+  },
+  "permutation_strict": {
+    "observed_f1": 0.3073,
+    "null_mean_f1": 0.0918,
+    "null_std_f1": 0.032,
+    "null_p95_f1": 0.1503,
+    "null_max_f1": 0.2077,
+    "permutations": 500,
+    "p_value": 0.002,
+    "note": "one-sided; p = (1 + #{null >= observed}) / (N + 1)"
+  },
+  "ladder_broad": [
+    {
+      "f1": 0.5246,
+      "mcc": 0.3067,
+      "fold_mean_f1": 0.523,
+      "fold_std_f1": 0.0321,
+      "n": 1481,
+      "positives": 449,
+      "rung": "R0",
+      "control": "none (duplicates kept, random split)",
+      "drop_from_R0": 0.0,
+      "trivial_floor": 0.4653
+    },
+    {
+      "f1": 0.5226,
+      "mcc": 0.3069,
+      "fold_mean_f1": 0.5207,
+      "fold_std_f1": 0.0548,
+      "n": 1382,
+      "positives": 422,
+      "rung": "R1",
+      "control": "+ exact deduplication",
+      "drop_from_R0": 0.002,
+      "trivial_floor": 0.4678
+    },
+    {
+      "f1": 0.5365,
+      "mcc": 0.333,
+      "fold_mean_f1": 0.5354,
+      "fold_std_f1": 0.0433,
+      "n": 1234,
+      "positives": 377,
+      "rung": "R2",
+      "control": "+ near-duplicate removal",
+      "near_duplicates_dropped": 148,
+      "drop_from_R0": -0.0119,
+      "trivial_floor": 0.468
+    },
+    {
+      "f1": 0.5172,
+      "mcc": 0.3049,
+      "fold_mean_f1": 0.518,
+      "fold_std_f1": 0.0345,
+      "n": 1234,
+      "positives": 377,
+      "rung": "R3",
+      "control": "+ thread-disjoint split (full protocol)",
+      "drop_from_R0": 0.0074,
+      "trivial_floor": 0.468
+    }
+  ],
+  "repeated_cv_broad": {
+    "repeats": 20,
+    "fold_mean_f1_mean": 0.5139,
+    "fold_mean_f1_std": 0.0112,
+    "fold_mean_f1_range": [
+      0.4973,
+      0.5391
+    ],
+    "pooled_f1_mean": 0.5144,
+    "pooled_f1_std": 0.011,
+    "pooled_f1_range": [
+      0.4954,
+      0.5388
+    ],
+    "note": "each repeat is a different thread-to-fold assignment"
+  },
+  "permutation_broad": {
+    "observed_f1": 0.5172,
+    "null_mean_f1": 0.2324,
+    "null_std_f1": 0.0328,
+    "null_p95_f1": 0.2862,
+    "null_max_f1": 0.3156,
+    "permutations": 500,
+    "p_value": 0.002,
+    "note": "one-sided; p = (1 + #{null >= observed}) / (N + 1)"
+  },
+  "agreement": {
+    "agreement_f1": 0.744,
+    "agreement_f1_ci95": [
+      0.7032,
+      0.7808
+    ],
+    "cohens_kappa": 0.6618,
+    "cohens_kappa_ci95": [
+      0.6114,
+      0.7099
+    ],
+    "resamples": 2000,
+    "note": "thread-level bootstrap; one annotator scored against the other"
+  }
+}

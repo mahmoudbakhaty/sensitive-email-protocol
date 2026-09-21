@@ -52,12 +52,21 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `scripts/addendum.py` | Standalone bootstrap intervals and paired tests, superseded by `final_run.py` but kept because the reproducibility section refers to it. |
 | `scripts/figs_v2.py` | Regenerates both paper figures from the data. |
 | `results/RESULTS_FINAL.md` | Every figure of Tables I-VI, with the environment and fingerprint that produced them. |
-| `results/RESULTS_arabic_v2.json` | The Arabic run, raw. Tables VII and VIII are generated from this file directly, so they cannot drift from it. |
+| `results/RESULTS_arabic_v2.json` | The Arabic run, raw. Tables IX and X are generated from this file directly, so they cannot drift from it. |
 | `results/RESULTS_arabic_v2.md` | The same, annotated with what the section should and should not claim. |
-| `results/FINDING_sklearn_groupkfold.md` | The full record of the version-dependence investigation behind Section VII-E. |
-| `results/superseded/` | Earlier runs. Kept because Section VII-E compares against them; **do not quote these as results.** |
-| `paper_refs_v2.py` | The 38 references plus `VERIFIED`, recording how each was resolved. Every entry carries a DOI, an arXiv id or a stable URL. |
+| `results/FINDING_sklearn_groupkfold.md` | The full record of the version-dependence investigation behind Section VII-F. |
+| `results/superseded/` | Earlier runs. Kept because Section VII-F compares against them; **do not quote these as results.** |
+| `paper_refs_v2.py` | The 45 references plus `VERIFIED`, recording how each was resolved. Every entry carries a DOI, an arXiv id or a stable URL. |
 | `fig_v2_*.png` | The two paper figures. |
+| `scripts/strengthen.py` | The leakage ladder, the permutation null, the repeated cross-validation and the agreement interval. Runs on CPU. |
+| `scripts/compare_versions.py` | Builds the scikit-learn 1.8.0 against 1.9.1 comparison from the two result files. |
+| `scripts/llm_protocol.py` | An instruction-tuned LLM under the same protocol. Written and tested; **not yet run** - see the limitation in Section IX. |
+| `results/RESULTS_strengthen_sklearn191.json` | The strengthening run under the pinned library. The figures in Sections VII-G and VII-H come from this file. |
+| `results/RESULTS_strengthen_sklearn180.json` | The same suite under 1.8.0, with every other library held fixed. |
+| `results/RESULTS_strengthen.md` | The four measurements, written up, with what each does and does not establish. |
+| `results/RESULTS_version_effect.md` | What the library version alone changes, with six ungrouped controls that do not move. |
+| `quoted_figures.py` | Every figure quoted from another paper, with the page it was read from. These cannot be regenerated here. |
+| `LITERATURE_SURVEY_2026-09-21.md` | Where the field stands and where this work sits in it, with each figure attributed. |
 
 **Not yet included:** `RESULTS_FINAL.json`, the raw record of the definitive
 run. `results/RESULTS_FINAL.md` carries every figure quoted in the paper, but
