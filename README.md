@@ -64,6 +64,8 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `scripts/llm_protocol.py` | An instruction-tuned LLM under the same protocol. Produced Table IX. |
 | `scripts/test_llm_protocol.py` | Checks the fold bookkeeping with the model stubbed out: no thread crosses a fold, no in-context example comes from a test thread. |
 | `scripts/test_judge_path.py` | Checks the model call itself on a tiny real model. The first Kaggle run died in exactly the line this covers, which the stubbed test could not reach. |
+| `results/RESULTS_FINAL.json` | The run behind Tables III to V, raw. Environment, fold fingerprint, per-fold dispersion and bootstrap intervals. |
+| `results/PREDICTIONS_FINAL.json` | Per-message predictions and scores for all ten classical configurations, so any figure can be recomputed. |
 | `results/RESULTS_LLM.json` | Qwen2.5-7B-Instruct under the protocol, four runs. Source of Table IX. |
 | `results/RESULTS_strengthen_sklearn191.json` | The strengthening run under the pinned library. The figures in Sections VII-G and VII-H come from this file. |
 | `results/RESULTS_strengthen_sklearn180.json` | The same suite under 1.8.0, with every other library held fixed. |
@@ -72,9 +74,13 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `quoted_figures.py` | Every figure quoted from another paper, with the page it was read from. These cannot be regenerated here. |
 | `LITERATURE_SURVEY_2026-09-21.md` | Where the field stands and where this work sits in it, with each figure attributed. |
 
-**Not yet included:** `RESULTS_FINAL.json`, the raw record of the definitive
-run. `results/RESULTS_FINAL.md` carries every figure quoted in the paper, but
-the machine-readable file and the per-item predictions are still to be added.
+**The definitive run, re-executed.** The original session's record was never
+retrieved, so the run was repeated from `scripts/final_run.py` on the released
+pin, months later and on different hardware. The fold fingerprint reproduced
+exactly (`50b3daba1a99ae32`) and every deterministic figure reproduced to four
+decimal places. The GPU-trained encoder did not reproduce bit for bit: it is
+0.006 F1 low on the broad labels, because GPU training is not deterministic
+across hardware even under a fixed seed. Both records are now here.
 
 ## The data is not redistributed, it is rebuilt
 
