@@ -56,9 +56,13 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `results/RESULTS_arabic_v2.md` | The same, annotated with what the section should and should not claim. |
 | `results/FINDING_sklearn_groupkfold.md` | The full record of the version-dependence investigation behind Section VII-F. |
 | `results/superseded/` | Earlier runs. Kept because Section VII-F compares against them; **do not quote these as results.** |
-| `paper_refs_v2.py` | The 46 references plus `VERIFIED`, recording how each was resolved. Every entry carries a DOI, an arXiv id or a stable URL. |
+| `paper_refs_v2.py` | The 47 references plus `VERIFIED`, recording how each was resolved. Every entry carries a DOI, an arXiv id or a stable URL. |
 | `fig_v2_*.png` | The three paper figures. |
 | `scripts/fig_ladder.py` | Builds Fig. 3 straight from the results file, so the figure cannot drift from the numbers. |
+| `scripts/ladder_v2.py` | The corrected leakage ladder: one control per rung, twenty seeded partitions, fold class balance held fixed. **Supersedes the ladder in `strengthen.py`.** |
+| `scripts/ladder_stratified.py` | Separates the thread-grouping cost from the class-marginal term that plain GroupKFold introduces. |
+| `results/RESULTS_ladder_v2.json` | The corrected ladder. Source of Table VII and Fig. 3. |
+| `results/RESULTS_ladder_stratified.json` | The leakage / class-imbalance separation. |
 | `scripts/strengthen.py` | The leakage ladder, the permutation null, the repeated cross-validation and the agreement interval. Runs on CPU. |
 | `scripts/compare_versions.py` | Builds the scikit-learn 1.8.0 against 1.9.1 comparison from the two result files. |
 | `scripts/llm_protocol.py` | An instruction-tuned LLM under the same protocol. Produced Table IX. |

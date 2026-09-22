@@ -67,6 +67,7 @@ REFS = [
     'D. Antypas, I. Sen, C. Perez-Almendros, J. Camacho-Collados and F. Barbieri, “Sensitive content classification in social media: A holistic resource and evaluation,” in Proc. 9th Workshop on Online Abuse and Harms (WOAH), Aug. 2025, pp. 17–31. [Online]. Available: https://aclanthology.org/2025.woah-1.2/',
     'M. Ojala and G. C. Garriga, “Permutation tests for studying classifier performance,” J. Mach. Learn. Res., vol. 11, no. 62, pp. 1833–1863, 2010. [Online]. Available: https://www.jmlr.org/papers/v11/ojala10a.html',
     'G. C. Cawley and N. L. C. Talbot, “On over-fitting in model selection and subsequent selection bias in performance evaluation,” J. Mach. Learn. Res., vol. 11, no. 70, pp. 2079–2107, 2010. [Online]. Available: https://www.jmlr.org/papers/v11/cawley10a.html',
+    'S. Roth, “Which leakage types matter? A quantitative landscape across 2,047 benchmark datasets,” arXiv:2604.04199, Apr. 2026. [Online]. Available: https://arxiv.org/abs/2604.04199',
     'W. Antoun, F. Baly and H. Hajj, “AraBERT: Transformer-based model for Arabic language understanding,” in Proc. 12th Int. Conf. Language Resources and Evaluation (LREC), Marseille, France, 2020. [Online]. Available: https://aclanthology.org/2020.osact-1.2/',
     'NLLB Team, M. R. Costa-jussà, J. Cross, O. Çelebi, M. Elbayad, K. Heafield, K. Heffernan, E. Kalbassi, J. Lam, D. Licht, J. Maillard, A. Sun, S. Wang, G. Wenzek, A. Youngblood et al., “No language left behind: Scaling human-centered machine translation,” arXiv:2207.04672, 2022.',
 ]
@@ -119,9 +120,10 @@ VERIFIED = {
     42: 'acl 2025.woah-1.2 - PDF read 2026-09-21; pp. 17-31; gpt-4o 75.7',
     43: 'jmlr v11 ojala10a - page read 2026-09-21; vol. 11, pp. 1833-1863',
     44: 'jmlr v11 cawley10a - page read 2026-09-22; vol. 11, pp. 2079-2107',
-    45: 'arxiv 2003.00104 / LREC 2020 proceedings',
-    46: 'arxiv 2207.04672 - collective authorship, first 15 named then et al.',
+    45: 'arxiv 2604.04199 - abstract read 2026-09-22; single author, 5 Apr 2026',
+    46: 'arxiv 2003.00104 / LREC 2020 proceedings',
+    47: 'arxiv 2207.04672 - collective authorship, first 15 named then et al.',
 }
 
-assert len(REFS) == 46, len(REFS)
-assert len(VERIFIED) == 46, len(VERIFIED)
+assert len(REFS) == 47, len(REFS)
+assert len(VERIFIED) == 47, len(VERIFIED)

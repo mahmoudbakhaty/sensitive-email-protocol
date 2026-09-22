@@ -1,0 +1,94 @@
+{
+  "environment": {
+    "python": "3.14.0",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.4.2"
+  },
+  "seeds": 20,
+  "near_duplicates_dropped": 148,
+  "note": "every rung is the mean of 20 seeded partitions; the grouped rung uses StratifiedGroupKFold so fold class balance matches the ungrouped rungs",
+  "strict": {
+    "rungs": [
+      {
+        "rung": "R0  none (duplicates kept)",
+        "n": 1481,
+        "f1": 0.3571,
+        "f1_sd": 0.0171,
+        "mcc": 0.2126,
+        "trivial_floor": 0.3026
+      },
+      {
+        "rung": "R1  + exact deduplication",
+        "n": 1382,
+        "f1": 0.3421,
+        "f1_sd": 0.0154,
+        "mcc": 0.2068,
+        "trivial_floor": 0.3064
+      },
+      {
+        "rung": "R2  + near-duplicate removal",
+        "n": 1234,
+        "f1": 0.3541,
+        "f1_sd": 0.0166,
+        "mcc": 0.2408,
+        "trivial_floor": 0.3073
+      },
+      {
+        "rung": "R3  + thread-disjoint split",
+        "n": 1234,
+        "f1": 0.3375,
+        "f1_sd": 0.013,
+        "mcc": 0.2302,
+        "trivial_floor": 0.3073
+      }
+    ],
+    "deltas": {
+      "exact_deduplication": -0.015,
+      "near_duplicate_removal": 0.012,
+      "thread_disjoint_split": -0.0166,
+      "total_R0_to_R3": -0.0196
+    }
+  },
+  "broad": {
+    "rungs": [
+      {
+        "rung": "R0  none (duplicates kept)",
+        "n": 1481,
+        "f1": 0.5249,
+        "f1_sd": 0.0094,
+        "mcc": 0.3051,
+        "trivial_floor": 0.4653
+      },
+      {
+        "rung": "R1  + exact deduplication",
+        "n": 1382,
+        "f1": 0.5239,
+        "f1_sd": 0.0076,
+        "mcc": 0.3114,
+        "trivial_floor": 0.4678
+      },
+      {
+        "rung": "R2  + near-duplicate removal",
+        "n": 1234,
+        "f1": 0.5308,
+        "f1_sd": 0.0097,
+        "mcc": 0.3269,
+        "trivial_floor": 0.468
+      },
+      {
+        "rung": "R3  + thread-disjoint split",
+        "n": 1234,
+        "f1": 0.5144,
+        "f1_sd": 0.011,
+        "mcc": 0.3024,
+        "trivial_floor": 0.468
+      }
+    ],
+    "deltas": {
+      "exact_deduplication": -0.001,
+      "near_duplicate_removal": 0.0069,
+      "thread_disjoint_split": -0.0164,
+      "total_R0_to_R3": -0.0105
+    }
+  }
+}

@@ -19,7 +19,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-RESULTS = r"C:\Users\lenovo\Downloads\RESULTS_strengthen_sklearn191.json"
+RESULTS = r"C:\Users\lenovo\Downloads\RESULTS_ladder_v2.json"
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                    "fig_v2_ladder.png")
 
@@ -50,10 +50,11 @@ def main():
     d = json.load(io.open(RESULTS, encoding="utf-8"))
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.9), sharey=False)
 
-    for ax, key, title in ((axes[0], "ladder_strict", "Strict labels"),
-                           (axes[1], "ladder_broad", "Broad labels")):
-        rungs = d[key]
+    for ax, key, title in ((axes[0], "strict", "Strict labels"),
+                           (axes[1], "broad", "Broad labels")):
+        rungs = d[key]["rungs"]
         f1 = [r["f1"] for r in rungs]
+        sd = [r["f1_sd"] for r in rungs]
         floor = rungs[-1]["trivial_floor"]
         x = np.arange(len(f1))
 
@@ -61,6 +62,8 @@ def main():
         ax.annotate("trivial all-positive floor", xy=(0.02, floor),
                     xytext=(0.02, floor - 0.018), fontsize=6.5, color=MID)
 
+        ax.errorbar(x, f1, yerr=sd, fmt="none", ecolor=LIGHT, elinewidth=1.0,
+                    capsize=2.5, zorder=1)
         ax.plot(x, f1, "-", color=MID, lw=1.0, zorder=2)
         ax.plot(x[:-1], f1[:-1], "o", color="white", mec=MID, mew=1.1,
                 ms=5.5, zorder=3)
@@ -87,8 +90,8 @@ def main():
         ax.set_xticks(x)
         ax.set_xticklabels(LABELS, fontsize=6.8)
         ax.set_xlim(-0.35, len(f1) + 0.15)
-        lo = min(min(f1), floor) - 0.045
-        hi = max(f1) + 0.055
+        lo = min(min(f1), floor) - max(0.045, max(sd) + 0.02)
+        hi = max(f1) + max(0.055, max(sd) + 0.03)
         ax.set_ylim(lo, hi)
         ax.set_title(title, fontsize=8, color=INK, pad=6)
         ax.tick_params(length=2)
@@ -97,8 +100,8 @@ def main():
     fig.tight_layout(pad=0.6)
     fig.savefig(OUT, bbox_inches="tight", facecolor="white")
     print("written %s" % OUT)
-    for k in ("ladder_strict", "ladder_broad"):
-        print("  %-14s %s" % (k, [r["f1"] for r in d[k]]))
+    for k in ("strict", "broad"):
+        print("  %-8s %s" % (k, [r["f1"] for r in d[k]["rungs"]]))
 
 
 if __name__ == "__main__":
