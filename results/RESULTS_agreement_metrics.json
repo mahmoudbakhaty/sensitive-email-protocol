@@ -1,0 +1,38 @@
+{
+  "environment": {
+    "python": "3.14.0",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.4.2"
+  },
+  "resamples": 2000,
+  "note": "thread-level bootstrap; Gwet's AC1 added after James (LREC 2026) flagged the kappa paradox under skew",
+  "observed_agreement": {
+    "estimate": 0.8755,
+    "ci95": [
+      0.8564,
+      0.8945
+    ]
+  },
+  "cohens_kappa": {
+    "estimate": 0.6618,
+    "ci95": [
+      0.6114,
+      0.7099
+    ]
+  },
+  "gwets_ac1": {
+    "estimate": 0.8031,
+    "ci95": [
+      0.7682,
+      0.8351
+    ]
+  },
+  "annotator_f1": {
+    "estimate": 0.744,
+    "ci95": [
+      0.7032,
+      0.7808
+    ]
+  },
+  "ac1_minus_kappa": 0.1412
+}

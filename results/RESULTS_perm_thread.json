@@ -1,0 +1,43 @@
+{
+  "environment": {
+    "python": "3.14.0",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.4.2"
+  },
+  "permutations": 500,
+  "note": "message-level vs thread-level label permutation",
+  "strict": {
+    "observed_f1": 0.3264,
+    "message_level": {
+      "null_mean": 0.0933,
+      "null_sd": 0.0318,
+      "null_p95": 0.1505,
+      "null_max": 0.1914,
+      "p_value": 0.002
+    },
+    "thread_level": {
+      "null_mean": 0.0886,
+      "null_sd": 0.0306,
+      "null_p95": 0.1415,
+      "null_max": 0.1862,
+      "p_value": 0.002
+    }
+  },
+  "broad": {
+    "observed_f1": 0.5117,
+    "message_level": {
+      "null_mean": 0.2337,
+      "null_sd": 0.0323,
+      "null_p95": 0.2895,
+      "null_max": 0.3213,
+      "p_value": 0.002
+    },
+    "thread_level": {
+      "null_mean": 0.2369,
+      "null_sd": 0.0312,
+      "null_p95": 0.2871,
+      "null_max": 0.3313,
+      "p_value": 0.002
+    }
+  }
+}

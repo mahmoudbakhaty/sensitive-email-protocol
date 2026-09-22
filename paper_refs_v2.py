@@ -60,6 +60,7 @@ REFS = [
     'J. Lee, L. Tian, A. Brillantes, A.-S. Mihăiţă and M.-A. Rizoiu, “Long live fine-tuning: Task-specific transformers outperform zero-shot LLMs for misinformation response classification on Reddit,” arXiv:2606.04274, 2026.',
     'scikit-learn developers, “GroupKFold now uses stable sorting when doing the group distribution; this ensures that the splits are consistent across runs,” in Release Notes for scikit-learn 1.9, pull request #28464, 2025. [Online]. Available: https://scikit-learn.org/stable/whats_new/v1.9.html',
     'A. Zainab, M. A. Khalid, F. U. Khan and A. Khan, “Benchmarking classical and transformer-based models for document sensitivity classification,” arXiv:2608.16928, Aug. 2026. [Online]. Available: https://arxiv.org/abs/2608.16928',
+    'A. Zainab, A. Khan, M. A. Khalid and F. U. Khan, “A channel-boosted multi-agent system with iterative consultation for document sensitivity classification,” arXiv:2609.22212, Sep. 2026. [Online]. Available: https://arxiv.org/abs/2609.22212',
     'A. Ivchenko, “CTSCAN: Evaluation leakage in chest CT segmentation and a reproducible patient-disjoint benchmark,” arXiv:2604.15561, Apr. 2026. [Online]. Available: https://arxiv.org/abs/2604.15561',
     'A. A. Ntwali, L. Rück and M. Heckmann, “Detection of personal data in structured datasets using a large language model,” in Proc. Workshop on Large Language Models for Data Protection and Management (LLM-DPM), Berlin, Germany, Jun. 2025, arXiv:2506.22305. [Online]. Available: https://arxiv.org/abs/2506.22305',
     'R. Richie, S. Grover and F. Tsui, “Inter-annotator agreement is not the ceiling of machine learning performance: Evidence from a comprehensive set of simulations,” in Proc. 21st Workshop on Biomedical Language Processing (BioNLP), Dublin, Ireland, 2022, pp. 275–284, doi:10.18653/v1/2022.bionlp-1.26.',
@@ -68,6 +69,9 @@ REFS = [
     'M. Ojala and G. C. Garriga, “Permutation tests for studying classifier performance,” J. Mach. Learn. Res., vol. 11, no. 62, pp. 1833–1863, 2010. [Online]. Available: https://www.jmlr.org/papers/v11/ojala10a.html',
     'G. C. Cawley and N. L. C. Talbot, “On over-fitting in model selection and subsequent selection bias in performance evaluation,” J. Mach. Learn. Res., vol. 11, no. 70, pp. 2079–2107, 2010. [Online]. Available: https://www.jmlr.org/papers/v11/cawley10a.html',
     'S. Roth, “Which leakage types matter? A quantitative landscape across 2,047 benchmark datasets,” arXiv:2604.04199, Apr. 2026. [Online]. Available: https://arxiv.org/abs/2604.04199',
+    'M. Boguslav and K. B. Cohen, “Inter-annotator agreement and the upper limit on machine performance: Evidence from biomedical natural language processing,” Stud. Health Technol. Inform., vol. 245, pp. 298–302, 2017, doi:10.3233/978-1-61499-830-3-298.',
+    'J. H. F. James, “Counting on consensus: Selecting the right inter-annotator agreement metric for NLP annotation and evaluation,” in Proc. 15th Lang. Resources and Evaluation Conf. (LREC), 2026, pp. 4434–4446. [Online]. Available: https://aclanthology.org/2026.lrec-1.347/',
+    'K. L. Gwet, “Handbook of Inter-Rater Reliability,” 4th ed. Gaithersburg, MD, USA: Advanced Analytics, 2014. [Online]. Available: https://agreestat.com/book4/',
     'W. Antoun, F. Baly and H. Hajj, “AraBERT: Transformer-based model for Arabic language understanding,” in Proc. 12th Int. Conf. Language Resources and Evaluation (LREC), Marseille, France, 2020. [Online]. Available: https://aclanthology.org/2020.osact-1.2/',
     'NLLB Team, M. R. Costa-jussà, J. Cross, O. Çelebi, M. Elbayad, K. Heafield, K. Heffernan, E. Kalbassi, J. Lam, D. Licht, J. Maillard, A. Sun, S. Wang, G. Wenzek, A. Youngblood et al., “No language left behind: Scaling human-centered machine translation,” arXiv:2207.04672, 2022.',
 ]
@@ -113,17 +117,21 @@ VERIFIED = {
     35: 'arxiv 2606.04274 - TITLE COMPLETED',
     36: 'scikit-learn 1.9 release notes, quoted verbatim; PR #28464',
     37: 'arxiv 2608.16928 - abstract read 2026-09-21; 4 authors, 5 Aug 2026',
-    38: 'arxiv 2604.15561 - abstract read 2026-09-21; 1 author, 16 Apr 2026',
-    39: 'arxiv 2506.22305 - abstract + HTML Table 2 read 2026-09-21',
-    40: 'acl 2022.bionlp-1.26 - page read 2026-09-21; pp. 275-284 confirmed',
-    41: 'arxiv 2512.04120 - abstract read 2026-09-21; 2 Dec 2025 NOT 2026',
-    42: 'acl 2025.woah-1.2 - PDF read 2026-09-21; pp. 17-31; gpt-4o 75.7',
-    43: 'jmlr v11 ojala10a - page read 2026-09-21; vol. 11, pp. 1833-1863',
-    44: 'jmlr v11 cawley10a - page read 2026-09-22; vol. 11, pp. 2079-2107',
-    45: 'arxiv 2604.04199 - abstract read 2026-09-22; single author, 5 Apr 2026',
-    46: 'arxiv 2003.00104 / LREC 2020 proceedings',
-    47: 'arxiv 2207.04672 - collective authorship, first 15 named then et al.',
+    38: 'arxiv 2609.22212 - abstract read 2026-09-22; same group, 2 Sep 2026',
+    39: 'arxiv 2604.15561 - abstract read 2026-09-21; 1 author, 16 Apr 2026',
+    40: 'arxiv 2506.22305 - abstract + HTML Table 2 read 2026-09-21',
+    41: 'acl 2022.bionlp-1.26 - page read 2026-09-21; pp. 275-284 confirmed',
+    42: 'arxiv 2512.04120 - abstract read 2026-09-21; 2 Dec 2025 NOT 2026',
+    43: 'acl 2025.woah-1.2 - PDF read 2026-09-21; pp. 17-31; gpt-4o 75.7',
+    44: 'jmlr v11 ojala10a - page read 2026-09-21; vol. 11, pp. 1833-1863',
+    45: 'jmlr v11 cawley10a - page read 2026-09-22; vol. 11, pp. 2079-2107',
+    46: 'arxiv 2604.04199 - abstract read 2026-09-22; single author, 5 Apr 2026',
+    47: 'iospress 10.3233/978-1-61499-830-3-298 - read 2026-09-22; MEDINFO 2017',
+    48: 'acl 2026.lrec-1.347 - PDF read 2026-09-22; pp. 4434-4446 confirmed',
+    49: 'publisher page - 4th edition; AC1 introduced in Gwet (2001)',
+    50: 'arxiv 2003.00104 / LREC 2020 proceedings',
+    51: 'arxiv 2207.04672 - collective authorship, first 15 named then et al.',
 }
 
-assert len(REFS) == 47, len(REFS)
-assert len(VERIFIED) == 47, len(VERIFIED)
+assert len(REFS) == 51, len(REFS)
+assert len(VERIFIED) == 51, len(VERIFIED)

@@ -56,9 +56,13 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `results/RESULTS_arabic_v2.md` | The same, annotated with what the section should and should not claim. |
 | `results/FINDING_sklearn_groupkfold.md` | The full record of the version-dependence investigation behind Section VII-F. |
 | `results/superseded/` | Earlier runs. Kept because Section VII-F compares against them; **do not quote these as results.** |
-| `paper_refs_v2.py` | The 47 references plus `VERIFIED`, recording how each was resolved. Every entry carries a DOI, an arXiv id or a stable URL. |
+| `paper_refs_v2.py` | The 51 references plus `VERIFIED`, recording how each was resolved. Every entry carries a DOI, an arXiv id or a stable URL. |
 | `fig_v2_*.png` | The three paper figures. |
 | `scripts/fig_ladder.py` | Builds Fig. 3 straight from the results file, so the figure cannot drift from the numbers. |
+| `scripts/agreement_metrics.py` | Cohen's kappa beside Gwet's AC1 and the raw agreement, after the kappa paradox was raised against us. |
+| `scripts/perm_thread.py` | The permutation null repeated at thread level, to check the message-level version was not flattered by clustering. |
+| `results/RESULTS_agreement_metrics.json` | Four agreement measures with intervals. |
+| `results/RESULTS_perm_thread.json` | Both permutation nulls. |
 | `scripts/ladder_v2.py` | The corrected leakage ladder: one control per rung, twenty seeded partitions, fold class balance held fixed. **Supersedes the ladder in `strengthen.py`.** |
 | `scripts/ladder_stratified.py` | Separates the thread-grouping cost from the class-marginal term that plain GroupKFold introduces. |
 | `results/RESULTS_ladder_v2.json` | The corrected ladder. Source of Table VII and Fig. 3. |
