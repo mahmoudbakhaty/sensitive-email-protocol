@@ -61,7 +61,10 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `scripts/fig_ladder.py` | Builds Fig. 3 straight from the results file, so the figure cannot drift from the numbers. |
 | `scripts/strengthen.py` | The leakage ladder, the permutation null, the repeated cross-validation and the agreement interval. Runs on CPU. |
 | `scripts/compare_versions.py` | Builds the scikit-learn 1.8.0 against 1.9.1 comparison from the two result files. |
-| `scripts/llm_protocol.py` | An instruction-tuned LLM under the same protocol. Written and tested; **not yet run** - see the limitation in Section IX. |
+| `scripts/llm_protocol.py` | An instruction-tuned LLM under the same protocol. Produced Table IX. |
+| `scripts/test_llm_protocol.py` | Checks the fold bookkeeping with the model stubbed out: no thread crosses a fold, no in-context example comes from a test thread. |
+| `scripts/test_judge_path.py` | Checks the model call itself on a tiny real model. The first Kaggle run died in exactly the line this covers, which the stubbed test could not reach. |
+| `results/RESULTS_LLM.json` | Qwen2.5-7B-Instruct under the protocol, four runs. Source of Table IX. |
 | `results/RESULTS_strengthen_sklearn191.json` | The strengthening run under the pinned library. The figures in Sections VII-G and VII-H come from this file. |
 | `results/RESULTS_strengthen_sklearn180.json` | The same suite under 1.8.0, with every other library held fixed. |
 | `results/RESULTS_strengthen.md` | The four measurements, written up, with what each does and does not establish. |

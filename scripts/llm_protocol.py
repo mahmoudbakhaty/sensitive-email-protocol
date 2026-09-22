@@ -35,6 +35,11 @@ import sys
 if __name__ == "__main__":
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "scikit-learn==1.9.1"], check=True)
+    # 4-bit weights: a 7B in fp16 leaves under 400 MiB free on a T4 and the
+    # first long prompt exhausts it. Quantisation keeps the model size and
+    # buys the headroom instead of trading down to a smaller model.
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q",
+                    "bitsandbytes"], check=False)
 
 import numpy as np
 import pandas as pd
@@ -58,8 +63,8 @@ DATA_DIR = "enron_with_categories"
 OUT_JSON = "RESULTS_LLM.json"
 FOLDS, SEED, VAL_FRAC = 5, 42, 0.30
 N_SHOT = 6
-MAX_CHARS = 6000      # the message being judged, head-truncated
-SHOT_CHARS = 1200     # in-context examples, kept short so the prompt stays
+MAX_CHARS = 4000      # the message being judged, head-truncated
+SHOT_CHARS = 900      # in-context examples, kept short so the prompt stays
                       # inside a T4's KV cache and the run inside its window
 N_BOOT = 2000
 
@@ -191,12 +196,38 @@ class Judge(object):
         from transformers import AutoModelForCausalLM, AutoTokenizer
         self.torch = torch
         self.tok = AutoTokenizer.from_pretrained(MODEL)
-        self.model = AutoModelForCausalLM.from_pretrained(
-            MODEL, dtype=torch.float16, device_map="auto")
+        self.model = self._load(torch, AutoModelForCausalLM)
         self.model.eval()
+        self.calls = 0
         self.yes = self._variants(["Yes", " Yes", "yes", " yes"])
         self.no = self._variants(["No", " No", "no", " no"])
         assert self.yes and self.no, "answer tokens not found in the vocabulary"
+
+    def _load(self, torch, AutoModelForCausalLM):
+        """4-bit if bitsandbytes is available, otherwise fp16 with headroom."""
+        try:
+            from transformers import BitsAndBytesConfig
+            import bitsandbytes  # noqa: F401
+            cfg = BitsAndBytesConfig(load_in_4bit=True,
+                                     bnb_4bit_quant_type="nf4",
+                                     bnb_4bit_compute_dtype=torch.float16,
+                                     bnb_4bit_use_double_quant=True)
+            m = AutoModelForCausalLM.from_pretrained(
+                MODEL, quantization_config=cfg, device_map="auto")
+            print("  loaded in 4-bit", flush=True)
+            return m
+        except Exception as exc:
+            print("  4-bit unavailable (%s); falling back to fp16 with "
+                  "reserved headroom" % type(exc).__name__, flush=True)
+            n = torch.cuda.device_count()
+            # Leave 3 GiB per device for activations and the KV cache.
+            free = int(torch.cuda.get_device_properties(0).total_memory
+                       / (1024 ** 3)) - 3
+            mm = {i: "%dGiB" % max(free, 4) for i in range(n)}
+            m = AutoModelForCausalLM.from_pretrained(
+                MODEL, dtype=torch.float16, device_map="auto", max_memory=mm)
+            print("  loaded in fp16, max_memory=%s" % mm, flush=True)
+            return m
 
     def _variants(self, words):
         ids = set()
@@ -214,16 +245,28 @@ class Judge(object):
             msgs.append({"role": "assistant",
                          "content": "Yes" if s_lab else "No"})
         msgs.append({"role": "user", "content": user_msg(subj, text)})
-        ids = self.tok.apply_chat_template(
-            msgs, add_generation_prompt=True, return_tensors="pt").to(
-                self.model.device)
+        # apply_chat_template returns a bare tensor on some transformers
+        # versions and a BatchEncoding on others. Passing the second straight
+        # into the model raises "indices must be Tensor, not BatchEncoding",
+        # so normalise to keyword arguments and let both shapes through.
+        out = self.tok.apply_chat_template(
+            msgs, add_generation_prompt=True, return_tensors="pt")
+        dev = self.model.device
+        if hasattr(out, "keys"):
+            enc = {k: v.to(dev) for k, v in out.items()}
+        else:
+            enc = {"input_ids": out.to(dev)}
         torch = self.torch
         with torch.no_grad():
-            logits = self.model(ids).logits[0, -1].float()
+            logits = self.model(**enc).logits[0, -1].float()
         lp = torch.log_softmax(logits, dim=-1)
         y = torch.logsumexp(lp[self.yes], dim=0)
         n = torch.logsumexp(lp[self.no], dim=0)
-        return float(torch.sigmoid(y - n))
+        v = float(torch.sigmoid(y - n))
+        self.calls = getattr(self, "calls", 0) + 1
+        if self.calls % 50 == 0 and torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        return v
 
 
 def pick_shots(df, idx, rng):

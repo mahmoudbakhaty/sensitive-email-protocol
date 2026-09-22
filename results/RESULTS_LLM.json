@@ -1,0 +1,163 @@
+{
+  "environment": {
+    "python": "3.12.13",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.0.2",
+    "torch": "2.10.0+cu128",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "gpu": "Tesla T4"
+  },
+  "note": "thread-disjoint folds; few-shot examples from training threads only; thresholds from validation threads only",
+  "Qwen2.5-7B_zeroshot_strict": {
+    "f1": 0.386,
+    "precision": 0.2727,
+    "recall": 0.66,
+    "mcc": 0.2105,
+    "tp": 165,
+    "fp": 440,
+    "fn": 85,
+    "tn": 692,
+    "roc_auc": 0.6966,
+    "pr_auc": 0.3183,
+    "f1_ci95": [
+      0.3431,
+      0.4266
+    ],
+    "mcc_ci95": [
+      0.1584,
+      0.2637
+    ],
+    "resamples": 2000,
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "shots": 0,
+    "thresholds": [
+      0.997,
+      0.002,
+      0.993,
+      0.997,
+      0.998
+    ],
+    "trivial_floor": 0.3064,
+    "folds_f1": [
+      0.3688,
+      0.3203,
+      0.3926,
+      0.4142,
+      0.4636
+    ]
+  },
+  "Qwen2.5-7B_fewshot_strict": {
+    "f1": 0.3707,
+    "precision": 0.3123,
+    "recall": 0.456,
+    "mcc": 0.2046,
+    "tp": 114,
+    "fp": 251,
+    "fn": 136,
+    "tn": 881,
+    "roc_auc": 0.6766,
+    "pr_auc": 0.3108,
+    "f1_ci95": [
+      0.3194,
+      0.4182
+    ],
+    "mcc_ci95": [
+      0.1444,
+      0.2659
+    ],
+    "resamples": 2000,
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "shots": 6,
+    "thresholds": [
+      0.915,
+      0.562,
+      0.622,
+      0.991,
+      0.996
+    ],
+    "trivial_floor": 0.3064,
+    "folds_f1": [
+      0.2927,
+      0.3804,
+      0.3438,
+      0.4,
+      0.4107
+    ]
+  },
+  "Qwen2.5-7B_zeroshot_broad": {
+    "f1": 0.5172,
+    "precision": 0.4329,
+    "recall": 0.6422,
+    "mcc": 0.252,
+    "tp": 271,
+    "fp": 355,
+    "fn": 151,
+    "tn": 605,
+    "roc_auc": 0.6907,
+    "pr_auc": 0.4895,
+    "f1_ci95": [
+      0.4765,
+      0.5567
+    ],
+    "mcc_ci95": [
+      0.1941,
+      0.3069
+    ],
+    "resamples": 2000,
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "shots": 0,
+    "thresholds": [
+      0.997,
+      0.004,
+      0.223,
+      0.997,
+      0.998
+    ],
+    "trivial_floor": 0.4678,
+    "folds_f1": [
+      0.5311,
+      0.4962,
+      0.484,
+      0.5771,
+      0.5081
+    ]
+  },
+  "Qwen2.5-7B_fewshot_broad": {
+    "f1": 0.5408,
+    "precision": 0.4749,
+    "recall": 0.628,
+    "mcc": 0.303,
+    "tp": 265,
+    "fp": 293,
+    "fn": 157,
+    "tn": 667,
+    "roc_auc": 0.6878,
+    "pr_auc": 0.4919,
+    "f1_ci95": [
+      0.4995,
+      0.5806
+    ],
+    "mcc_ci95": [
+      0.2446,
+      0.3595
+    ],
+    "resamples": 2000,
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "shots": 6,
+    "thresholds": [
+      0.005,
+      0.001,
+      0.006,
+      0.001,
+      0.007
+    ],
+    "trivial_floor": 0.4678,
+    "folds_f1": [
+      0.5371,
+      0.5089,
+      0.5587,
+      0.554,
+      0.5503
+    ]
+  }
+}
