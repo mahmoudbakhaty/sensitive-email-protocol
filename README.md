@@ -173,6 +173,38 @@ Stated in the paper and repeated here so nobody is surprised.
   translationese, pretraining-corpus differences and translation quality are
   confounded in the English-Arabic gap.
 
+## The pasteable notebook, and which build produced what
+
+`KAGGLE_FINAL.txt` is what the README tells a reader to paste into Kaggle, and
+it had drifted from `scripts/final_run.py`. The one difference was the whole
+difference: the Subject-header correction was applied to the script and not to
+the notebook, so anyone following the reproduction instructions rebuilt the
+**buggy** benchmark - 1069 thread keys instead of 1103 - and got numbers that
+do not match the paper. The notebook is regenerated from the script, and
+`scripts/test_notebooks.py` fails if they part again.
+
+Two files are deliberately kept as they ran, with the pre-correction regex,
+because they are the record of runs that produced released numbers:
+
+| file | what it produced | grouping |
+|---|---|---|
+| `scripts/colab_v2.py` | Section VIII and Table VI | 1069 thread keys |
+| `KAGGLE_ARABIC_V2.txt` | `results/RESULTS_arabic_v2.json` | 1069 thread keys |
+
+`colab_v2.py` was imported by three released scripts and was not in the
+repository at all, so `arabic_v2.py` could not even be imported. Both files now
+carry a header saying what they are; the test fails if the header goes.
+
+**Section VIII is not comparable with Tables III to V.** Its English and Arabic
+arms share the 1069-key grouping, which is what the comparison between them
+requires, but the main tables use 1103. The paper says so in Section VIII
+rather than leaving it here.
+
+The corrected regex is now spelled the same way everywhere, with the escape
+rather than a literal tab: a tab in source is one editor setting away from
+becoming spaces, and `[ ]*` would quietly bring back a variant of the bug.
+Rebuilding after the change still gives 1382 messages over 1103 threads.
+
 ## Do these scripts reproduce these numbers?
 
 Every CPU-only experiment script was re-run from this repository on 23

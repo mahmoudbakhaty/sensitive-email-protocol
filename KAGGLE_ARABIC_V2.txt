@@ -1,3 +1,15 @@
+# ---------------------------------------------------------------------------
+# KEPT AS IT RAN. The Subject regex below predates the correction described in
+# the README: \s* crosses the newline, so a message with an empty Subject
+# header takes the next header as its subject. Forty-three messages are
+# affected and thirty-four share one false thread key, giving 1069 thread keys
+# where the corrected builder gives 1103.
+#
+# results/RESULTS_arabic_v2.json was produced over those 1069 keys. Section
+# VIII of the paper is internally consistent because its English and Arabic
+# arms share this grouping, but its figures are NOT comparable with Tables III
+# to V. Re-running it needs a GPU.
+# ---------------------------------------------------------------------------
 # -*- coding: utf-8 -*-
 """Arabic run 2: AraBERT used the way its authors say to use it.
 

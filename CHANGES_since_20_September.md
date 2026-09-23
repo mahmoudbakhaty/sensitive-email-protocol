@@ -185,6 +185,20 @@ annotators settled 172 of 1,382 messages differently.
   cited, and was narrowed.
 - **An independent consistency checker** (Fazekas and Kovacs) passes all
   fourteen reported records.
+- **The notebook the reproduction instructions point at still had the
+  benchmark bug.** `KAGGLE_FINAL.txt` is what a reader pastes into Kaggle, and
+  the Subject-header correction had been applied to the script it is copied
+  from but not to the notebook. Anyone following the instructions rebuilt the
+  buggy benchmark - 1069 thread keys instead of 1103 - and got numbers that do
+  not match the paper. Regenerated, with a test that fails if they part again.
+  A module three released scripts import, `colab_v2.py`, was also missing from
+  the release entirely.
+- **Section VIII rests on the pre-correction grouping, and now says so.** The
+  cross-lingual run predates the Subject-header fix and groups the same 1382
+  messages into 1069 thread keys. Its English and Arabic arms share that
+  grouping, so the comparison it makes is sound; its figures are not comparable
+  with Tables III to V, and the section states that rather than leaving a
+  reader to discover it.
 - **The abstract claimed less scope than it needed.** It said nothing we
   tried on the strict labels exceeds F1 = 0.410; the conclusion says the same
   thing but adds "under validation-only threshold selection", and that clause

@@ -136,7 +136,7 @@ def build():
         # whose Subject header is empty it captures the next header
         # instead. 43 messages here, 34 of which then shared one false
         # thread key.
-        m = re.search(r"^Subject:[ 	]*(.*)$", raw, re.M | re.I)
+        m = re.search(r"^Subject:[ \t]*(.*)$", raw, re.M | re.I)
         subj = m.group(1).strip() if m else ""
         rows.append({"label": int(agreed), "label_either": int(either),
                      "thread_key": WS.sub(" ", SUBJ.sub("", subj).strip().lower())
