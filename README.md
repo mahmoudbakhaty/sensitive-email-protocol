@@ -173,6 +173,32 @@ Stated in the paper and repeated here so nobody is surprised.
   translationese, pretraining-corpus differences and translation quality are
   confounded in the English-Arabic gap.
 
+## The two control files, and why their numbers are higher
+
+`results/RESULTS_HYBRID_CONTROL.json` and `results/RESULTS_HYBRID_CPU.json`
+record a strict F1 of 0.4324 for an encoder-plus-character-n-gram fusion. The
+paper says nothing we tried on the strict labels exceeds 0.410. Both are
+correct, and the difference is the point of the experiments:
+
+* The paper's figures select the decision threshold **only on held-out
+  validation threads**. These two select it on the training fold, which is not
+  leakage into test but is a different, easier procedure - the same treatment
+  asymmetry that Section VII-D of the paper measures at up to 0.158 F1.
+* They stack **pooled out-of-fold scores**, which carries a known optimism.
+  `hybrid_control.py` exists to measure that optimism rather than assume it
+  away: fusing two deliberately redundant components - logistic regression and
+  a linear SVM over the same features - gains +0.0049 from the procedure alone.
+
+So these are controls on the fusion machinery, not results under the protocol,
+and they are not comparable with Tables III and IV. The fusion and pipeline
+claims were cut from the paper on the supervisor's review; these files are
+released because the measurements behind that decision should be inspectable.
+
+The framework the thesis title promises, `scripts/hybrid_framework.py`, does
+select every threshold on validation threads. It is written and tested but
+**has not been run**: it needs a GPU and the weekly quota is exhausted. No
+number from it appears anywhere.
+
 ## Reference verification
 
 Auditing our own reference list found one work attributed to the wrong

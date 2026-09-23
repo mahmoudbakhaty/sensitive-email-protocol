@@ -185,6 +185,16 @@ annotators settled 172 of 1,382 messages differently.
   cited, and was narrowed.
 - **An independent consistency checker** (Fazekas and Kovacs) passes all
   fourteen reported records.
+- **The abstract claimed less scope than it needed.** It said nothing we
+  tried on the strict labels exceeds F1 = 0.410; the conclusion says the same
+  thing but adds "under validation-only threshold selection", and that clause
+  is the one that matters. The released control experiments reach 0.4324,
+  with the threshold picked on the training fold rather than on held-out
+  validation threads and stacked on pooled out-of-fold scores whose optimism
+  the same experiment measures at +0.0049. Nothing is wrong with either
+  number, but a reader who opened the artifact would have found the higher one
+  with no explanation. The abstract now carries the conclusion's scope, and
+  the README names the two files, their figure and why it is not comparable.
 - **An F1 of 1.000 was attributed to published work that does not report
   one.** Four sentences read as though the literature reports a perfect score
   on this task. It does not, so far as we can establish: the figures this

@@ -61,7 +61,7 @@ def llm(labels, shots, field="f1"):
 
 DOC = """# What changed since the version sent on 20 September
 
-Eleven items. Nothing in the earlier version was withdrawn. Four claims that
+%(n_items)s items. Nothing in the earlier version was withdrawn. Four claims that
 rested on assertion now rest on measurement; a defect in the benchmark was
 found and repaired; the main tables turned out not to be comparing like with
 like and were rebuilt; the framework the registered thesis title promises was
@@ -246,6 +246,16 @@ annotators settled 172 of 1,382 messages differently.
   cited, and was narrowed.
 - **An independent consistency checker** (Fazekas and Kovacs) passes all
   fourteen reported records.
+- **The abstract claimed less scope than it needed.** It said nothing we
+  tried on the strict labels exceeds F1 = 0.410; the conclusion says the same
+  thing but adds "under validation-only threshold selection", and that clause
+  is the one that matters. The released control experiments reach 0.4324,
+  with the threshold picked on the training fold rather than on held-out
+  validation threads and stacked on pooled out-of-fold scores whose optimism
+  the same experiment measures at +0.0049. Nothing is wrong with either
+  number, but a reader who opened the artifact would have found the higher one
+  with no explanation. The abstract now carries the conclusion's scope, and
+  the README names the two files, their figure and why it is not comparable.
 - **An F1 of 1.000 was attributed to published work that does not report
   one.** Four sentences read as though the literature reports a perfect score
   on this task. It does not, so far as we can establish: the figures this
@@ -389,6 +399,11 @@ vals = {
 }
 
 vals.update(REF_COUNTS)
+_words = {9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve",
+          13: "Thirteen", 14: "Fourteen", 15: "Fifteen"}
+_heads = [l for l in DOC.splitlines()
+          if l.startswith("## ") and not l.startswith("## Summary")]
+vals["n_items"] = _words.get(len(_heads), str(len(_heads)))
 io.open(OUT, "w", encoding="utf-8").write(DOC % vals)
 print("written %s" % OUT)
 print("threads %d | fingerprint %s" % (vals["threads"], vals["fp"]))
