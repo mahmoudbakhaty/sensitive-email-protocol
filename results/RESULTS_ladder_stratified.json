@@ -9,15 +9,15 @@
   "strict": {
     "r2_stratified_mean": 0.3541,
     "r2_stratified_sd": 0.0166,
-    "r3_grouped_plain": 0.3264,
-    "r3_grouped_stratified_mean": 0.3375,
-    "r3_grouped_stratified_sd": 0.013,
-    "drop_as_published": -0.0277,
-    "drop_balance_held": -0.0166,
-    "class_marginal_share": -0.0111,
+    "r3_grouped_plain": 0.3368,
+    "r3_grouped_stratified_mean": 0.3334,
+    "r3_grouped_stratified_sd": 0.019,
+    "drop_as_published": -0.0173,
+    "drop_balance_held": -0.0207,
+    "class_marginal_share": 0.0034,
     "fold_balance_spread": {
       "r2_stratified": 0.0033,
-      "r3_grouped_plain": 0.0479,
+      "r3_grouped_plain": 0.1053,
       "r3_grouped_stratified": 0.0033
     },
     "seeds": 20
@@ -25,15 +25,15 @@
   "broad": {
     "r2_stratified_mean": 0.5308,
     "r2_stratified_sd": 0.0097,
-    "r3_grouped_plain": 0.5117,
-    "r3_grouped_stratified_mean": 0.5144,
-    "r3_grouped_stratified_sd": 0.011,
-    "drop_as_published": -0.0191,
-    "drop_balance_held": -0.0165,
-    "class_marginal_share": -0.0027,
+    "r3_grouped_plain": 0.5087,
+    "r3_grouped_stratified_mean": 0.5161,
+    "r3_grouped_stratified_sd": 0.0133,
+    "drop_as_published": -0.0221,
+    "drop_balance_held": -0.0147,
+    "class_marginal_share": -0.0074,
     "fold_balance_spread": {
       "r2_stratified": 0.004,
-      "r3_grouped_plain": 0.0405,
+      "r3_grouped_plain": 0.0931,
       "r3_grouped_stratified": 0.004
     },
     "seeds": 20

@@ -246,6 +246,19 @@ annotators settled 172 of 1,382 messages differently.
   cited, and was narrowed.
 - **An independent consistency checker** (Fazekas and Kovacs) passes all
   fourteen reported records.
+- **One result file was left behind by the benchmark fix, and the paper
+  quoted it.** `RESULTS_ladder_stratified.json` was last written on 22
+  September, over the old 1069-thread grouping; every other result file was
+  regenerated when the Subject-header bug was fixed the next day. It carried
+  its own environment block claiming the pinned library, so nothing looked
+  wrong. The paper took one number from it as a literal - that GroupKFold
+  "lets the test positive rate range over 0.048" - and on the corrected
+  benchmark that spread is 0.105, more than double. The claim's direction is
+  unchanged and in fact strengthened; the number was wrong. Regenerated, and
+  the paper now reads it, with a build-time assertion that the file's recorded
+  library matches the definitive run's. Two further constants taken from the
+  same file were referenced nowhere and are deleted rather than updated: a
+  constant nothing reads is a stale number waiting to be quoted.
 - **Table II's thread counts were two runs out of date.** It printed 173
   multi-message threads and 55 with mixed labels. The Subject-header
   correction moved those to 171 and 54; the result record updated and the two

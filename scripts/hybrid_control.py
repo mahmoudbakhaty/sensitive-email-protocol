@@ -36,13 +36,16 @@ from sklearn.model_selection import GroupKFold
 
 import strengthen as S
 
-D = os.path.dirname(io_paths.result_out(".keep"))
-OUT = os.path.join(D, "RESULTS_HYBRID_CONTROL.json")
+
+OUT = io_paths.result_out("RESULTS_HYBRID_CONTROL.json")
 FOLDS, SEED = 5, 42
 
 
 def load(name):
-    return json.load(io.open(os.path.join(D, name), encoding="utf-8"))
+    """Read through io_paths: the repository's results/ counts as
+    a source, which RESULTS_DIR alone does not."""
+    return json.load(io.open(io_paths.result_in(name, required=True),
+                             encoding="utf-8"))
 
 
 def pick_threshold(y, s):
