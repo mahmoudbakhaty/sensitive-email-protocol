@@ -17,6 +17,12 @@ StratifiedGroupKFold so that the class balance matches the ungrouped rungs.
 Whatever this returns replaces the published ladder. It is run under the same
 pinned environment as the rest.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 
@@ -24,7 +30,7 @@ import numpy as np
 
 import strengthen as S
 
-OUT = r"C:\Users\lenovo\Downloads\RESULTS_ladder_v2.json"
+OUT = io_paths.result_out("RESULTS_ladder_v2.json")
 SEEDS = list(range(42, 62))
 
 

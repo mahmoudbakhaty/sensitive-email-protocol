@@ -17,6 +17,12 @@ relabelling of the same corpus.
 If both nulls give the same answer the original p-value stands. If the
 thread-level null is much higher, the paper should report that one.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 from collections import defaultdict
@@ -25,7 +31,7 @@ import numpy as np
 
 import strengthen as S
 
-OUT = r"C:\Users\lenovo\Downloads\RESULTS_perm_thread.json"
+OUT = io_paths.result_out("RESULTS_perm_thread.json")
 N_PERM = 500
 SEED = 42
 

@@ -12,15 +12,19 @@ same seed, one thing different. Rungs R0 to R2 use a random split and should
 barely move; R3 is the grouped one and is where the change has to show. A rung
 that moves when it has no business moving is itself worth knowing about.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 import sys
 
-L = r"C:\Users\lenovo\Downloads\RESULTS_strengthen_sklearn180.json"
-R = r"C:\Users\lenovo\Downloads\RESULTS_strengthen_sklearn191.json"
-OUT = r"C:\Users\lenovo\Downloads\RESULTS_version_effect.md"
-
-
+L = io_paths.result_in("RESULTS_strengthen_sklearn180.json", required=True)
+R = io_paths.result_in("RESULTS_strengthen_sklearn191.json", required=True)
+OUT = io_paths.result_out("RESULTS_version_effect.md")
 def load(p):
     try:
         return json.load(io.open(p, encoding="utf-8"))

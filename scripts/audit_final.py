@@ -11,9 +11,9 @@ import re
 
 from pypdf import PdfReader
 
-PAPER = r"C:\Users\lenovo\Downloads\Research_Paper_v2_REVIEW_Bakhaty.pdf"
-REPO = r"C:\Users\lenovo\Downloads\artifact"
-
+PAPER = os.environ.get("PAPER_PDF") or os.path.join(
+    os.path.expanduser("~"), "Downloads", "Research_Paper_v2_REVIEW_Bakhaty.pdf")
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 text = "".join(p.extract_text() for p in PdfReader(PAPER).pages)
 body = text.split("REFERENCES")[0]
 

@@ -14,6 +14,12 @@ Comparing R2 against a stratified-grouped R3 isolates the leakage.
 
 Run under the same pinned environment as everything else.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 
@@ -23,7 +29,7 @@ from sklearn.model_selection import (GroupKFold, StratifiedGroupKFold,
 
 import strengthen as S
 
-OUT = r"C:\Users\lenovo\Downloads\RESULTS_ladder_stratified.json"
+OUT = io_paths.result_out("RESULTS_ladder_stratified.json")
 SEEDS = list(range(42, 62))          # 20 partitions, as in the repeated run
 
 

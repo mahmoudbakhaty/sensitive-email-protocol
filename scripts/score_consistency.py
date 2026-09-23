@@ -14,15 +14,19 @@ decisive, and it costs nothing to look.
 
 Figures are read from the released result files rather than retyped.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 
 from mlscorecheck.check.binary import check_1_testset_no_kfold
 
-RESULTS = r"C:\Users\lenovo\Downloads\RESULTS_FINAL.json"
-LLM = r"C:\Users\lenovo\Downloads\RESULTS_LLM.json"
-
-
+RESULTS = io_paths.result_in("RESULTS_FINAL.json", required=True)
+LLM = io_paths.result_in("RESULTS_LLM.json", required=True)
 def check(name, rec, n_pos, n_neg):
     """Feed the reported scores back as if we were an outside reader."""
     scores = {k: rec[k] for k in ("acc", "sens", "spec", "f1")

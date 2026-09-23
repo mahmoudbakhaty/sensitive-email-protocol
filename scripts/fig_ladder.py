@@ -10,6 +10,12 @@ nobody can read the drop as a fall from a good score.
 Built to the same rules as the other two figures: 8 cm wide, serif type, no
 colour carrying meaning on its own.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import json
 import io
 import os
@@ -19,7 +25,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-RESULTS = r"C:\Users\lenovo\Downloads\RESULTS_ladder_v2.json"
+RESULTS = io_paths.result_in("RESULTS_ladder_v2.json", required=True)
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                    "fig_v2_ladder.png")
 

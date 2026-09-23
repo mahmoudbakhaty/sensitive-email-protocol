@@ -15,6 +15,12 @@ move.
 
 Intervals are thread-level bootstraps, as everywhere else.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 
@@ -23,7 +29,7 @@ import pandas as pd
 
 import strengthen as S
 
-OUT = r"C:\Users\lenovo\Downloads\RESULTS_agreement_metrics.json"
+OUT = io_paths.result_out("RESULTS_agreement_metrics.json")
 N_BOOT = 2000
 SEED = 42
 

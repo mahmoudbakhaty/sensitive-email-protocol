@@ -173,6 +173,30 @@ Stated in the paper and repeated here so nobody is surprised.
   translationese, pretraining-corpus differences and translation quality are
   confounded in the English-Arabic gap.
 
+## Can you actually run this?
+
+Twenty absolute paths into the author's home directory were spread across
+seventeen scripts: six pointing at the corpus, fourteen at result files. The
+write-only ones failed elsewhere with a missing-directory error. The reading
+ones were worse - `score_consistency.py` and `fig_ladder.py` are named above as
+checks a reader can run, and they read files by a path no reader has, while a
+copy of each sits in `results/`.
+
+Every script now resolves through two small modules:
+
+| | order |
+|---|---|
+| `scripts/corpus_path.py` | `$ENRON_DIR`, the usual locations, the author's original path last |
+| `scripts/io_paths.py` | reads: `$RESULTS_DIR`, `<repo>/results`, `~/Downloads` - writes: `$RESULTS_DIR` else `~/Downloads` |
+
+```
+python scripts/test_paths.py    # fails if any script names one machine again
+```
+
+Checked by cloning this repository to an empty directory with an empty home:
+`score_consistency.py` and `fig_ladder.py` both run, both read the clone's own
+`results/`, and `fig_ladder.py` regenerates Fig. 3 with the published numbers.
+
 ## Did you get the same corpus we did?
 
 The benchmark is not redistributed; it is rebuilt from a public archive. Until

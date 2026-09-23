@@ -19,6 +19,12 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import corpus_path                                       # noqa: E402
 
 import glob
@@ -42,8 +48,7 @@ from sklearn.preprocessing import normalize
 # author's original path. scripts/verify_corpus.py puts it where this
 # finds it. See corpus_path.py.
 BASE = corpus_path.resolve()
-OUT_JSON = r"C:\Users\lenovo\Downloads\RESULTS_strengthen.json"
-
+OUT_JSON = io_paths.result_out("RESULTS_strengthen.json")
 SENS = {(4, 10), (3, 10), (2, 8), (3, 5), (3, 4), (1, 5), (1, 2)}
 EMPTY = {(1, 7), (1, 8)}
 WS = re.compile(r"\s+")
