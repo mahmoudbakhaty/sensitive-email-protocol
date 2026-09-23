@@ -1,0 +1,96 @@
+{
+  "note": "controls for the two-component hybrid",
+  "environment": {
+    "python": "3.14.0",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.4.2"
+  },
+  "strict": {
+    "singles": {
+      "encoder": {
+        "f1": 0.3971,
+        "roc_auc": 0.7104
+      },
+      "word tf-idf": {
+        "f1": 0.3879,
+        "roc_auc": 0.7109
+      },
+      "linear SVM": {
+        "f1": 0.2096,
+        "roc_auc": 0.7143
+      },
+      "char n-grams": {
+        "f1": 0.4073,
+        "roc_auc": 0.7095
+      }
+    },
+    "fusions": {
+      "encoder + word tf-idf": {
+        "f1": 0.4062,
+        "mcc": 0.2433,
+        "roc_auc": 0.7249
+      },
+      "CONTROL: word tf-idf + linear SVM": {
+        "f1": 0.3908,
+        "mcc": 0.2261,
+        "roc_auc": 0.7064
+      },
+      "encoder + char n-grams": {
+        "f1": 0.4324,
+        "mcc": 0.2817,
+        "roc_auc": 0.7252
+      },
+      "encoder + word + char": {
+        "f1": 0.4282,
+        "mcc": 0.2744,
+        "roc_auc": 0.7279
+      }
+    },
+    "control_gain": 0.0029,
+    "hybrid_gain": 0.0091
+  },
+  "broad": {
+    "singles": {
+      "encoder": {
+        "f1": 0.515,
+        "roc_auc": 0.7121
+      },
+      "word tf-idf": {
+        "f1": 0.545,
+        "roc_auc": 0.7232
+      },
+      "linear SVM": {
+        "f1": 0.4586,
+        "roc_auc": 0.7234
+      },
+      "char n-grams": {
+        "f1": 0.557,
+        "roc_auc": 0.7224
+      }
+    },
+    "fusions": {
+      "encoder + word tf-idf": {
+        "f1": 0.5539,
+        "mcc": 0.3155,
+        "roc_auc": 0.7416
+      },
+      "CONTROL: word tf-idf + linear SVM": {
+        "f1": 0.5499,
+        "mcc": 0.2985,
+        "roc_auc": 0.7192
+      },
+      "encoder + char n-grams": {
+        "f1": 0.5717,
+        "mcc": 0.3468,
+        "roc_auc": 0.7402
+      },
+      "encoder + word + char": {
+        "f1": 0.5664,
+        "mcc": 0.3356,
+        "roc_auc": 0.7439
+      }
+    },
+    "control_gain": 0.0049,
+    "hybrid_gain": 0.0089
+  }
+}

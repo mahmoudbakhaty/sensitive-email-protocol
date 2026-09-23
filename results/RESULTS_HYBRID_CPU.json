@@ -1,0 +1,128 @@
+{
+  "note": "cross-fitted fusion of the encoder and the classical model, from released out-of-fold scores; preliminary, see the caveat in the script",
+  "components": [
+    "encoder",
+    "classical"
+  ],
+  "environment": {
+    "python": "3.14.0",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.4.2"
+  },
+  "strict": {
+    "encoder": {
+      "f1": 0.4099,
+      "mcc": 0.2529,
+      "roc_auc": 0.7104,
+      "pr_auc": 0.3642,
+      "f1_ci95": [
+        0.3633,
+        0.4592
+      ],
+      "trivial_floor": 0.3064
+    },
+    "classical": {
+      "f1": 0.3505,
+      "mcc": 0.2402,
+      "roc_auc": 0.7109,
+      "pr_auc": 0.3219,
+      "f1_ci95": [
+        0.292,
+        0.4084
+      ],
+      "trivial_floor": 0.3064
+    },
+    "hybrid": {
+      "f1": 0.4062,
+      "mcc": 0.2433,
+      "roc_auc": 0.7249,
+      "pr_auc": 0.3729,
+      "f1_ci95": [
+        0.3599,
+        0.4549
+      ],
+      "trivial_floor": 0.3064
+    },
+    "weights": [
+      {
+        "encoder": 3.7556,
+        "classical": 3.5771
+      },
+      {
+        "encoder": 3.6314,
+        "classical": 3.5457
+      },
+      {
+        "encoder": 3.6772,
+        "classical": 3.7555
+      },
+      {
+        "encoder": 3.1327,
+        "classical": 3.9201
+      },
+      {
+        "encoder": 3.3889,
+        "classical": 4.03
+      }
+    ],
+    "gain_over_best_component": -0.0037
+  },
+  "broad": {
+    "encoder": {
+      "f1": 0.5303,
+      "mcc": 0.2654,
+      "roc_auc": 0.7121,
+      "pr_auc": 0.5352,
+      "f1_ci95": [
+        0.4918,
+        0.569
+      ],
+      "trivial_floor": 0.4678
+    },
+    "classical": {
+      "f1": 0.5095,
+      "mcc": 0.2954,
+      "roc_auc": 0.7232,
+      "pr_auc": 0.5012,
+      "f1_ci95": [
+        0.4632,
+        0.5532
+      ],
+      "trivial_floor": 0.4678
+    },
+    "hybrid": {
+      "f1": 0.5539,
+      "mcc": 0.3155,
+      "roc_auc": 0.7416,
+      "pr_auc": 0.5515,
+      "f1_ci95": [
+        0.5152,
+        0.5948
+      ],
+      "trivial_floor": 0.4678
+    },
+    "weights": [
+      {
+        "encoder": 2.8439,
+        "classical": 3.4724
+      },
+      {
+        "encoder": 2.9818,
+        "classical": 3.1306
+      },
+      {
+        "encoder": 2.9241,
+        "classical": 3.6116
+      },
+      {
+        "encoder": 2.7417,
+        "classical": 3.3331
+      },
+      {
+        "encoder": 3.1506,
+        "classical": 3.0595
+      }
+    ],
+    "gain_over_best_component": 0.0236
+  }
+}
