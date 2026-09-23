@@ -72,6 +72,9 @@ REFS = [
     'M. Boguslav and K. B. Cohen, “Inter-annotator agreement and the upper limit on machine performance: Evidence from biomedical natural language processing,” Stud. Health Technol. Inform., vol. 245, pp. 298–302, 2017, doi:10.3233/978-1-61499-830-3-298.',
     'J. H. F. James, “Counting on consensus: Selecting the right inter-annotator agreement metric for NLP annotation and evaluation,” in Proc. 15th Lang. Resources and Evaluation Conf. (LREC), 2026, pp. 4434–4446. [Online]. Available: https://aclanthology.org/2026.lrec-1.347/',
     'K. L. Gwet, “Handbook of Inter-Rater Reliability,” 4th ed. Gaithersburg, MD, USA: Advanced Analytics, 2014. [Online]. Available: https://agreestat.com/book4/',
+    'M. Ferrari Dacrema, P. Cremonesi and D. Jannach, “Are we really making much progress? A worrying analysis of recent neural recommendation approaches,” in Proc. 13th ACM Conf. Recommender Systems (RecSys), 2019, pp. 101–109, doi:10.1145/3298689.3347058.',
+    'K. Musgrave, S. Belongie and S.-N. Lim, “A metric learning reality check,” in Proc. European Conf. Computer Vision (ECCV), 2020, arXiv:2003.08505. [Online]. Available: https://arxiv.org/abs/2003.08505',
+    'G. Loiseau, D. Sileo, D. Riquet, M. Meyer and M. Tommasi, “Distilling human-aligned privacy sensitivity assessment from large language models,” arXiv:2603.29497, Mar. 2026. [Online]. Available: https://arxiv.org/abs/2603.29497',
     'W. Antoun, F. Baly and H. Hajj, “AraBERT: Transformer-based model for Arabic language understanding,” in Proc. 12th Int. Conf. Language Resources and Evaluation (LREC), Marseille, France, 2020. [Online]. Available: https://aclanthology.org/2020.osact-1.2/',
     'NLLB Team, M. R. Costa-jussà, J. Cross, O. Çelebi, M. Elbayad, K. Heafield, K. Heffernan, E. Kalbassi, J. Lam, D. Licht, J. Maillard, A. Sun, S. Wang, G. Wenzek, A. Youngblood et al., “No language left behind: Scaling human-centered machine translation,” arXiv:2207.04672, 2022.',
 ]
@@ -129,9 +132,12 @@ VERIFIED = {
     47: 'iospress 10.3233/978-1-61499-830-3-298 - read 2026-09-22; MEDINFO 2017',
     48: 'acl 2026.lrec-1.347 - PDF read 2026-09-22; pp. 4434-4446 confirmed',
     49: 'publisher page - 4th edition; AC1 introduced in Gwet (2001)',
-    50: 'arxiv 2003.00104 / LREC 2020 proceedings',
-    51: 'arxiv 2207.04672 - collective authorship, first 15 named then et al.',
+    50: 'acm 10.1145/3298689.3347058 - read 2026-09-23; RecSys 2019',
+    51: 'arxiv 2003.08505 / ECCV 2020 - read 2026-09-23',
+    52: 'arxiv 2603.29497 - abstract read 2026-09-23; 5 authors, 31 Mar 2026',
+    53: 'arxiv 2003.00104 / LREC 2020 proceedings',
+    54: 'arxiv 2207.04672 - collective authorship, first 15 named then et al.',
 }
 
-assert len(REFS) == 51, len(REFS)
-assert len(VERIFIED) == 51, len(VERIFIED)
+assert len(REFS) == 54, len(REFS)
+assert len(VERIFIED) == 54, len(VERIFIED)

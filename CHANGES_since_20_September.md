@@ -58,10 +58,18 @@ The support vector machine was recalling 0.160 of the positive class at
 its default operating point and 0.640 at a selected one. It was not a
 weak model; it was a model at the wrong operating point.
 
-**0.158 is larger than any difference between two models anywhere in the
-paper.** The choice of operating-point procedure matters more here than the
-choice of model - which is the paper's own thesis, arriving from inside its own
-tables. New Table VI-A.
+We claim nothing new in the principle. That a threshold choice can confound a
+comparison of F1 scores is textbook - which is why ROC-AUC is recommended for
+comparing classifiers, and the paper already reports it. That an experimental
+choice can reorder a published ranking is the finding of a line running from
+Ferrari Dacrema et al. (RecSys 2019) to Musgrave et al. (ECCV 2020), both now
+cited.
+
+What is ours is narrower and less flattering: Section IV-D states that the
+threshold must be chosen on data the reported score does not come from, and we
+did not apply that rule to every row of our own tables. **0.158 F1 is
+what that cost on one model - larger than any difference between two models
+anywhere in the paper.** New Table VI-A.
 
 The reordering is not cosmetic. Under the old arrangement the encoder led on
 both label sets. Under one treatment it leads on the strict labels, 0.410
@@ -221,7 +229,7 @@ judgement two trained people applied differently to 172 messages.
 |---|---|---|
 | Length, IEEE | 10 pp | 15 pp |
 | Contributions | 6 | 9 |
-| References | 38 | 51 |
+| References | 38 | 54 |
 | Tables | 6 | 12 |
 | Figures | 2 | 3 |
 
