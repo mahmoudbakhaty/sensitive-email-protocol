@@ -246,6 +246,12 @@ annotators settled 172 of 1,382 messages differently.
   cited, and was narrowed.
 - **An independent consistency checker** (Fazekas and Kovacs) passes all
   fourteen reported records.
+- **Table II's thread counts were two runs out of date.** It printed 173
+  multi-message threads and 55 with mixed labels. The Subject-header
+  correction moved those to 171 and 54; the result record updated and the two
+  hand-typed literals in the paper did not. Recomputed from the corrected
+  corpus to confirm - 171 and 54 - and the table now reads them from the
+  record, like every other figure in it.
 - **A table caption named a source its numbers do not come from.** Table X's
   caption said its English figures were from the run of Table III. They were
   not, and had not been since Tables III and IV were rebuilt under one
