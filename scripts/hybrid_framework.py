@@ -386,6 +386,33 @@ def run(df, lab, llm_all, OUT, SCORES):
         print("  (no provenance block: not written - stub run)", flush=True)
 
 
+def corpus_fingerprint(df):
+    """Identifies the corpus these scores belong to.
+
+    Over the message texts, not their count: a corpus that changed while
+    keeping its size must not silently reuse the old scores."""
+    h = hashlib.sha256()
+    for t in df.text.tolist():
+        h.update(t.encode("utf-8", "replace"))
+        h.update(str(len(t)).encode())   # length-prefixed, so a separator
+                                         # byte cannot be forged
+    return h.hexdigest()[:16]
+
+
+def load_llm_cache(fp, n):
+    """The LLM pass from an earlier attempt, if it is for this corpus."""
+    if not os.path.exists(SCORES_JSON):
+        return None
+    try:
+        j = json.load(io.open(SCORES_JSON, encoding="utf-8"))
+    except Exception:                                         # noqa: BLE001
+        return None
+    raw = j.get("llm_raw")
+    if j.get("corpus_fingerprint") != fp or not raw or len(raw) != n:
+        return None
+    return np.array(raw, dtype=float)
+
+
 def main():
     check_environment()
     print("=== hybrid LLM-based framework ===")
@@ -399,9 +426,16 @@ def main():
              df.label_either.sum()), flush=True)
 
     print()
-    print("scoring every message with the LLM once (zero-shot, fold- and "
-          "label-independent)", flush=True)
-    llm_all = llm_scores(df.text.tolist(), df.subject.tolist())
+    fp = corpus_fingerprint(df)
+    cached = load_llm_cache(fp, len(df))
+    if cached is not None:
+        llm_all = cached
+        print("LLM scores reused from %s (fingerprint %s)"
+              % (SCORES_JSON, fp), flush=True)
+    else:
+        print("scoring every message with the LLM once (zero-shot, fold- and "
+              "label-independent)", flush=True)
+        llm_all = llm_scores(df.text.tolist(), df.subject.tolist())
     print("  LLM scores: mean %.4f, at the extremes %.1f%%"
           % (llm_all.mean(),
              100.0 * np.mean((llm_all < 0.01) | (llm_all > 0.99))), flush=True)
@@ -416,7 +450,14 @@ def main():
            "note": "components calibrated on validation threads; fusion "
                    "weights and thresholds fitted there too; test folds "
                    "untouched"}
-    SCORES = {"llm_raw": [round(float(v), 6) for v in llm_all]}
+    OUT["corpus_fingerprint"] = fp
+    SCORES = {"llm_raw": [round(float(v), 6) for v in llm_all],
+              "corpus_fingerprint": fp}
+    # Written before the encoder work starts. That work takes about an hour
+    # and can die; the LLM pass is what costs quota and must survive it.
+    json.dump(OUT, io.open(OUT_JSON, "w", encoding="utf-8"), indent=2)
+    json.dump(SCORES, io.open(SCORES_JSON, "w", encoding="utf-8"), indent=2)
+    print("  LLM pass checkpointed to %s" % SCORES_JSON, flush=True)
 
     for lab in ("strict", "broad"):
         print()
