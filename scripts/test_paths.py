@@ -84,8 +84,26 @@ def check_corpus_resolution_order():
             os.environ["ENRON_DIR"] = old
 
 
+def check_no_duplicate_files():
+    """The same file in two places drifts. Twice today it already had.
+
+    KAGGLE_FINAL.txt was a stale copy of final_run.py and still carried the
+    benchmark bug; changes_gen.py existed at the root and under scripts/, and
+    the second copy could not even import because paper_refs_v2.py sits beside
+    the first."""
+    root = {f for f in os.listdir(REPO) if f.endswith(".py")}
+    here = {f for f in os.listdir(HERE) if f.endswith(".py")}
+    dup = sorted(root & here)
+    print("  python files in both the root and scripts/ : %s"
+          % (", ".join(dup) if dup else "none"))
+    return not dup
+
+
 def main():
     ok = True
+    print("=== one copy of each file ===")
+    ok &= check_no_duplicate_files()
+    print()
     print("=== absolute paths ===")
     ok &= check_no_machine_paths()
     print()
