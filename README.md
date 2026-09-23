@@ -173,6 +173,42 @@ Stated in the paper and repeated here so nobody is surprised.
   translationese, pretraining-corpus differences and translation quality are
   confounded in the English-Arabic gap.
 
+## Did you get the same corpus we did?
+
+The benchmark is not redistributed; it is rebuilt from a public archive. Until
+now nothing let a reader check that their archive was ours - no checksum, and
+no corpus-level digest - and six scripts, `strengthen.py` among them, carried
+an absolute path into a temp directory on the author's machine, so they ran
+there and nowhere else. Both are fixed.
+
+```
+python scripts/verify_corpus.py        # downloads, checks, extracts, rebuilds
+```
+
+It reports three things and they are not interchangeable:
+
+| | what it is | expected |
+|---|---|---|
+| **ARCHIVE** | sha256 of the tarball as served | `08625500ab4c032f...` , 4,523,350 bytes |
+| **CORPUS** | digest of the rebuilt messages and labels | `493f90a5df5b8f40` , 1382 messages / 1103 threads / 250 strict / 422 broad |
+| **FOLDS** | the published `fold_fingerprint` | `63e3aea5c3d37629` **under scikit-learn 1.9.1 only** |
+
+The corpus digest is the one that answers "same data?". It is taken over the
+messages themselves, order-independently, so it does not move with the library
+version or the operating system - `sorted(glob(...))` orders Windows and POSIX
+paths differently, which would otherwise change it for no reason.
+
+**A different fold fingerprint is not a reproduction failure.** `GroupKFold`'s
+assignment changed between scikit-learn versions, which is precisely what
+Section VII-F of the paper measures; on 1.8.0 the same corpus gives
+`a456e576074f733a`. Only the corpus block makes the script exit non-zero. It
+was tested by tampering with one message: the digest moves and the check
+fails.
+
+Every script finds the corpus through `scripts/corpus_path.py`: `$ENRON_DIR`
+first, then the usual locations, then the author's original path last so the
+published runs still reproduce where they were produced.
+
 ## The two control files, and why their numbers are higher
 
 `results/RESULTS_HYBRID_CONTROL.json` and `results/RESULTS_HYBRID_CPU.json`

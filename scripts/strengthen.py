@@ -15,6 +15,12 @@ Everything here runs on CPU from the corpus already on disk. The classical
 pipeline is copied from final_run.py unchanged so the numbers stay comparable
 to the ones already published.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import corpus_path                                       # noqa: E402
+
 import glob
 import hashlib
 import json
@@ -32,9 +38,10 @@ from sklearn.model_selection import (GroupKFold, StratifiedGroupKFold,
                                      StratifiedKFold)
 from sklearn.preprocessing import normalize
 
-BASE = (r"C:\Users\lenovo\AppData\Local\Temp\claude\C--Users-lenovo"
-        r"\fccd8d1f-1d07-4097-95b6-2b0cf5cf3dd3\scratchpad"
-        r"\enroncat\enron_with_categories")
+# Resolved, not hardcoded: $ENRON_DIR, then the usual places, then the
+# author's original path. scripts/verify_corpus.py puts it where this
+# finds it. See corpus_path.py.
+BASE = corpus_path.resolve()
 OUT_JSON = r"C:\Users\lenovo\Downloads\RESULTS_strengthen.json"
 
 SENS = {(4, 10), (3, 10), (2, 8), (3, 5), (3, 4), (1, 5), (1, 2)}

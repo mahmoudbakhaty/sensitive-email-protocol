@@ -3,3 +3,6 @@ enron_with_categories.tar.gz
 __pycache__/
 *.pyc
 word_f1_cache.json
+
+# scripts/verify_corpus.py extracts the archive here; it is not redistributed
+scripts/_corpus_check/

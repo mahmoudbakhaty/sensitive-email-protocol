@@ -12,16 +12,22 @@ limitation stands as stated and we can say how few. If enough messages carry
 the header, the agreement between the two methods is measurable and the paper
 should report a number instead of a caveat.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import corpus_path                                       # noqa: E402
+
 import glob
 import hashlib
 import os
 import re
 from collections import defaultdict
 
-BASE = (r"C:\Users\lenovo\AppData\Local\Temp\claude\C--Users-lenovo"
-        r"\fccd8d1f-1d07-4097-95b6-2b0cf5cf3dd3\scratchpad"
-        r"\enroncat\enron_with_categories")
-
+# Resolved, not hardcoded: $ENRON_DIR, then the usual places, then the
+# author's original path. scripts/verify_corpus.py puts it where this
+# finds it. See corpus_path.py.
+BASE = corpus_path.resolve()
 SENS = {(4, 10), (3, 10), (2, 8), (3, 5), (3, 4), (1, 5), (1, 2)}
 EMPTY = {(1, 7), (1, 8)}
 WS = re.compile(r"\s+")

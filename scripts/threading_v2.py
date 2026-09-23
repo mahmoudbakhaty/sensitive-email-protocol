@@ -18,6 +18,12 @@ measured cost of thread leakage changes when the grouping gets better, because
 the paper reports that cost and calls it a lower bound. Both groupings are run
 through the identical pipeline.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import corpus_path                                       # noqa: E402
+
 import glob
 import hashlib
 import io
@@ -32,9 +38,10 @@ import pandas as pd
 
 import strengthen as S
 
-BASE = (r"C:\Users\lenovo\AppData\Local\Temp\claude\C--Users-lenovo"
-        r"\fccd8d1f-1d07-4097-95b6-2b0cf5cf3dd3\scratchpad"
-        r"\enroncat\enron_with_categories")
+# Resolved, not hardcoded: $ENRON_DIR, then the usual places, then the
+# author's original path. scripts/verify_corpus.py puts it where this
+# finds it. See corpus_path.py.
+BASE = corpus_path.resolve()
 OUT = r"C:\Users\lenovo\Downloads\RESULTS_threading_v2.json"
 
 SENS = {(4, 10), (3, 10), (2, 8), (3, 5), (3, 4), (1, 5), (1, 2)}

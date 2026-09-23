@@ -7,13 +7,17 @@ in-context example is ever drawn from a test thread, and that the threshold is
 chosen without touching the test fold. A stub judge makes all three checkable
 on a laptop.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import corpus_path                                       # noqa: E402
+
 import numpy as np
 
 import llm_protocol as L
 
-L.DATA_DIR = (r"C:\Users\lenovo\AppData\Local\Temp\claude\C--Users-lenovo"
-              r"\fccd8d1f-1d07-4097-95b6-2b0cf5cf3dd3\scratchpad"
-              r"\enroncat\enron_with_categories")
+L.DATA_DIR = corpus_path.resolve(required=True)
 L.N_BOOT = 200
 
 

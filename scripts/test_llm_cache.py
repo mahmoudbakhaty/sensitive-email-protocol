@@ -5,6 +5,12 @@ A cache that silently accepts the wrong scores is worse than no cache: it
 would attach one corpus's LLM judgements to another's labels and report the
 result as a measurement.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import corpus_path                                       # noqa: E402
+
 import io
 import json
 import os
@@ -24,9 +30,7 @@ fake_torch.no_grad = lambda: types.SimpleNamespace(
 
 import hybrid_framework as H  # noqa: E402
 
-H.DATA_DIR = (r"C:\Users\lenovo\AppData\Local\Temp\claude\C--Users-lenovo"
-              r"\fccd8d1f-1d07-4097-95b6-2b0cf5cf3dd3\scratchpad"
-              r"\enroncat\enron_with_categories")
+H.DATA_DIR = corpus_path.resolve(required=True)
 H.SCORES_JSON = "TEST_llm_cache.json"
 
 df = H.build()

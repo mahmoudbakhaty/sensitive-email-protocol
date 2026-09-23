@@ -12,6 +12,12 @@ test_judge_path.py. This covers everything around it.
 """
 import os
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import corpus_path                                       # noqa: E402
+
+import os
+import sys
 import types
 
 import numpy as np
@@ -34,9 +40,7 @@ fake_torch.no_grad = lambda: types.SimpleNamespace(
 
 import hybrid_framework as H  # noqa: E402
 
-H.DATA_DIR = (r"C:\Users\lenovo\AppData\Local\Temp\claude\C--Users-lenovo"
-              r"\fccd8d1f-1d07-4097-95b6-2b0cf5cf3dd3\scratchpad"
-              r"\enroncat\enron_with_categories")
+H.DATA_DIR = corpus_path.resolve(required=True)
 H.N_BOOT = 200
 
 SEEN = {"encoder_train": [], "encoder_eval": []}
