@@ -17,6 +17,8 @@
  ],
  "n_random": 200,
  "n_bootstrap": 2000,
+ "val_frac": 0.3,
+ "folds": 5,
  "dataset": {
   "messages": 1382,
   "threads": 1103

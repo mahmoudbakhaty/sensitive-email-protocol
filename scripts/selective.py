@@ -7,14 +7,24 @@ comparison asks one question - how often is it right when forced to answer
 about everything - and a deployed filter is never in that position. It can
 decide automatically where it is confident and route the rest to a person.
 
-Under that question the methods are not close. Ranking messages by the
-model's own confidence and scoring only the most confident share, the
-fine-tuned encoder climbs from F1 0.408 at full coverage to 0.569 at 30%,
-while logistic regression and the linear SVM FALL - the messages they are
-surest about are disproportionately the ones they get wrong. The separation F1
-could not find is in the confidence, not in the classification.
+Under that question every method improves, and by more than any modelling
+difference this paper measures. Ranking messages by the model's own confidence
+and scoring only the share it keeps, the fine-tuned encoder climbs from F1
+0.397 at full coverage to 0.559 at 36%, a gain of 0.162; the classical models
+gain between 0.090 and 0.107. The intervals still overlap, so this ranks
+nothing either - the claim is that abstention is worth more than the choice of
+model, not that one model is better.
 
-Two things make that a measurement rather than an artefact.
+A DISCARDED VERSION OF THIS ANALYSIS SAID THE OPPOSITE. It used a single
+global threshold recovered from the released predictions instead of per-fold
+validation-selected ones, and under it logistic regression and the linear SVM
+fell BELOW the random band, which looked like a finding: that only the encoder
+has usable confidence. It was an artefact of ranking by distance from a
+threshold that was not the model's own - logistic regression's recovered
+global threshold was 0.4999 while its per-fold validation thresholds are not
+0.5. The conclusion it suggested is not supported.
+
+Two things make what remains a measurement rather than an artefact.
 
 THE ABSTENTION RULE IS CHOSEN ON VALIDATION, NEVER ON TEST. Declining messages
 changes the set the score is computed on, so a curve drawn by choosing the
@@ -222,7 +232,7 @@ def main():
 
     out = {"environment": S.ENV, "protocol": __doc__.strip().splitlines()[0],
            "coverages": list(COVERAGES), "n_random": N_RAND,
-           "n_bootstrap": N_BOOT,
+           "n_bootstrap": N_BOOT, "val_frac": VAL_FRAC, "folds": FOLDS,
            "dataset": {"messages": int(len(df)),
                        "threads": int(df.thread_key.nunique())}}
 
