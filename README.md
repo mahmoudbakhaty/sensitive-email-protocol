@@ -319,6 +319,34 @@ conclusion.
 python scripts/selective.py        # ~4 minutes on CPU
 ```
 
+## Does it decline what the annotators argued over?
+
+The benchmark carries 172 messages two trained annotators settled differently.
+If the messages a model declines are disproportionately those, its uncertainty
+tracks human disagreement rather than its own ignorance.
+
+| model | best enrichment | p |
+|---|---|---|
+| logistic regression | 1.03x | 0.32 |
+| linear SVM | 1.05x | 0.27 |
+| character n-grams | 1.00x | 0.53 |
+| fine-tuned encoder | **1.19x** | **0.0013** |
+
+The three classical models sit at 1.00x: whatever makes abstention work for
+them, it is not contestedness. The encoder's declined set is enriched, modestly
+- 14.8% contested against a 12.4% base.
+
+Twenty-eight tests were run (seven coverages, four models), so the threshold
+that matters is Bonferroni's 0.00179, and exactly one result clears it. Stated
+in `results/RESULTS_DECLINED.md` rather than left for a reader to work out,
+because a paper arguing that near-perfect published scores measure dataset
+construction cannot then quote an uncorrected p of 0.03 out of a grid of 28.
+
+```
+python scripts/declined.py         # ~4 minutes on CPU
+python scripts/fig_selective.py    # the risk-coverage figure
+```
+
 ## The two control files, and why their numbers are higher
 
 `results/RESULTS_HYBRID_CONTROL.json` and `results/RESULTS_HYBRID_CPU.json`
