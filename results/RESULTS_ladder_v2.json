@@ -36,17 +36,17 @@
       {
         "rung": "R3  + thread-disjoint split",
         "n": 1234,
-        "f1": 0.3375,
-        "f1_sd": 0.013,
-        "mcc": 0.2302,
+        "f1": 0.3334,
+        "f1_sd": 0.019,
+        "mcc": 0.2233,
         "trivial_floor": 0.3073
       }
     ],
     "deltas": {
       "exact_deduplication": -0.015,
       "near_duplicate_removal": 0.012,
-      "thread_disjoint_split": -0.0166,
-      "total_R0_to_R3": -0.0196
+      "thread_disjoint_split": -0.0207,
+      "total_R0_to_R3": -0.0237
     }
   },
   "broad": {
@@ -78,17 +78,17 @@
       {
         "rung": "R3  + thread-disjoint split",
         "n": 1234,
-        "f1": 0.5144,
-        "f1_sd": 0.011,
-        "mcc": 0.3024,
+        "f1": 0.5161,
+        "f1_sd": 0.0133,
+        "mcc": 0.3055,
         "trivial_floor": 0.468
       }
     ],
     "deltas": {
       "exact_deduplication": -0.001,
       "near_duplicate_removal": 0.0069,
-      "thread_disjoint_split": -0.0164,
-      "total_R0_to_R3": -0.0105
+      "thread_disjoint_split": -0.0147,
+      "total_R0_to_R3": -0.0088
     }
   }
 }

@@ -1,0 +1,43 @@
+{
+  "environment": {
+    "python": "3.14.0",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.4.2"
+  },
+  "seeds": 20,
+  "window_days": 30,
+  "min_share": 0.34,
+  "subject_threads": 1103,
+  "refined_threads": 1160,
+  "subject_groups_split": 34,
+  "strict": {
+    "subject": {
+      "ungrouped": 0.3421,
+      "grouped": 0.3362,
+      "leakage_cost": -0.0059,
+      "grouped_sd": 0.0143
+    },
+    "refined": {
+      "ungrouped": 0.3421,
+      "grouped": 0.3202,
+      "leakage_cost": -0.0219,
+      "grouped_sd": 0.0168
+    },
+    "cost_change": -0.016
+  },
+  "broad": {
+    "subject": {
+      "ungrouped": 0.5239,
+      "grouped": 0.506,
+      "leakage_cost": -0.0179,
+      "grouped_sd": 0.0105
+    },
+    "refined": {
+      "ungrouped": 0.5239,
+      "grouped": 0.5104,
+      "leakage_cost": -0.0135,
+      "grouped_sd": 0.0119
+    },
+    "cost_change": 0.0044
+  }
+}

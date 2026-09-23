@@ -7,36 +7,36 @@
   "permutations": 500,
   "note": "message-level vs thread-level label permutation",
   "strict": {
-    "observed_f1": 0.3264,
+    "observed_f1": 0.3368,
     "message_level": {
-      "null_mean": 0.0933,
-      "null_sd": 0.0318,
-      "null_p95": 0.1505,
-      "null_max": 0.1914,
+      "null_mean": 0.0921,
+      "null_sd": 0.0319,
+      "null_p95": 0.1491,
+      "null_max": 0.2006,
       "p_value": 0.002
     },
     "thread_level": {
-      "null_mean": 0.0886,
-      "null_sd": 0.0306,
-      "null_p95": 0.1415,
-      "null_max": 0.1862,
+      "null_mean": 0.0913,
+      "null_sd": 0.0319,
+      "null_p95": 0.1445,
+      "null_max": 0.1813,
       "p_value": 0.002
     }
   },
   "broad": {
-    "observed_f1": 0.5117,
+    "observed_f1": 0.5087,
     "message_level": {
-      "null_mean": 0.2337,
-      "null_sd": 0.0323,
-      "null_p95": 0.2895,
-      "null_max": 0.3213,
+      "null_mean": 0.232,
+      "null_sd": 0.0328,
+      "null_p95": 0.2843,
+      "null_max": 0.3183,
       "p_value": 0.002
     },
     "thread_level": {
-      "null_mean": 0.2369,
-      "null_sd": 0.0312,
-      "null_p95": 0.2871,
-      "null_max": 0.3313,
+      "null_mean": 0.2338,
+      "null_sd": 0.0311,
+      "null_p95": 0.2834,
+      "null_max": 0.3277,
       "p_value": 0.002
     }
   }

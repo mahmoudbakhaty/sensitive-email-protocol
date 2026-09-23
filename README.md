@@ -63,6 +63,12 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `scripts/perm_thread.py` | The permutation null repeated at thread level, to check the message-level version was not flattered by clustering. |
 | `results/RESULTS_agreement_metrics.json` | Four agreement measures with intervals. |
 | `results/RESULTS_perm_thread.json` | Both permutation nulls. |
+| `scripts/roberta_seeds.py` | The encoder over five seeded partitions. Its single-partition strict figure lies above the whole seeded range. |
+| `scripts/threading_v2.py` | A finer thread reconstruction - subject plus shared correspondents plus a 30-day window - and what it does to the measured leakage cost. |
+| `scripts/thread_check.py` | How many messages carry In-Reply-To or References. Three of 1,382 and none. |
+| `scripts/score_consistency.py` | Runs Fazekas and Kovacs's checker over our own reported scores. |
+| `results/RESULTS_ROBERTA_SEEDS.json` | The seeded encoder runs. |
+| `results/RESULTS_threading_v2.json` | The finer-threading comparison. |
 | `scripts/ladder_v2.py` | The corrected leakage ladder: one control per rung, twenty seeded partitions, fold class balance held fixed. **Supersedes the ladder in `strengthen.py`.** |
 | `scripts/ladder_stratified.py` | Separates the thread-grouping cost from the class-marginal term that plain GroupKFold introduces. |
 | `results/RESULTS_ladder_v2.json` | The corrected ladder. Source of Table VII and Fig. 3. |
@@ -81,6 +87,16 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `results/RESULTS_version_effect.md` | What the library version alone changes, with six ungrouped controls that do not move. |
 | `quoted_figures.py` | Every figure quoted from another paper, with the page it was read from. These cannot be regenerated here. |
 | `LITERATURE_SURVEY_2026-09-21.md` | Where the field stands and where this work sits in it, with each figure attributed. |
+
+**A benchmark bug, found on 22 September and fixed.** The expression reading
+the Subject header used a whitespace class that crosses the newline, so on a
+message with an empty subject it captured the following header. Forty-three
+messages, 3.1% of the corpus, took a thread key from the wrong line, and
+thirty-four of them shared one key and therefore always fell in the same fold.
+Threads go from 1,069 to 1,103 and the fingerprint from `50b3daba1a99ae32` to
+`63e3aea5c3d37629`. Logistic regression moved by 0.005, the encoder by 0.051.
+Every figure in the paper and in this repository comes from the corrected
+build.
 
 **The definitive run, re-executed.** The original session's record was never
 retrieved, so the run was repeated from `scripts/final_run.py` on the released

@@ -132,7 +132,11 @@ def build():
         both += agreed
         one += (either and not agreed)
         neither += (not either)
-        m = re.search(r"^Subject:\s*(.*)$", raw, re.M | re.I)
+        # A tab or space only: \s* crosses the newline, so on a message
+        # whose Subject header is empty it captures the next header
+        # instead. 43 messages here, 34 of which then shared one false
+        # thread key.
+        m = re.search(r"^Subject:[ 	]*(.*)$", raw, re.M | re.I)
         subj = m.group(1).strip() if m else ""
         rows.append({"label": int(agreed), "label_either": int(either),
                      "thread_key": WS.sub(" ", SUBJ.sub("", subj).strip().lower())

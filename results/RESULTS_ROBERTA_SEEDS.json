@@ -1,0 +1,101 @@
+{
+  "environment": {
+    "python": "3.12.13",
+    "scikit_learn": "1.9.1",
+    "torch": "2.10.0+cu128",
+    "gpu": "Tesla T4"
+  },
+  "model": "roberta-base",
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "note": "StratifiedGroupKFold per seed; same configuration as the single-partition run, only the partition varies",
+  "strict": {
+    "runs": [
+      {
+        "f1": 0.3724,
+        "mcc": 0.2055,
+        "roc_auc": 0.6639,
+        "seed": 42
+      },
+      {
+        "f1": 0.3802,
+        "mcc": 0.2031,
+        "roc_auc": 0.6625,
+        "seed": 43
+      },
+      {
+        "f1": 0.3929,
+        "mcc": 0.2232,
+        "roc_auc": 0.6486,
+        "seed": 44
+      },
+      {
+        "f1": 0.349,
+        "mcc": 0.1519,
+        "roc_auc": 0.6669,
+        "seed": 45
+      },
+      {
+        "f1": 0.3859,
+        "mcc": 0.2169,
+        "roc_auc": 0.6986,
+        "seed": 46
+      }
+    ],
+    "f1_mean": 0.3761,
+    "f1_sd": 0.0151,
+    "f1_range": [
+      0.349,
+      0.3929
+    ],
+    "mcc_mean": 0.2001,
+    "roc_auc_mean": 0.6681
+  },
+  "broad": {
+    "runs": [
+      {
+        "f1": 0.5165,
+        "mcc": 0.2827,
+        "roc_auc": 0.707,
+        "seed": 42
+      },
+      {
+        "f1": 0.5398,
+        "mcc": 0.2867,
+        "roc_auc": 0.7129,
+        "seed": 43
+      },
+      {
+        "f1": 0.5254,
+        "mcc": 0.2735,
+        "roc_auc": 0.6906,
+        "seed": 44
+      },
+      {
+        "f1": 0.5398,
+        "mcc": 0.2882,
+        "roc_auc": 0.7107,
+        "seed": 45
+      },
+      {
+        "f1": 0.5323,
+        "mcc": 0.2599,
+        "roc_auc": 0.6907,
+        "seed": 46
+      }
+    ],
+    "f1_mean": 0.5308,
+    "f1_sd": 0.0089,
+    "f1_range": [
+      0.5165,
+      0.5398
+    ],
+    "mcc_mean": 0.2782,
+    "roc_auc_mean": 0.7024
+  }
+}
