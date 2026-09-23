@@ -291,6 +291,34 @@ Every script finds the corpus through `scripts/corpus_path.py`: `$ENRON_DIR`
 first, then the usual locations, then the author's original path last so the
 published runs still reproduce where they were produced.
 
+## What a model is worth when it is allowed to decline
+
+Every method lands between F1 0.368 and 0.397 at full coverage with
+overlapping intervals, which is why the paper ranks none of them. That asks how
+often a model is right when forced to answer about every message, and a
+deployed filter is never in that position.
+
+| model | full coverage | ~30% coverage | z vs random | AURC |
+|---|---|---|---|---|
+| logistic regression | 0.3683 | 0.4772 | +3.4 | 0.586 |
+| character n-grams | 0.3675 | 0.4571 | +2.8 | 0.584 |
+| linear SVM | 0.3814 | 0.4880 | +3.3 | 0.561 |
+| fine-tuned encoder | 0.3971 | **0.5592** | **+5.1** | **0.525** |
+
+The abstention rule is chosen on validation threads and never on test, the
+achieved coverage is reported rather than the target, and every point is run
+again with the same number of messages declined at random 200 times - random
+abstention leaves F1 flat, so the gain is not a shrinking denominator.
+
+It does not establish a ranking: the intervals overlap, as they do everywhere
+in this paper. `results/RESULTS_SELECTIVE.md` has the table, the caveats, and
+a correction of an earlier version of this analysis that reached the wrong
+conclusion.
+
+```
+python scripts/selective.py        # ~4 minutes on CPU
+```
+
 ## The two control files, and why their numbers are higher
 
 `results/RESULTS_HYBRID_CONTROL.json` and `results/RESULTS_HYBRID_CPU.json`
