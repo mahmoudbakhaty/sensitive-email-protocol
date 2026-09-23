@@ -16,6 +16,12 @@ Whether it survives that is the question. A cheap character-level baseline
 beating a fine-tuned transformer is the kind of claim that usually evaporates
 when the thresholds are chosen honestly.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 import os
@@ -30,8 +36,7 @@ from sklearn.model_selection import GroupKFold
 
 import strengthen as S
 
-OUT = os.path.join(os.path.expanduser("~"), "Downloads",
-                   "RESULTS_CHAR_NGRAM.json")
+OUT = io_paths.result_out("RESULTS_CHAR_NGRAM.json")
 FOLDS, SEED, VAL_FRAC, N_BOOT = 5, 42, 0.30, 2000
 
 

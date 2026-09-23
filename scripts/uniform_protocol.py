@@ -17,6 +17,12 @@ for it. Its threshold is selected over the quantiles of its own validation
 decision values instead, which is the same procedure expressed on the scale the
 model actually produces.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 import os
@@ -32,7 +38,7 @@ from sklearn.svm import LinearSVC
 
 import strengthen as S
 
-OUT = os.path.join(os.path.expanduser("~"), "Downloads", "RESULTS_UNIFORM.json")
+OUT = io_paths.result_out("RESULTS_UNIFORM.json")
 FOLDS, SEED, VAL_FRAC, N_BOOT = 5, 42, 0.30, 2000
 
 

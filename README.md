@@ -173,6 +173,32 @@ Stated in the paper and repeated here so nobody is surprised.
   translationese, pretraining-corpus differences and translation quality are
   confounded in the English-Arabic gap.
 
+## Do these scripts reproduce these numbers?
+
+Every CPU-only experiment script was re-run from this repository on 23
+September 2026, on the corpus rebuilt from the freshly downloaded archive, and
+compared key by key with the record it ships. The local library was
+scikit-learn 1.8.0; the published runs used 1.9.1.
+
+| script | keys | numbers that differ |
+|---|---|---|
+| `agreement_metrics.py` | 14 | **0** |
+| `threading_v2.py` | 27 | **0** |
+| `ladder_v2.py` | 16 | **0** |
+| `ladder_stratified.py` | 29 | 14 |
+| `char_baseline.py` | 43 | 32 |
+| `uniform_protocol.py` | 110 | 96 |
+
+The split is the paper's Section VII-F claim, reproduced on six scripts it does
+not discuss. The three that reproduce exactly are the three that do not rest on
+a single `GroupKFold` partition - two involve no splitting at all, and
+`ladder_v2.py` averages over twenty seeded partitions per rung. The three that
+differ all read one deterministic partition. **The version sensitivity is in
+the partition, and averaging over seeded partitions removes it.**
+
+Full table and what it does and does not mean:
+`results/RESULTS_rerun_2026-09-23.md`.
+
 ## Can you actually run this?
 
 Twenty absolute paths into the author's home directory were spread across

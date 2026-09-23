@@ -17,6 +17,12 @@ n-grams, which see morphology and formatting where word n-grams see
 vocabulary - to test the other direction: if diversity is what pays, a
 different view of the same text should pay too.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 import os
@@ -30,7 +36,7 @@ from sklearn.model_selection import GroupKFold
 
 import strengthen as S
 
-D = os.path.join(os.path.expanduser("~"), "Downloads")
+D = os.path.dirname(io_paths.result_out(".keep"))
 OUT = os.path.join(D, "RESULTS_HYBRID_CONTROL.json")
 FOLDS, SEED = 5, 42
 

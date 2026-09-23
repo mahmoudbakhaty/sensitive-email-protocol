@@ -21,6 +21,12 @@ on out-of-fold predictions. The framework run avoids it properly by fitting
 the fusion inside each fold on held-out validation threads. Expect this number
 to be slightly optimistic against that one.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 import os
@@ -34,7 +40,7 @@ from sklearn.model_selection import GroupKFold
 
 import strengthen as S
 
-D = os.path.join(os.path.expanduser("~"), "Downloads")
+D = os.path.dirname(io_paths.result_out(".keep"))
 OUT = os.path.join(D, "RESULTS_HYBRID_CPU.json")
 FOLDS, SEED, N_BOOT = 5, 42, 2000
 

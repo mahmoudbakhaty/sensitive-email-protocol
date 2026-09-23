@@ -19,6 +19,12 @@ the training fold minus 30% of its threads, threshold chosen on those held-out
 threads over the same grid, pooled out-of-fold, thread-level intervals. The
 encoder's published numbers can then be read against these.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                          # noqa: E402
+
 import io
 import json
 import os
@@ -34,8 +40,7 @@ from sklearn.svm import LinearSVC
 
 import strengthen as S
 
-OUT = os.path.join(os.path.expanduser("~"), "Downloads",
-                   "RESULTS_FAIR_COMPARISON.json")
+OUT = io_paths.result_out("RESULTS_FAIR_COMPARISON.json")
 FOLDS, SEED, VAL_FRAC, N_BOOT = 5, 42, 0.30, 2000
 GRID = np.arange(0.05, 0.96, 0.01)
 
