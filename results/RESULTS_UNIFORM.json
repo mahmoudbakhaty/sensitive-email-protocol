@@ -1,0 +1,236 @@
+{
+  "environment": {
+    "python": "3.14.0",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.4.2"
+  },
+  "dataset": {
+    "messages": 1382,
+    "threads": 1103
+  },
+  "note": "every model under the encoder's treatment: fitted on the training fold minus 30%% of its threads, threshold chosen on those threads",
+  "trivial_floor_strict": 0.3064,
+  "LinearSVM_uniform_strict": {
+    "f1": 0.3814,
+    "precision": 0.2716,
+    "recall": 0.64,
+    "mcc": 0.2032,
+    "roc_auc": 0.7012,
+    "pr_auc": 0.3135,
+    "tp": 160,
+    "fp": 429,
+    "fn": 90,
+    "tn": 703,
+    "thresholds": [
+      -0.3299,
+      -0.2501,
+      -0.272,
+      -0.3229,
+      -0.5316
+    ],
+    "folds_f1": [
+      0.3837,
+      0.3966,
+      0.4878,
+      0.2877,
+      0.3568
+    ],
+    "fold_mean_f1": 0.3825,
+    "fold_sd_f1": 0.0647,
+    "f1_ci95": [
+      0.3402,
+      0.4236
+    ],
+    "mcc_ci95": [
+      0.1501,
+      0.2561
+    ],
+    "trivial_floor": 0.3064
+  },
+  "LogReg_uniform_strict": {
+    "f1": 0.3683,
+    "precision": 0.2649,
+    "recall": 0.604,
+    "mcc": 0.1829,
+    "roc_auc": 0.6962,
+    "pr_auc": 0.3095,
+    "tp": 151,
+    "fp": 419,
+    "fn": 99,
+    "tn": 713,
+    "thresholds": [
+      0.44,
+      0.44,
+      0.45,
+      0.42,
+      0.35
+    ],
+    "folds_f1": [
+      0.3562,
+      0.4032,
+      0.4898,
+      0.2692,
+      0.3482
+    ],
+    "fold_mean_f1": 0.3733,
+    "fold_sd_f1": 0.0724,
+    "f1_ci95": [
+      0.3235,
+      0.4114
+    ],
+    "mcc_ci95": [
+      0.13,
+      0.237
+    ],
+    "trivial_floor": 0.3064
+  },
+  "CharNgram_uniform_strict": {
+    "f1": 0.3675,
+    "precision": 0.2604,
+    "recall": 0.624,
+    "mcc": 0.1807,
+    "roc_auc": 0.697,
+    "pr_auc": 0.3109,
+    "tp": 156,
+    "fp": 443,
+    "fn": 94,
+    "tn": 689,
+    "thresholds": [
+      0.43,
+      0.45,
+      0.46,
+      0.41,
+      0.34
+    ],
+    "folds_f1": [
+      0.3613,
+      0.3664,
+      0.4722,
+      0.3218,
+      0.3429
+    ],
+    "fold_mean_f1": 0.3729,
+    "fold_sd_f1": 0.0521,
+    "f1_ci95": [
+      0.3253,
+      0.4085
+    ],
+    "mcc_ci95": [
+      0.1264,
+      0.2348
+    ],
+    "trivial_floor": 0.3064
+  },
+  "trivial_floor_broad": 0.4678,
+  "LinearSVM_uniform_broad": {
+    "f1": 0.55,
+    "precision": 0.412,
+    "recall": 0.827,
+    "mcc": 0.2915,
+    "roc_auc": 0.7186,
+    "pr_auc": 0.4958,
+    "tp": 349,
+    "fp": 498,
+    "fn": 73,
+    "tn": 462,
+    "thresholds": [
+      -0.2659,
+      -0.1933,
+      -0.2723,
+      -0.3211,
+      -0.3342
+    ],
+    "folds_f1": [
+      0.5725,
+      0.5192,
+      0.5683,
+      0.4542,
+      0.6209
+    ],
+    "fold_mean_f1": 0.547,
+    "fold_sd_f1": 0.0565,
+    "f1_ci95": [
+      0.5137,
+      0.5854
+    ],
+    "mcc_ci95": [
+      0.2442,
+      0.3369
+    ],
+    "trivial_floor": 0.4678
+  },
+  "LogReg_uniform_broad": {
+    "f1": 0.5438,
+    "precision": 0.4023,
+    "recall": 0.8389,
+    "mcc": 0.2786,
+    "roc_auc": 0.7178,
+    "pr_auc": 0.4861,
+    "tp": 354,
+    "fp": 526,
+    "fn": 68,
+    "tn": 434,
+    "thresholds": [
+      0.42,
+      0.45,
+      0.44,
+      0.43,
+      0.39
+    ],
+    "folds_f1": [
+      0.5442,
+      0.5234,
+      0.5692,
+      0.4872,
+      0.5788
+    ],
+    "fold_mean_f1": 0.5406,
+    "fold_sd_f1": 0.033,
+    "f1_ci95": [
+      0.5076,
+      0.5798
+    ],
+    "mcc_ci95": [
+      0.2286,
+      0.326
+    ],
+    "trivial_floor": 0.4678
+  },
+  "CharNgram_uniform_broad": {
+    "f1": 0.5378,
+    "precision": 0.4048,
+    "recall": 0.8009,
+    "mcc": 0.2668,
+    "roc_auc": 0.7192,
+    "pr_auc": 0.5016,
+    "tp": 338,
+    "fp": 497,
+    "fn": 84,
+    "tn": 463,
+    "thresholds": [
+      0.39,
+      0.45,
+      0.44,
+      0.41,
+      0.44
+    ],
+    "folds_f1": [
+      0.5166,
+      0.5023,
+      0.5887,
+      0.4919,
+      0.5903
+    ],
+    "fold_mean_f1": 0.538,
+    "fold_sd_f1": 0.0428,
+    "f1_ci95": [
+      0.5029,
+      0.573
+    ],
+    "mcc_ci95": [
+      0.2127,
+      0.3185
+    ],
+    "trivial_floor": 0.4678
+  }
+}

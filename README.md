@@ -63,6 +63,11 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `scripts/perm_thread.py` | The permutation null repeated at thread level, to check the message-level version was not flattered by clustering. |
 | `results/RESULTS_agreement_metrics.json` | Four agreement measures with intervals. |
 | `results/RESULTS_perm_thread.json` | Both permutation nulls. |
+| `scripts/uniform_protocol.py` | Every non-GPU model under the encoder's treatment, so Tables III and IV compare like with like. |
+| `scripts/fair_comparison.py` | Each model under both treatments, which is how the gap was measured. |
+| `scripts/char_baseline.py` | Character n-grams under the paper's protocol. |
+| `results/RESULTS_UNIFORM.json` | Source of Tables III and IV's classical rows. |
+| `results/RESULTS_FAIR_COMPARISON.json` | The treatment gap, per model. |
 | `scripts/roberta_seeds.py` | The encoder over five seeded partitions. Its single-partition strict figure lies above the whole seeded range. |
 | `scripts/threading_v2.py` | A finer thread reconstruction - subject plus shared correspondents plus a 30-day window - and what it does to the measured leakage cost. |
 | `scripts/thread_check.py` | How many messages carry In-Reply-To or References. Three of 1,382 and none. |
