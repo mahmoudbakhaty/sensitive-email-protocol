@@ -10,6 +10,7 @@ The first Kaggle run of the LLM script died in a line this kind of test could
 not reach, so the model call itself is covered separately by
 test_judge_path.py. This covers everything around it.
 """
+import os
 import sys
 import types
 
@@ -68,6 +69,13 @@ def main():
 
     OUT, SCORES = {}, {}
     H.run(df, "strict", llm_all, OUT, SCORES)
+
+    # run() used to write RESULTS_HYBRID.json unconditionally, so this stub -
+    # whose encoder is handed the label and therefore scores F1 0.94 on a
+    # benchmark where nothing honest passes 0.41 - produced a file that read
+    # like a real result. Nothing in the paper came from it. Keep it that way.
+    for f in (H.OUT_JSON, H.SCORES_JSON):
+        assert not os.path.exists(f),             "the stub run wrote %s; a result file must come from main()" % f
 
     g = df.thread_key.values
     print()

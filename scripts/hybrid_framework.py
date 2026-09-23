@@ -59,9 +59,20 @@ from torch.utils.data import DataLoader, Dataset
 from transformers import (AutoModelForCausalLM,
                           AutoModelForSequenceClassification, AutoTokenizer)
 
-assert sklearn.__version__ == "1.9.1", sklearn.__version__
-assert torch.cuda.is_available(), "no GPU: enable the accelerator"
+PINNED_SKLEARN = "1.9.1"
 DEV = "cuda"
+
+
+def check_environment():
+    """Asserted by main(), not at import.
+
+    Section VII-F showed the scikit-learn version changes GroupKFold, so the
+    pin guards any run that produces numbers. It must not guard importing the
+    module: test_hybrid.py drives this file on a laptop with a stub encoder,
+    and an import-time assert makes that harness impossible to run - which is
+    exactly what happened."""
+    assert sklearn.__version__ == PINNED_SKLEARN, sklearn.__version__
+    assert torch.cuda.is_available(), "no GPU: enable the accelerator"
 
 LLM_MODEL = "Qwen/Qwen2.5-7B-Instruct"
 ENC_MODEL = "roberta-base"
@@ -362,11 +373,21 @@ def run(df, lab, llm_all, OUT, SCORES):
                  r["f1_ci95"][0], r["f1_ci95"][1]), flush=True)
     OUT["fusion_weights_%s" % lab] = weights
     SCORES[lab] = {n: [round(float(v), 6) for v in oof_s[n]] for n in names}
-    json.dump(OUT, io.open(OUT_JSON, "w", encoding="utf-8"), indent=2)
-    json.dump(SCORES, io.open(SCORES_JSON, "w", encoding="utf-8"), indent=2)
+    # Checkpoint after each label set, because the broad pass can die on
+    # Kaggle after the strict pass has already cost half an hour. Guarded on
+    # the provenance block only main() builds: test_hybrid.py drives run()
+    # with a stub encoder that is handed the label, and its numbers must never
+    # land in a file that reads like a result.
+    if "environment" in OUT:
+        json.dump(OUT, io.open(OUT_JSON, "w", encoding="utf-8"), indent=2)
+        json.dump(SCORES, io.open(SCORES_JSON, "w", encoding="utf-8"),
+                  indent=2)
+    else:
+        print("  (no provenance block: not written - stub run)", flush=True)
 
 
 def main():
+    check_environment()
     print("=== hybrid LLM-based framework ===")
     print("sklearn %s | torch %s | %s"
           % (sklearn.__version__, torch.__version__,
