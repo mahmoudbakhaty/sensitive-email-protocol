@@ -185,6 +185,18 @@ annotators settled 172 of 1,382 messages differently.
   cited, and was narrowed.
 - **An independent consistency checker** (Fazekas and Kovacs) passes all
   fourteen reported records.
+- **A table caption named a source its numbers do not come from.** Table X's
+  caption said its English figures were from the run of Table III. They were
+  not, and had not been since Tables III and IV were rebuilt under one
+  treatment: Table X prints LinearSVM at 0.264 where Table III prints 0.381,
+  a gap of 0.117 F1. The figures themselves are right - they are the
+  cross-lingual run's own English arm, on the same 1069-key grouping as its
+  Arabic arm, which is exactly what the comparison between the two needs. The
+  caption now says so. Sending a reader to a table the numbers do not come
+  from is the same defect as a mis-attributed citation, and the earlier check
+  could not catch it: it asked whether each printed number appears somewhere
+  in the release, which a number in the wrong row under the wrong caption
+  passes. `scripts/audit_table_sources.py` now binds each row to its record.
 - **The notebook the reproduction instructions point at still had the
   benchmark bug.** `KAGGLE_FINAL.txt` is what a reader pastes into Kaggle, and
   the Subject-header correction had been applied to the script it is copied
