@@ -31,6 +31,21 @@ HYB = load("RESULTS_HYBRID_CPU.json")
 CTL = load("RESULTS_HYBRID_CONTROL.json")
 
 
+# Reference figures are counted from the list, never typed. The note names
+# 54 entries and a target count; both moved when [20] gained an arXiv id.
+import re as _re
+import paper_refs_v2 as _R
+
+_DOI = [r for r in _R.REFS if _re.search(r"doi:\s*10\.", r, _re.I)]
+_ARX = [r for r in _R.REFS if _re.search(r"arXiv:\s*\d{4}\.\d{4,5}", r, _re.I)]
+_URL = [r for r in _R.REFS if _re.search(r"https?://", r)]
+REF_COUNTS = {"n_refs": len(_R.REFS), "n_doi": len(_DOI),
+              "n_arxiv": len(_ARX), "n_url": len(_URL),
+              "n_targets": len(_DOI) + len(_ARX) + len(_URL)}
+assert not [r for r in _R.REFS
+            if r not in _DOI and r not in _ARX and r not in _URL],     "a reference carries no identifier"
+
+
 def uni(model, labels, field="f1"):
     return UNI["%s_uniform_%s" % (model, labels)][field]
 
@@ -231,6 +246,19 @@ annotators settled 172 of 1,382 messages differently.
   cited, and was narrowed.
 - **An independent consistency checker** (Fazekas and Kovacs) passes all
   fourteen reported records.
+- **Every reference was fetched, not just counted.** Earlier rounds checked
+  that each of the %(n_refs)s entries carries an identifier. This round resolved all
+  %(n_targets)s targets - %(n_doi)s DOIs through the Crossref registry, %(n_arxiv)s arXiv identifiers
+  through their abstract pages, %(n_url)s direct links - and compared the title and
+  author list that came back with the one printed. Two entries failed.
+  Reference [20] named an author who is not on that paper and omitted one who
+  is; it is corrected against arXiv:2310.17884 and the ICLR 2024 proceedings.
+  Reference [49] pointed at a page that now returns 404 after a publisher
+  site restructure, and is re-pointed at the live listing. The OpenReview link
+  on [20] was also replaced: OpenReview now answers automated requests with a
+  browser challenge, so that link could not be verified by a reviewer's script
+  either. Three further entries the checker flagged were artefacts of the
+  checker, not defects, and are documented as such in `paper_refs_v2.py`.
 
 ## 8b. The framework the thesis title promises is built
 
@@ -348,6 +376,7 @@ vals = {
     "ctl_gain_b": CTL["broad"]["control_gain"],
 }
 
+vals.update(REF_COUNTS)
 io.open(OUT, "w", encoding="utf-8").write(DOC % vals)
 print("written %s" % OUT)
 print("threads %d | fingerprint %s" % (vals["threads"], vals["fp"]))

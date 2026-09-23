@@ -1,0 +1,922 @@
+{
+ "checked": 54,
+ "entries_with_a_problem": [],
+ "log": [
+  {
+   "n": 1,
+   "printed_title": "2026 Data Breach Investigations Report",
+   "verified_note": "industry report - Verizon DBIR 2026, corporate author",
+   "checks": [
+    {
+     "kind": "url",
+     "url": "https://www.verizon.com/business/resources/reports/dbir/",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 2,
+   "printed_title": "Microsoft Purview Data Loss Prevention documentation",
+   "verified_note": "vendor documentation - Microsoft Learn, corporate author",
+   "checks": [
+    {
+     "kind": "url",
+     "url": "https://learn.microsoft.com/purview/dlp-learn-about-dlp",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 3,
+   "printed_title": "Detecting personally identifiable information through natural language processing: A step forward",
+   "verified_note": "crossref 10.3390/asi8020055",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.3390/asi8020055",
+     "status": 200,
+     "registry_title": "Detecting Personally Identifiable Information Through Natural Language Processing: A Step Forward",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 4,
+   "printed_title": "Identifying personal identifiable information (PII) in unstructured text: A comparative study on transformers",
+   "verified_note": "crossref 10.1007/978-3-031-68312-1_14",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1007/978-3-031-68312-1_14",
+     "status": 200,
+     "registry_title": "Identifying Personal Identifiable Information (PII) in Unstructured Text: A Comparative Study on Transformers",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 5,
+   "printed_title": "Privacy BERT-LSTM: A novel NLP algorithm for sensitive information detection in textual documents",
+   "verified_note": "crossref 10.1007/s00521-024-09707-w",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1007/s00521-024-09707-w",
+     "status": 200,
+     "registry_title": "Privacy BERT-LSTM: a novel NLP algorithm for sensitive information detection in textual documents",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 6,
+   "printed_title": "A multi-input multi-output transformer-based hybrid neural network for multi-class privacy disclosure detection",
+   "verified_note": "arxiv 2108.08483",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2108.08483",
+     "status": 200,
+     "registry_title": "A Multi-input Multi-output Transformer-based Hybrid Neural Network for Multi-class Privacy Disclosure Detection",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 7,
+   "printed_title": "Detecting personal identifiable information in Swedish learner essays",
+   "verified_note": "acl 2024.caldpseudo-1.7",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.18653/v1/2024.caldpseudo-1.7",
+     "status": 200,
+     "registry_title": "Detecting Personal Identifiable Information in Swedish Learner Essays",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 8,
+   "printed_title": "An evaluation study of hybrid methods for multilingual PII detection",
+   "verified_note": "arxiv 2510.07551",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2510.07551",
+     "status": 200,
+     "registry_title": "An Evaluation Study of Hybrid Methods for Multilingual PII Detection",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 9,
+   "printed_title": "Hybrid AI for Arabic sensitive data detection: Enhancing privacy compliance in Egypt",
+   "verified_note": "crossref 10.18280/ijsse.150602",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.18280/ijsse.150602",
+     "status": 200,
+     "registry_title": "Hybrid AI for Arabic Sensitive Data Detection: Enhancing Privacy Compliance in Egypt",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 10,
+   "printed_title": "Automated detection of unstructured context-dependent sensitive information using deep learning",
+   "verified_note": "crossref 10.1016/j.iot.2021.100444",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1016/j.iot.2021.100444",
+     "status": 200,
+     "registry_title": "Automated detection of unstructured context-dependent sensitive information using deep learning",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 11,
+   "printed_title": "Detecting context-dependent sensitive data in unstructured text",
+   "verified_note": "crossref 10.3390/info17070663",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.3390/info17070663",
+     "status": 200,
+     "registry_title": "Detecting Context-Dependent Sensitive Data in Unstructured Text",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 12,
+   "printed_title": "CASSED: Context-based approach for structured sensitive data detection",
+   "verified_note": "crossref 10.1016/j.eswa.2023.119924",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1016/j.eswa.2023.119924",
+     "status": 200,
+     "registry_title": "CASSED: Context-based Approach for Structured Sensitive Data Detection",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 13,
+   "printed_title": "Sensitive information detection: Recursive neural networks for encoding context",
+   "verified_note": "arxiv 2008.10863",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2008.10863",
+     "status": 200,
+     "registry_title": "Sensitive Information Detection: Recursive Neural Networks for Encoding Context",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 14,
+   "printed_title": "Detecting sensitive information from unstructured text in a data-constrained environment",
+   "verified_note": "ieee 10041388",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1109/COMSNETS56262.2023.10041388",
+     "status": 200,
+     "registry_title": "Detecting Sensitive Information from Unstructured Text in a Data-Constrained Environment",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 15,
+   "printed_title": "Is your model sensitive? SPeDaC: A new benchmark for detecting and classifying sensitive personal data",
+   "verified_note": "arxiv 2208.06216",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2208.06216",
+     "status": 200,
+     "registry_title": "Is Your Model Sensitive? SPeDaC: A New Benchmark for Detecting and Classifying Sensitive Personal Data",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 16,
+   "printed_title": "How the accuracy and confidence of sensitivity classification affects digital sensitivity review",
+   "verified_note": "acm 10.1145/3417334",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1145/3417334",
+     "status": 200,
+     "registry_title": "How the Accuracy and Confidence of Sensitivity Classification Affects Digital Sensitivity Review",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 17,
+   "printed_title": "Comparing intrinsic and extrinsic evaluation of sensitivity classification",
+   "verified_note": "crossref 10.1007/978-3-030-99739-7_25 - ATTRIBUTION CORRECTED",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1007/978-3-030-99739-7_25",
+     "status": 200,
+     "registry_title": "Comparing Intrinsic and Extrinsic Evaluation of Sensitivity Classification",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 18,
+   "printed_title": "The FACTS of technology-assisted sensitivity review",
+   "verified_note": "arxiv 1907.02956",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/1907.02956",
+     "status": 200,
+     "registry_title": "The FACTS of Technology-Assisted Sensitivity Review",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 19,
+   "printed_title": "Decision support for detecting sensitive text in government records",
+   "verified_note": "crossref 10.1007/s10506-023-09383-6 - YEAR CORRECTED 2023->2025",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1007/s10506-023-09383-6",
+     "status": 200,
+     "registry_title": "Decision support for detecting sensitive text in government records",
+     "title_match": true,
+     "authors": "registry name-field quirk"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 20,
+   "printed_title": "Can LLMs keep a secret? Testing privacy implications of language models via contextual integrity theory",
+   "verified_note": "ICLR 2024 proceedings + arxiv 2310.17884 - re-read 2026-09-23; AUTHORS CORRECTED: T. Berg-Kirkpatrick is not an author, R. Shokri was missing. OpenReview link replaced - it now answers scripts with a browser challenge, so no reviewer could check it",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2310.17884",
+     "status": 200,
+     "registry_title": "Can LLMs Keep a Secret? Testing Privacy Implications of Language Models via Contextual Integrity Theory",
+     "title_match": true,
+     "authors": "match"
+    },
+    {
+     "kind": "url",
+     "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/08305d8b2ddab98932c163ea73df065f-Abstract-Conference.html",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 21,
+   "printed_title": "PrivaCI-Bench: Evaluating privacy with contextual integrity and legal compliance",
+   "verified_note": "arxiv 2502.17041",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2502.17041",
+     "status": 200,
+     "registry_title": "PrivaCI-Bench: Evaluating Privacy with Contextual Integrity and Legal Compliance",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 22,
+   "printed_title": "Preserving privacy in large language models: A survey on current threats and solutions",
+   "verified_note": "arxiv 2408.05212",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2408.05212",
+     "status": 200,
+     "registry_title": "Preserving Privacy in Large Language Models: A Survey on Current Threats and Solutions",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 23,
+   "printed_title": "A survey on privacy risks and protection in large language models",
+   "verified_note": "crossref 10.1007/s44443-025-00177-1",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1007/s44443-025-00177-1",
+     "status": 200,
+     "registry_title": "A survey on privacy risks and protection in large language models",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 24,
+   "printed_title": "SafeGPT: Preventing data leakage and unethical outputs in enterprise LLM use",
+   "verified_note": "arxiv 2601.06366",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2601.06366",
+     "status": 200,
+     "registry_title": "SafeGPT: Preventing Data Leakage and Unethical Outputs in Enterprise LLM Use",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 25,
+   "printed_title": "The measurement of observer agreement for categorical data",
+   "verified_note": "crossref 10.2307/2529310 - Landis & Koch 1977",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.2307/2529310",
+     "status": 200,
+     "registry_title": "The Measurement of Observer Agreement for Categorical Data",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 26,
+   "printed_title": "The Matthews correlation coefficient (MCC) is more informative than Cohen’s kappa and Brier score in binary classification assessment",
+   "verified_note": "crossref 10.1109/ACCESS.2021.3084050 - MCC vs kappa",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1109/ACCESS.2021.3084050",
+     "status": 200,
+     "registry_title": "The Matthews Correlation Coefficient (MCC) is More Informative Than Cohen’s Kappa and Brier Score in Binary Classification Assessment",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 27,
+   "printed_title": "Leakage and the reproducibility crisis in machine-learning-based science",
+   "verified_note": "crossref 10.1016/j.patter.2023.100804",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1016/j.patter.2023.100804",
+     "status": 200,
+     "registry_title": "Leakage and the reproducibility crisis in machine-learning-based science",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 28,
+   "printed_title": "The advantages of the Matthews correlation coefficient (MCC) over F1 score and accuracy in binary classification evaluation",
+   "verified_note": "crossref 10.1186/s12864-019-6413-7",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1186/s12864-019-6413-7",
+     "status": 200,
+     "registry_title": "The advantages of the Matthews correlation coefficient (MCC) over F1 score and accuracy in binary classification evaluation",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 29,
+   "printed_title": "Fine-tuning large language models with limited data: A survey and practical guide",
+   "verified_note": "arxiv 2411.09539",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2411.09539",
+     "status": 200,
+     "registry_title": "Fine-tuning Large Language Models with Limited Data: A Survey and Practical Guide",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 30,
+   "printed_title": "BERT: Pre-training of deep bidirectional transformers for language understanding",
+   "verified_note": "NAACL-HLT 2019 proceedings",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.18653/v1/N19-1423",
+     "status": 200,
+     "registry_title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 31,
+   "printed_title": "The Enron corpus: A new dataset for email classification research",
+   "verified_note": "ECML 2004 LNCS 3201",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1007/978-3-540-30115-8_22",
+     "status": 200,
+     "registry_title": "The Enron Corpus: A New Dataset for Email Classification Research",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 32,
+   "printed_title": "The Enron corpus: Where the email bodies are buried?",
+   "verified_note": "arxiv 2001.10374",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2001.10374",
+     "status": 200,
+     "registry_title": "The Enron Corpus: Where the Email Bodies are Buried?",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 33,
+   "printed_title": "A sensitivity-aware test collection for search among personal information",
+   "verified_note": "arxiv 2606.27559",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2606.27559",
+     "status": 200,
+     "registry_title": "A Sensitivity-Aware Test Collection for Search Among Personal Information",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 34,
+   "printed_title": "Llama 3.2: Revolutionizing edge AI and vision with open, customizable models",
+   "verified_note": "vendor blog - Meta AI, corporate author",
+   "checks": [
+    {
+     "kind": "url",
+     "url": "https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/",
+     "status": "bot-walled",
+     "note": "verified by hand; this host refuses scripts"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 35,
+   "printed_title": "Long live fine-tuning: Task-specific transformers outperform zero-shot LLMs for misinformation response classification on Reddit",
+   "verified_note": "arxiv 2606.04274 - TITLE COMPLETED",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2606.04274",
+     "status": 200,
+     "registry_title": "Long Live Fine-Tuning: Task-Specific Transformers Outperform Zero-Shot LLMs for Misinformation Response Classification on Reddit",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 36,
+   "printed_title": "GroupKFold now uses stable sorting when doing the group distribution; this ensures that the splits are consistent across runs",
+   "verified_note": "scikit-learn 1.9 release notes, quoted verbatim; PR #28464",
+   "checks": [
+    {
+     "kind": "url",
+     "url": "https://scikit-learn.org/stable/whats_new/v1.9.html",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 37,
+   "printed_title": "Benchmarking classical and transformer-based models for document sensitivity classification",
+   "verified_note": "arxiv 2608.16928 - abstract read 2026-09-21; 4 authors, 5 Aug 2026",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2608.16928",
+     "status": 200,
+     "registry_title": "Benchmarking Classical and Transformer-Based Models for Document Sensitivity Classification",
+     "title_match": true,
+     "authors": "match"
+    },
+    {
+     "kind": "url",
+     "url": "https://arxiv.org/abs/2608.16928",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 38,
+   "printed_title": "A channel-boosted multi-agent system with iterative consultation for document sensitivity classification",
+   "verified_note": "arxiv 2609.22212 - abstract read 2026-09-22; same group, 2 Sep 2026",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2609.22212",
+     "status": 200,
+     "registry_title": "A Channel-Boosted Multi-Agent System with Iterative Consultation for Document Sensitivity Classification",
+     "title_match": true,
+     "authors": "match"
+    },
+    {
+     "kind": "url",
+     "url": "https://arxiv.org/abs/2609.22212",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 39,
+   "printed_title": "CTSCAN: Evaluation leakage in chest CT segmentation and a reproducible patient-disjoint benchmark",
+   "verified_note": "arxiv 2604.15561 - abstract read 2026-09-21; 1 author, 16 Apr 2026",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2604.15561",
+     "status": 200,
+     "registry_title": "CTSCAN: Evaluation Leakage in Chest CT Segmentation and a Reproducible Patient-Disjoint Benchmark",
+     "title_match": true,
+     "authors": "match"
+    },
+    {
+     "kind": "url",
+     "url": "https://arxiv.org/abs/2604.15561",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 40,
+   "printed_title": "Detection of personal data in structured datasets using a large language model",
+   "verified_note": "arxiv 2506.22305 - abstract + HTML Table 2 read 2026-09-21",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2506.22305",
+     "status": 200,
+     "registry_title": "Detection of Personal Data in Structured Datasets Using a Large Language Model",
+     "title_match": true,
+     "authors": "match"
+    },
+    {
+     "kind": "url",
+     "url": "https://arxiv.org/abs/2506.22305",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 41,
+   "printed_title": "Inter-annotator agreement is not the ceiling of machine learning performance: Evidence from a comprehensive set of simulations",
+   "verified_note": "acl 2022.bionlp-1.26 - page read 2026-09-21; pp. 275-284 confirmed",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.18653/v1/2022.bionlp-1.26",
+     "status": 200,
+     "registry_title": "Inter-annotator agreement is not the ceiling of machine learning performance: Evidence from a comprehensive set of simulations",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 42,
+   "printed_title": "Towards contextual sensitive data detection",
+   "verified_note": "arxiv 2512.04120 - abstract read 2026-09-21; 2 Dec 2025 NOT 2026",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2512.04120",
+     "status": 200,
+     "registry_title": "Towards Contextual Sensitive Data Detection",
+     "title_match": true,
+     "authors": "match"
+    },
+    {
+     "kind": "url",
+     "url": "https://arxiv.org/abs/2512.04120",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 43,
+   "printed_title": "Sensitive content classification in social media: A holistic resource and evaluation",
+   "verified_note": "acl 2025.woah-1.2 - PDF read 2026-09-21; pp. 17-31; gpt-4o 75.7",
+   "checks": [
+    {
+     "kind": "url",
+     "url": "https://aclanthology.org/2025.woah-1.2/",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 44,
+   "printed_title": "Permutation tests for studying classifier performance",
+   "verified_note": "jmlr v11 ojala10a - page read 2026-09-21; vol. 11, pp. 1833-1863",
+   "checks": [
+    {
+     "kind": "url",
+     "url": "https://www.jmlr.org/papers/v11/ojala10a.html",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 45,
+   "printed_title": "On over-fitting in model selection and subsequent selection bias in performance evaluation",
+   "verified_note": "jmlr v11 cawley10a - page read 2026-09-22; vol. 11, pp. 2079-2107",
+   "checks": [
+    {
+     "kind": "url",
+     "url": "https://www.jmlr.org/papers/v11/cawley10a.html",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 46,
+   "printed_title": "Which leakage types matter? A quantitative landscape across 2,047 benchmark datasets",
+   "verified_note": "arxiv 2604.04199 - abstract read 2026-09-22; single author, 5 Apr 2026",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2604.04199",
+     "status": 200,
+     "registry_title": "Which Leakage Types Matter? A Quantitative Landscape Across 2,047 Benchmark Datasets",
+     "title_match": true,
+     "authors": "match"
+    },
+    {
+     "kind": "url",
+     "url": "https://arxiv.org/abs/2604.04199",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 47,
+   "printed_title": "Inter-annotator agreement and the upper limit on machine performance: Evidence from biomedical natural language processing",
+   "verified_note": "iospress 10.3233/978-1-61499-830-3-298 - read 2026-09-22; MEDINFO 2017",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.3233/978-1-61499-830-3-298",
+     "status": 200,
+     "registry_title": "Inter-Annotator Agreement and the Upper Limit on Machine Performance: Evidence from Biomedical Natural Language Processing",
+     "title_match": true,
+     "authors": "registry name-field quirk"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 48,
+   "printed_title": "Counting on consensus: Selecting the right inter-annotator agreement metric for NLP annotation and evaluation",
+   "verified_note": "acl 2026.lrec-1.347 - PDF read 2026-09-22; pp. 4434-4446 confirmed",
+   "checks": [
+    {
+     "kind": "url",
+     "url": "https://aclanthology.org/2026.lrec-1.347/",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 49,
+   "printed_title": "Handbook of Inter-Rater Reliability",
+   "verified_note": "publisher page - 4th edition; AC1 introduced in Gwet (2001). LINK CORRECTED 2026-09-23: /book4/ returns 404 after a site restructure; the 4th ed. is listed on store.html. A 5th ed. (ISBN 978-1-7923-5463-2) now exists; AC1 is unchanged, so the edition our AC1 implementation follows is kept",
+   "checks": [
+    {
+     "kind": "url",
+     "url": "https://agreestat.com/store.html",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": false
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 50,
+   "printed_title": "Are we really making much progress? A worrying analysis of recent neural recommendation approaches",
+   "verified_note": "acm 10.1145/3298689.3347058 - read 2026-09-23; RecSys 2019",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1145/3298689.3347058",
+     "status": 200,
+     "registry_title": "Are we really making much progress? A worrying analysis of recent neural recommendation approaches",
+     "title_match": true,
+     "authors": "match"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 51,
+   "printed_title": "A metric learning reality check",
+   "verified_note": "arxiv 2003.08505 / ECCV 2020 - read 2026-09-23",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2003.08505",
+     "status": 200,
+     "registry_title": "A Metric Learning Reality Check",
+     "title_match": true,
+     "authors": "match"
+    },
+    {
+     "kind": "url",
+     "url": "https://arxiv.org/abs/2003.08505",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 52,
+   "printed_title": "Distilling human-aligned privacy sensitivity assessment from large language models",
+   "verified_note": "arxiv 2603.29497 - abstract read 2026-09-23; 5 authors, 31 Mar 2026",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2603.29497",
+     "status": 200,
+     "registry_title": "Distilling Human-Aligned Privacy Sensitivity Assessment from Large Language Models",
+     "title_match": true,
+     "authors": "match"
+    },
+    {
+     "kind": "url",
+     "url": "https://arxiv.org/abs/2603.29497",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 53,
+   "printed_title": "AraBERT: Transformer-based model for Arabic language understanding",
+   "verified_note": "arxiv 2003.00104 / LREC 2020 proceedings",
+   "checks": [
+    {
+     "kind": "url",
+     "url": "https://aclanthology.org/2020.osact-1.2/",
+     "status": 200,
+     "soft_404": false,
+     "title_in_page": true
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 54,
+   "printed_title": "No language left behind: Scaling human-centered machine translation",
+   "verified_note": "arxiv 2207.04672 - collective authorship, first 15 named then et al.",
+   "checks": [
+    {
+     "kind": "arxiv",
+     "url": "https://arxiv.org/abs/2207.04672",
+     "status": 200,
+     "registry_title": "No Language Left Behind: Scaling Human-Centered Machine Translation",
+     "title_match": true,
+     "authors": "et al. by design"
+    }
+   ],
+   "clean": true
+  }
+ ]
+}

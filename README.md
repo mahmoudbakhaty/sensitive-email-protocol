@@ -57,6 +57,7 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `results/FINDING_sklearn_groupkfold.md` | The full record of the version-dependence investigation behind Section VII-F. |
 | `results/superseded/` | Earlier runs. Kept because Section VII-F compares against them; **do not quote these as results.** |
 | `paper_refs_v2.py` | The 54 references plus `VERIFIED`, recording how each was resolved. Every entry carries a DOI, an arXiv id or a stable URL. |
+| `scripts/verify_references.py` | Fetches every reference target and compares the returned title and authors with the printed ones. Exits non-zero on any failure. |
 | `fig_v2_*.png` | The three paper figures. |
 | `scripts/fig_ladder.py` | Builds Fig. 3 straight from the results file, so the figure cannot drift from the numbers. |
 | `scripts/agreement_metrics.py` | Cohen's kappa beside Gwet's AC1 and the raw agreement, after the kappa paradox was raised against us. |
@@ -176,4 +177,19 @@ Stated in the paper and repeated here so nobody is surprised.
 
 Auditing our own reference list found one work attributed to the wrong
 authors, one incorrect publication year and one truncated title. All corrected;
-`VERIFIED` in `paper_refs_v2.py` records the source used for each of the 38.
+`VERIFIED` in `paper_refs_v2.py` records the source used for each of the 54.
+
+A later round showed that recording a source is not the same as resolving one.
+`scripts/verify_references.py` fetches every target - DOIs through the Crossref
+registry, arXiv ids through their abstract pages, plain URLs directly - and
+compares the title and author list that come back with the ones printed. It
+found two defects that the identifier count had passed: one entry naming an
+author who is not on the paper while omitting one who is, and one link that had
+started returning 404 after a publisher restructured its site. Run it yourself;
+it exits non-zero if any entry fails, and writes
+`results/RESULTS_reference_resolution.json`.
+
+Two hosts refuse scripted clients (OpenReview answers with a browser challenge,
+ai.meta.com with a 400). Those entries are flagged `bot-walled` and verified by
+hand. Where such a link was the only identifier, it was replaced with one a
+reviewer's script can also resolve.

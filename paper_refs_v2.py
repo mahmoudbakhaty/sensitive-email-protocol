@@ -20,6 +20,25 @@ Verification outcome:
 Sources used for verification (per entry, in VERIFIED below):
   crossref = api.crossref.org/works/<doi>   arxiv = arxiv.org/abs/<id>
   acl = aclanthology.org                    ieee = ieeexplore.ieee.org
+
+2026-09-23 resolution pass. The earlier rounds checked that each entry HAS an
+identifier. This one fetched all 62 targets and compared the title and author
+list that came back. Two defects:
+
+  * [20] named T. Berg-Kirkpatrick, who is not an author of that paper, and
+    omitted R. Shokri, who is - the same defect class as the [17]
+    mis-attribution. Corrected against arXiv:2310.17884 and the ICLR 2024
+    proceedings page. Its OpenReview link was also replaced: OpenReview now
+    answers automated requests with a browser challenge, so that link cannot
+    be verified by anyone's script, a reviewer's included.
+  * [49] pointed at agreestat.com/book4/, which returns 404 after a site
+    restructure. Re-pointed at store.html, which resolves and lists the
+    edition cited.
+
+Three further flags were artefacts of the checking script, not of the list:
+[19] Crossref splits "James Van Guilder" as given="James Van"/family="Guilder";
+[47] IOS Press stores whole names in the family field; [54] is an "et al."
+list by design. All three entries are correct as printed.
 """
 
 REFS = [
@@ -42,7 +61,7 @@ REFS = [
     'M. F. Sayed, N. Mallekav and D. W. Oard, “Comparing intrinsic and extrinsic evaluation of sensitivity classification,” in Advances in Information Retrieval (ECIR), LNCS, Springer, 2022, pp. 215-222, doi:10.1007/978-3-030-99739-7_25.',
     'G. McDonald, C. Macdonald and I. Ounis, “The FACTS of technology-assisted sensitivity review,” arXiv:1907.02956, 2019.',
     'K. Branting, B. Brown, C. Giannella, J. Van Guilder, J. Harrold, S. Howell and J. R. Baron, “Decision support for detecting sensitive text in government records,” Artificial Intelligence and Law, vol. 33, no. 1, pp. 171-197, 2025, doi:10.1007/s10506-023-09383-6.',
-    'N. Mireshghallah, H. Kim, X. Zhou, Y. Tsvetkov, Y. Choi, M. Sap and T. Berg-Kirkpatrick, “Can LLMs keep a secret? Testing privacy implications of language models via contextual integrity theory,” in Proc. Int. Conf. Learning Representations (ICLR), 2024. [Online]. Available: https://openreview.net/forum?id=gmg7t8b4s0',
+    'N. Mireshghallah, H. Kim, X. Zhou, Y. Tsvetkov, M. Sap, R. Shokri and Y. Choi, “Can LLMs keep a secret? Testing privacy implications of language models via contextual integrity theory,” in Proc. Int. Conf. Learning Representations (ICLR), 2024, arXiv:2310.17884. [Online]. Available: https://proceedings.iclr.cc/paper_files/paper/2024/hash/08305d8b2ddab98932c163ea73df065f-Abstract-Conference.html',
     'H. Li, W. Hu, H. Jing, Y. Chen, Q. Hu, S. Han, T. Chu, P. Hu and Y. Song, “PrivaCI-Bench: Evaluating privacy with contextual integrity and legal compliance,” arXiv:2502.17041, 2025.',
     'M. Miranda, E. S. Ruzzetti, A. Santilli, F. M. Zanzotto, S. Bratières and E. Rodolà, “Preserving privacy in large language models: A survey on current threats and solutions,” arXiv:2408.05212, 2024.',
     'K. Chen, X. Zhou, Y. Lin, S. Feng, L. Shen and P. Wu, “A survey on privacy risks and protection in large language models,” J. King Saud Univ. - Computer and Information Sciences, vol. 37, no. 7, art. 163, 2025, doi:10.1007/s44443-025-00177-1.',
@@ -71,7 +90,7 @@ REFS = [
     'S. Roth, “Which leakage types matter? A quantitative landscape across 2,047 benchmark datasets,” arXiv:2604.04199, Apr. 2026. [Online]. Available: https://arxiv.org/abs/2604.04199',
     'M. Boguslav and K. B. Cohen, “Inter-annotator agreement and the upper limit on machine performance: Evidence from biomedical natural language processing,” Stud. Health Technol. Inform., vol. 245, pp. 298–302, 2017, doi:10.3233/978-1-61499-830-3-298.',
     'J. H. F. James, “Counting on consensus: Selecting the right inter-annotator agreement metric for NLP annotation and evaluation,” in Proc. 15th Lang. Resources and Evaluation Conf. (LREC), 2026, pp. 4434–4446. [Online]. Available: https://aclanthology.org/2026.lrec-1.347/',
-    'K. L. Gwet, “Handbook of Inter-Rater Reliability,” 4th ed. Gaithersburg, MD, USA: Advanced Analytics, 2014. [Online]. Available: https://agreestat.com/book4/',
+    'K. L. Gwet, “Handbook of Inter-Rater Reliability,” 4th ed. Gaithersburg, MD, USA: Advanced Analytics, 2014. [Online]. Available: https://agreestat.com/store.html',
     'M. Ferrari Dacrema, P. Cremonesi and D. Jannach, “Are we really making much progress? A worrying analysis of recent neural recommendation approaches,” in Proc. 13th ACM Conf. Recommender Systems (RecSys), 2019, pp. 101–109, doi:10.1145/3298689.3347058.',
     'K. Musgrave, S. Belongie and S.-N. Lim, “A metric learning reality check,” in Proc. European Conf. Computer Vision (ECCV), 2020, arXiv:2003.08505. [Online]. Available: https://arxiv.org/abs/2003.08505',
     'G. Loiseau, D. Sileo, D. Riquet, M. Meyer and M. Tommasi, “Distilling human-aligned privacy sensitivity assessment from large language models,” arXiv:2603.29497, Mar. 2026. [Online]. Available: https://arxiv.org/abs/2603.29497',
@@ -102,7 +121,7 @@ VERIFIED = {
     17: 'crossref 10.1007/978-3-030-99739-7_25 - ATTRIBUTION CORRECTED',
     18: 'arxiv 1907.02956',
     19: 'crossref 10.1007/s10506-023-09383-6 - YEAR CORRECTED 2023->2025',
-    20: 'ICLR 2024 proceedings',
+    20: 'ICLR 2024 proceedings + arxiv 2310.17884 - re-read 2026-09-23; AUTHORS CORRECTED: T. Berg-Kirkpatrick is not an author, R. Shokri was missing. OpenReview link replaced - it now answers scripts with a browser challenge, so no reviewer could check it',
     21: 'arxiv 2502.17041',
     22: 'arxiv 2408.05212',
     23: 'crossref 10.1007/s44443-025-00177-1',
@@ -131,7 +150,7 @@ VERIFIED = {
     46: 'arxiv 2604.04199 - abstract read 2026-09-22; single author, 5 Apr 2026',
     47: 'iospress 10.3233/978-1-61499-830-3-298 - read 2026-09-22; MEDINFO 2017',
     48: 'acl 2026.lrec-1.347 - PDF read 2026-09-22; pp. 4434-4446 confirmed',
-    49: 'publisher page - 4th edition; AC1 introduced in Gwet (2001)',
+    49: 'publisher page - 4th edition; AC1 introduced in Gwet (2001). LINK CORRECTED 2026-09-23: /book4/ returns 404 after a site restructure; the 4th ed. is listed on store.html. A 5th ed. (ISBN 978-1-7923-5463-2) now exists; AC1 is unchanged, so the edition our AC1 implementation follows is kept',
     50: 'acm 10.1145/3298689.3347058 - read 2026-09-23; RecSys 2019',
     51: 'arxiv 2003.08505 / ECCV 2020 - read 2026-09-23',
     52: 'arxiv 2603.29497 - abstract read 2026-09-23; 5 authors, 31 Mar 2026',

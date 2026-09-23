@@ -185,6 +185,19 @@ annotators settled 172 of 1,382 messages differently.
   cited, and was narrowed.
 - **An independent consistency checker** (Fazekas and Kovacs) passes all
   fourteen reported records.
+- **Every reference was fetched, not just counted.** Earlier rounds checked
+  that each of the 54 entries carries an identifier. This round resolved all
+  63 targets - 22 DOIs through the Crossref registry, 22 arXiv identifiers
+  through their abstract pages, 19 direct links - and compared the title and
+  author list that came back with the one printed. Two entries failed.
+  Reference [20] named an author who is not on that paper and omitted one who
+  is; it is corrected against arXiv:2310.17884 and the ICLR 2024 proceedings.
+  Reference [49] pointed at a page that now returns 404 after a publisher
+  site restructure, and is re-pointed at the live listing. The OpenReview link
+  on [20] was also replaced: OpenReview now answers automated requests with a
+  browser challenge, so that link could not be verified by a reviewer's script
+  either. Three further entries the checker flagged were artefacts of the
+  checker, not defects, and are documented as such in `paper_refs_v2.py`.
 
 ## 8b. The framework the thesis title promises is built
 
