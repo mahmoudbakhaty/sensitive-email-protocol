@@ -16,15 +16,21 @@ import io
 import json
 import os
 import re
+import sys
 
 from pypdf import PdfReader
 
-PDF = r"C:\Users\lenovo\Downloads\Research_Paper_v2_Bakhaty.pdf"
-RES = r"C:\Users\lenovo\Downloads\artifact\results"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import io_paths                                              # noqa: E402
+
+# $PAPER_PDF, else the built paper wherever the other result files live.
+PDF = os.environ.get("PAPER_PDF") or os.path.join(
+    os.path.expanduser("~"), "Downloads", "Research_Paper_v2_Bakhaty.pdf")
 
 
 def load(n):
-    return json.load(io.open(os.path.join(RES, n), encoding="utf-8"))
+    return json.load(io.open(io_paths.result_in(n, required=True),
+                             encoding="utf-8"))
 
 
 F = load("RESULTS_FINAL.json")
