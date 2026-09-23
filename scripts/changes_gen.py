@@ -246,6 +246,18 @@ annotators settled 172 of 1,382 messages differently.
   cited, and was narrowed.
 - **An independent consistency checker** (Fazekas and Kovacs) passes all
   fourteen reported records.
+- **An F1 of 1.000 was attributed to published work that does not report
+  one.** Four sentences read as though the literature reports a perfect score
+  on this task. It does not, so far as we can establish: the figures this
+  paper itself surveys are 98.2%% accuracy, 99%% accuracy and F1 = 0.92, and a
+  search found no published 1.000 on context-dependent sensitivity. The only
+  1.000 we can document is our own earlier dataset, which the paper already
+  says and whose cause it already gives - thirty duplicates and complete
+  keyword separability. Projecting our own number onto other people's work is
+  the same defect as a mis-attributed citation, and the argument never needed
+  it: what the annotator reference point contradicts is a near-perfect score,
+  whatever its third decimal. The four sentences are now anchored on the
+  figures actually cited.
 - **Every reference was fetched, not just counted.** Earlier rounds checked
   that each of the %(n_refs)s entries carries an identifier. This round resolved all
   %(n_targets)s targets - %(n_doi)s DOIs through the Crossref registry, %(n_arxiv)s arXiv identifiers
