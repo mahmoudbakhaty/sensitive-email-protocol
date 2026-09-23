@@ -26,6 +26,13 @@ LAD = load("RESULTS_ladder_v2.json")
 THR = load("RESULTS_threading_v2.json")
 AGR = load("RESULTS_agreement_metrics.json")
 PRM = load("RESULTS_perm_thread.json")
+UNI = load("RESULTS_UNIFORM.json")
+HYB = load("RESULTS_HYBRID_CPU.json")
+CTL = load("RESULTS_HYBRID_CONTROL.json")
+
+
+def uni(model, labels, field="f1"):
+    return UNI["%s_uniform_%s" % (model, labels)][field]
 
 
 def f(key, field="f1"):
@@ -39,11 +46,13 @@ def llm(labels, shots, field="f1"):
 
 DOC = """# What changed since the version sent on 20 September
 
-Nine items. Nothing in the earlier version was withdrawn. Four claims that
-rested on assertion now rest on measurement, a defect in the benchmark was
-found and repaired, three factual errors were corrected, every external claim
-was checked for a citation, and the related work now states plainly which part
-of the argument is not ours.
+Eleven items. Nothing in the earlier version was withdrawn. Four claims that
+rested on assertion now rest on measurement; a defect in the benchmark was
+found and repaired; the main tables turned out not to be comparing like with
+like and were rebuilt; the framework the registered thesis title promises was
+built; three factual errors were corrected; every external claim was checked
+for a citation; and the related work now states plainly which part of the
+argument is not ours.
 
 ---
 
@@ -74,6 +83,36 @@ III to V, Table IX and both result figures read from the run records rather
 than carrying hand-typed numbers. The build fails if the thread count or the
 fingerprint in the text disagrees with the record. Hand-typed numbers are why
 the paper kept the pre-bug figures after the benchmark was rebuilt.
+
+## 1b. Tables III and IV were not comparing like with like
+
+Checking whether a character n-gram baseline could join Table III showed it
+could not, because the table's own rows were treated differently. The classical
+rows took a fixed operating point and the whole training fold; the encoder row
+selected its threshold on held-out threads and therefore trained on seventy per
+cent of it. Neither is leakage - a fixed threshold is tuned on nothing - but
+the rows were being read against each other.
+
+| Model | Published F1 | One treatment | Change |
+|---|---|---|---|
+| LinearSVM, strict | %(t_svm_s_p).4f | %(t_svm_s_u).4f | %(t_svm_s_d)+.4f |
+| LinearSVM, broad | %(t_svm_b_p).4f | %(t_svm_b_u).4f | %(t_svm_b_d)+.4f |
+| LogReg, broad | %(t_lr_b_p).4f | %(t_lr_b_u).4f | %(t_lr_b_d)+.4f |
+| LogReg, strict | %(t_lr_s_p).4f | %(t_lr_s_u).4f | %(t_lr_s_d)+.4f |
+
+The support vector machine was recalling %(svm_r_p).3f of the positive class at
+its default operating point and %(svm_r_u).3f at a selected one. It was not a
+weak model; it was a model at the wrong operating point.
+
+**%(t_max).3f is larger than any difference between two models anywhere in the
+paper.** The choice of operating-point procedure matters more here than the
+choice of model - which is the paper's own thesis, arriving from inside its own
+tables. New Table VI-A.
+
+The reordering is not cosmetic. Under the old arrangement the encoder led on
+both label sets. Under one treatment it leads on the strict labels, %(rb_s).3f
+against %(best_s).3f, and comes **last** on the broad: LinearSVM %(u_svm_b).3f,
+LogReg %(u_lr_b).3f, character n-grams %(u_ch_b).3f, encoder %(rb_b).3f.
 
 ## 2. The limitation about large language models is now a result
 
@@ -185,6 +224,26 @@ annotators settled 172 of 1,382 messages differently.
 - **An independent consistency checker** (Fazekas and Kovacs) passes all
   fourteen reported records.
 
+## 8b. The framework the thesis title promises is built
+
+The registered title promises a hybrid LLM-based framework. What existed was a
+protocol, a benchmark and four models compared under it; the components had
+never been combined. `hybrid_framework.py` combines an instruction-tuned model,
+a fine-tuned encoder and tf-idf, with every component calibrated on held-out
+validation threads, the fusion weights fitted there and the threshold chosen
+there. An earlier fusion was cut from the paper for being miscalibrated and
+unvalidated; both are addressed rather than repeated. It needs a GPU and the
+weekly quota is exhausted, so it is written and tested but not yet run.
+
+The two-component half runs now, cross-fitted from released scores. On the
+broad labels it gains %(hyb_gain_b)+.4f F1 over the better component; on the
+strict labels the ranking improves but the gain does not survive thresholding.
+
+A control matters here. Fusing two redundant components gains
+%(ctl_gain_b)+.4f, which is the procedural optimism of cross-fitted stacking,
+measured rather than assumed. Roughly half the apparent gain would have
+happened from any fusion.
+
 ## 9. Related work: what is ours and what is not
 
 **Zainab et al. (5 August 2026) make the general claim that leakage inflates
@@ -209,7 +268,7 @@ judgement two trained people applied differently to 172 messages.
 | Length, IEEE | 10 pp | 15 pp |
 | Contributions | 6 | 9 |
 | References | 38 | 51 |
-| Tables | 6 | 11 |
+| Tables | 6 | 12 |
 | Figures | 2 | 3 |
 
 Every figure the paper prints is traceable to a released record; the artifact
@@ -256,6 +315,29 @@ vals = {
     "af1_lo": AGR["annotator_f1"]["ci95"][0],
     "af1_hi": AGR["annotator_f1"]["ci95"][1],
     "ac1_d": abs(AGR["ac1_minus_kappa"]),
+    "t_svm_s_p": f("LinearSVM_grouped_strict"),
+    "t_svm_s_u": uni("LinearSVM", "strict"),
+    "t_svm_s_d": uni("LinearSVM", "strict") - f("LinearSVM_grouped_strict"),
+    "t_svm_b_p": f("LinearSVM_grouped_broad"),
+    "t_svm_b_u": uni("LinearSVM", "broad"),
+    "t_svm_b_d": uni("LinearSVM", "broad") - f("LinearSVM_grouped_broad"),
+    "t_lr_s_p": f("LogReg_grouped_strict"),
+    "t_lr_s_u": uni("LogReg", "strict"),
+    "t_lr_s_d": uni("LogReg", "strict") - f("LogReg_grouped_strict"),
+    "t_lr_b_p": f("LogReg_grouped_broad"),
+    "t_lr_b_u": uni("LogReg", "broad"),
+    "t_lr_b_d": uni("LogReg", "broad") - f("LogReg_grouped_broad"),
+    "svm_r_p": f("LinearSVM_grouped_strict", "recall"),
+    "svm_r_u": uni("LinearSVM", "strict", "recall"),
+    "t_max": max(abs(uni(m, l) - f("%s_grouped_%s" % (m, l)))
+                 for m in ("LinearSVM", "LogReg")
+                 for l in ("strict", "broad")),
+    "best_s": max(uni(m, "strict") for m in ("LinearSVM", "LogReg", "CharNgram")),
+    "u_svm_b": uni("LinearSVM", "broad"), "u_lr_b": uni("LogReg", "broad"),
+    "u_ch_b": uni("CharNgram", "broad"),
+    "rb_b": f("transformer_grouped_broad"),
+    "hyb_gain_b": HYB["broad"]["gain_over_best_component"],
+    "ctl_gain_b": CTL["broad"]["control_gain"],
 }
 
 io.open(OUT, "w", encoding="utf-8").write(DOC % vals)
