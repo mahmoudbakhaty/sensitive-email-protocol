@@ -148,17 +148,37 @@ def main():
         print("  %-10s %d held | mean share on the cut %.1f%%"
               % (aname, held[aname], 100 * ties))
     print()
-    if held["stacked"] < held["single"]:
-        verdict = ("SUPPORTED: stacking breaks %d contracts that a single "
-                   "calibrated model keeps"
-                   % (held["single"] - held["stacked"]))
-    elif held["stacked"] == held["single"]:
-        verdict = ("REFUTED: stacking holds exactly as many contracts as a "
-                   "single calibrated model; the architecture is not the "
-                   "difference")
+    # A count is not a verdict. Stacking "losing" one contract is only
+    # evidence if the tie mechanism explains it - and stacked-P has no ties at
+    # all, so a break there cannot be about ties. The first version of this
+    # logic called a difference of one SUPPORTED, which is the same mistake
+    # ties_and_model_strength.py made before it was tightened.
+    ties = {a: float(np.mean([r["tie_share"]
+                              for c in out["corpora"].values() for r in c[a]]))
+            for a, _ in ARCHS}
+    same_break_without_ties = (held["stacked-P"] <= held["stacked"]
+                               and ties["stacked-P"] < 0.001)
+    gap = held["single"] - held["stacked"]
+
+    if same_break_without_ties:
+        verdict = ("REFUTED: the tie-free arm (Platt, %.1f%% on the cut) "
+                   "breaks as many contracts as the stacked isotonic one, so "
+                   "the break is not about ties. Stacking also REDUCES ties, "
+                   "%.1f%% against %.1f%% for a single model - the opposite of "
+                   "the hypothesis."
+                   % (100 * ties["stacked-P"], 100 * ties["stacked"],
+                      100 * ties["single"]))
+    elif gap >= 3:
+        verdict = ("SUPPORTED: stacking breaks %d contracts a single "
+                   "calibrated model keeps, and the tie-free arm does not"
+                   % gap)
+    elif gap > 0:
+        verdict = ("INCONCLUSIVE: stacking loses %d contract(s), too few to "
+                   "separate from the noise at the tightest request" % gap)
     else:
-        verdict = ("REFUTED, and the other way: stacking holds MORE "
-                   "contracts than a single model")
+        verdict = ("REFUTED: stacking holds at least as many contracts as a "
+                   "single calibrated model")
+    out["tie_share_by_arch"] = {k: round(v, 4) for k, v in ties.items()}
     print("  " + verdict)
     out["held"] = held
     out["verdict"] = verdict

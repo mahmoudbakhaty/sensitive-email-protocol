@@ -1,0 +1,233 @@
+{
+ "requests": [
+  0.02,
+  0.05,
+  0.1
+ ],
+ "corpora": {
+  "SMS Spam": {
+   "single": [
+    {
+     "requested": 0.02,
+     "delivered": 0.0139,
+     "held": true,
+     "tie_share": 0.0168,
+     "distinct": 19.2
+    },
+    {
+     "requested": 0.05,
+     "delivered": 0.0305,
+     "held": true,
+     "tie_share": 0.036,
+     "distinct": 19.2
+    },
+    {
+     "requested": 0.1,
+     "delivered": 0.0731,
+     "held": true,
+     "tie_share": 0.093,
+     "distinct": 19.2
+    }
+   ],
+   "stacked": [
+    {
+     "requested": 0.02,
+     "delivered": 0.0207,
+     "held": false,
+     "tie_share": 0.0006,
+     "distinct": 59.8
+    },
+    {
+     "requested": 0.05,
+     "delivered": 0.0447,
+     "held": true,
+     "tie_share": 0.011,
+     "distinct": 59.8
+    },
+    {
+     "requested": 0.1,
+     "delivered": 0.0941,
+     "held": true,
+     "tie_share": 0.012,
+     "distinct": 59.8
+    }
+   ],
+   "stacked-P": [
+    {
+     "requested": 0.02,
+     "delivered": 0.0189,
+     "held": true,
+     "tie_share": 0.0,
+     "distinct": 1038.6
+    },
+    {
+     "requested": 0.05,
+     "delivered": 0.0468,
+     "held": true,
+     "tie_share": 0.0,
+     "distinct": 1038.6
+    },
+    {
+     "requested": 0.1,
+     "delivered": 0.0982,
+     "held": true,
+     "tie_share": 0.0,
+     "distinct": 1038.6
+    }
+   ]
+  },
+  "tweet_eval hate": {
+   "single": [
+    {
+     "requested": 0.02,
+     "delivered": 0.0123,
+     "held": true,
+     "tie_share": 0.0121,
+     "distinct": 58.8
+    },
+    {
+     "requested": 0.05,
+     "delivered": 0.0374,
+     "held": true,
+     "tie_share": 0.0205,
+     "distinct": 58.8
+    },
+    {
+     "requested": 0.1,
+     "delivered": 0.0818,
+     "held": true,
+     "tie_share": 0.028,
+     "distinct": 58.8
+    }
+   ],
+   "stacked": [
+    {
+     "requested": 0.02,
+     "delivered": 0.0163,
+     "held": true,
+     "tie_share": 0.0029,
+     "distinct": 354.4
+    },
+    {
+     "requested": 0.05,
+     "delivered": 0.0483,
+     "held": true,
+     "tie_share": 0.0013,
+     "distinct": 354.4
+    },
+    {
+     "requested": 0.1,
+     "delivered": 0.0978,
+     "held": true,
+     "tie_share": 0.0033,
+     "distinct": 354.4
+    }
+   ],
+   "stacked-P": [
+    {
+     "requested": 0.02,
+     "delivered": 0.0178,
+     "held": true,
+     "tie_share": 0.0,
+     "distinct": 1796.2
+    },
+    {
+     "requested": 0.05,
+     "delivered": 0.0475,
+     "held": true,
+     "tie_share": 0.0,
+     "distinct": 1796.2
+    },
+    {
+     "requested": 0.1,
+     "delivered": 0.097,
+     "held": true,
+     "tie_share": 0.0,
+     "distinct": 1796.2
+    }
+   ]
+  },
+  "Enron-Spam": {
+   "single": [
+    {
+     "requested": 0.02,
+     "delivered": 0.017,
+     "held": true,
+     "tie_share": 0.0047,
+     "distinct": 34.4
+    },
+    {
+     "requested": 0.05,
+     "delivered": 0.0401,
+     "held": true,
+     "tie_share": 0.0194,
+     "distinct": 34.4
+    },
+    {
+     "requested": 0.1,
+     "delivered": 0.0727,
+     "held": true,
+     "tie_share": 0.5949,
+     "distinct": 34.4
+    }
+   ],
+   "stacked": [
+    {
+     "requested": 0.02,
+     "delivered": 0.0198,
+     "held": true,
+     "tie_share": 0.0012,
+     "distinct": 170.4
+    },
+    {
+     "requested": 0.05,
+     "delivered": 0.0463,
+     "held": true,
+     "tie_share": 0.0055,
+     "distinct": 170.4
+    },
+    {
+     "requested": 0.1,
+     "delivered": 0.0799,
+     "held": true,
+     "tie_share": 0.0641,
+     "distinct": 170.4
+    }
+   ],
+   "stacked-P": [
+    {
+     "requested": 0.02,
+     "delivered": 0.0205,
+     "held": false,
+     "tie_share": 0.0,
+     "distinct": 1928.0
+    },
+    {
+     "requested": 0.05,
+     "delivered": 0.0489,
+     "held": true,
+     "tie_share": 0.0,
+     "distinct": 1928.0
+    },
+    {
+     "requested": 0.1,
+     "delivered": 0.0991,
+     "held": true,
+     "tie_share": 0.0,
+     "distinct": 1928.0
+    }
+   ]
+  }
+ },
+ "held": {
+  "single": 9,
+  "stacked": 8,
+  "stacked-P": 8
+ },
+ "verdict": "REFUTED: the tie-free arm (Platt, 0.0% on the cut) breaks as many contracts as the stacked isotonic one, so the break is not about ties. Stacking also REDUCES ties, 1.1% against 9.2% for a single model - the opposite of the hypothesis.",
+ "tie_share_by_arch": {
+  "single": 0.0917,
+  "stacked": 0.0113,
+  "stacked-P": 0.0
+ }
+}

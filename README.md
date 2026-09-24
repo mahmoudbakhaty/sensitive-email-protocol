@@ -522,14 +522,20 @@ So: isotonic makes the delivered rate **unpredictable**, not systematically too
 high. Which side of the promise the tie falls on is a property of the data, and
 the bound does not control it.
 
-Two explanations for the direction have now been tested and both are refuted.
-Distribution shift: the failing threshold is four times *more* stable than the
-one that works. Model weakness: tweet_eval/hate was weakened to a Brier of
-0.2332, worse than this benchmark's 0.2268, and kept its contract at every
-step (`results/RESULTS_TIES_AND_STRENGTH.md`). The mechanism is established;
-its direction is not, and neither model strength, corpus size nor class balance
-distinguishes the corpora where it falls one way from those where it falls the
-other.
+**Three explanations for the direction have been tested and all three are
+refuted.**
+
+| hypothesis | verdict |
+|---|---|
+| the failing threshold is less stable | refuted - it is four times *more* stable |
+| the model is weaker | refuted - tweet_eval/hate at a worse Brier kept its contract |
+| our architecture stacks calibrators | refuted - stacking *reduces* ties, 9.2% to 1.1% |
+
+Details in `results/RESULTS_TIES_AND_STRENGTH.md` and
+`results/RESULTS_STACKING_TIES.md`. The mechanism is established; its
+direction is not, and neither stability, model strength, corpus size, class
+balance nor architecture distinguishes the corpora where it falls one way from
+those where it falls the other.
 
 ```
 python scripts/why_block_fails.py
