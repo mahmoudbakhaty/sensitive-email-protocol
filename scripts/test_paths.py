@@ -99,8 +99,35 @@ def check_no_duplicate_files():
     return not dup
 
 
+def check_readme_headline_is_current():
+    """The README's front table must match the records.
+
+    Every figure in it was typed. After the Subject-header correction the
+    records changed and the table did not, so the first thing a reader saw was
+    1,069 threads instead of 1,103 and the best strict method at 0.359 instead
+    of 0.410. It is generated now; this checks it was regenerated."""
+    import subprocess
+    readme = os.path.join(REPO, "README.md")
+    before = io.open(readme, encoding="utf-8").read()
+    r = subprocess.run([sys.executable,
+                        os.path.join(HERE, "readme_headline.py")],
+                       capture_output=True, text=True)
+    after = io.open(readme, encoding="utf-8").read()
+    if r.returncode != 0:
+        print("  regenerating the headline table failed: %s"
+              % r.stderr.strip()[:120])
+        return False
+    same = before == after
+    print("  README headline table matches the records : %s"
+          % ("yes" if same else "NO - it was stale and has been regenerated"))
+    return same
+
+
 def main():
     ok = True
+    print("=== the README front table ===")
+    ok &= check_readme_headline_is_current()
+    print()
     print("=== one copy of each file ===")
     ok &= check_no_duplicate_files()
     print()
