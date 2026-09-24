@@ -1,0 +1,596 @@
+{
+ "source": "NorskRegnesentral/text-anonymization-benchmark",
+ "files": [
+  {
+   "name": "echr_dev.json",
+   "sha256": "8c3c7306f46b8d54debeb38ae11d8b0b8bcf4bdccbc3b6f13c12ad7be16893ec"
+  },
+  {
+   "name": "echr_test.json",
+   "sha256": "cd0f0f15f84a8739654c7cf30c6be8ce27b051ef73974d39d792a0cb8c846379"
+  }
+ ],
+ "ours": {
+  "observed_agreement": 0.8755,
+  "cohens_kappa": 0.6618,
+  "gwets_ac1": 0.8031,
+  "annotator_f1": 0.744,
+  "positive_rate": 0.2431,
+  "pairs": 1382.0,
+  "one": 172.0,
+  "label_rate": 0.1809
+ },
+ "label_definitions": {
+  "DIRECT": {
+   "sentences": 8182,
+   "documents": 207,
+   "positive_rate": 0.0559,
+   "unanimous_share": 0.9825,
+   "approx_kappa": 0.8971,
+   "exact_kappa": 0.9428,
+   "equal_marginal_pair_kappa": 0.9418,
+   "annotator_rate_spread": 0.0141,
+   "observed_agreement": 0.9897,
+   "gwets_ac1": 0.9886,
+   "annotator_f1": 0.9026
+  },
+  "DIRECT or QUASI": {
+   "sentences": 8182,
+   "documents": 207,
+   "positive_rate": 0.6347,
+   "unanimous_share": 0.8225,
+   "approx_kappa": 0.8136,
+   "exact_kappa": 0.8069,
+   "equal_marginal_pair_kappa": 0.8016,
+   "annotator_rate_spread": 0.1522,
+   "observed_agreement": 0.9116,
+   "gwets_ac1": 0.8319,
+   "annotator_f1": 0.9279
+  },
+  "confidential": {
+   "sentences": 8182,
+   "documents": 207,
+   "positive_rate": 0.0425,
+   "unanimous_share": 0.9347,
+   "approx_kappa": 0.5164,
+   "exact_kappa": 0.2818,
+   "equal_marginal_pair_kappa": 0.2549,
+   "annotator_rate_spread": 0.0594,
+   "observed_agreement": 0.9633,
+   "gwets_ac1": 0.9603,
+   "annotator_f1": 0.5355
+  }
+ },
+ "context_dependence": {
+  "doc_string_pairs": 13185,
+  "context_dependent_under_noise_only": 149,
+  "context_dependent_share_null": 0.211,
+  "annotators_split_within_document": 2812,
+  "annotators_split_share": 0.2133,
+  "strings_in_3plus_documents": 706,
+  "majority_differs_across_documents": 200,
+  "context_dependent_share": 0.2833,
+  "examples": [
+   {
+    "string": "british",
+    "documents": 69,
+    "decisions": {
+     "NO_MASK": 47,
+     "QUASI": 22
+    }
+   },
+   {
+    "string": "turkish",
+    "documents": 43,
+    "decisions": {
+     "NO_MASK": 22,
+     "QUASI": 21
+    }
+   },
+   {
+    "string": "london",
+    "documents": 81,
+    "decisions": {
+     "NO_MASK": 61,
+     "QUASI": 20
+    }
+   },
+   {
+    "string": "1 november 1998",
+    "documents": 35,
+    "decisions": {
+     "NO_MASK": 19,
+     "QUASI": 16
+    }
+   },
+   {
+    "string": "british national",
+    "documents": 34,
+    "decisions": {
+     "NO_MASK": 23,
+     "QUASI": 11
+    }
+   }
+  ]
+ },
+ "metadata_test": {
+  "tested": 57,
+  "significant_after_holm": 0,
+  "expected_nominal_by_chance": 2.85,
+  "strings": [],
+  "top": [
+   {
+    "string": "turkey",
+    "documents": 14,
+    "gain": 0.2143,
+    "p": 0.026
+   },
+   {
+    "string": "united kingdom",
+    "documents": 95,
+    "gain": 0.0105,
+    "p": 0.046
+   },
+   {
+    "string": "life imprisonment",
+    "documents": 11,
+    "gain": 0.2727,
+    "p": 0.0615
+   },
+   {
+    "string": "sweden",
+    "documents": 13,
+    "gain": 0.1538,
+    "p": 0.0805
+   },
+   {
+    "string": "british",
+    "documents": 69,
+    "gain": 0.029,
+    "p": 0.098
+   },
+   {
+    "string": "irish",
+    "documents": 10,
+    "gain": 0.2,
+    "p": 0.1185
+   },
+   {
+    "string": "1990",
+    "documents": 7,
+    "gain": 0.1429,
+    "p": 0.1545
+   },
+   {
+    "string": "london",
+    "documents": 81,
+    "gain": 0.0247,
+    "p": 0.179
+   }
+  ],
+  "all": [
+   {
+    "string": "turkey",
+    "documents": 14,
+    "gain": 0.2143,
+    "p": 0.026
+   },
+   {
+    "string": "united kingdom",
+    "documents": 95,
+    "gain": 0.0105,
+    "p": 0.046
+   },
+   {
+    "string": "life imprisonment",
+    "documents": 11,
+    "gain": 0.2727,
+    "p": 0.0615
+   },
+   {
+    "string": "sweden",
+    "documents": 13,
+    "gain": 0.1538,
+    "p": 0.0805
+   },
+   {
+    "string": "british",
+    "documents": 69,
+    "gain": 0.029,
+    "p": 0.098
+   },
+   {
+    "string": "irish",
+    "documents": 10,
+    "gain": 0.2,
+    "p": 0.1185
+   },
+   {
+    "string": "1990",
+    "documents": 7,
+    "gain": 0.1429,
+    "p": 0.1545
+   },
+   {
+    "string": "london",
+    "documents": 81,
+    "gain": 0.0247,
+    "p": 0.179
+   },
+   {
+    "string": "turkish",
+    "documents": 43,
+    "gain": 0.0465,
+    "p": 0.234
+   },
+   {
+    "string": "swedish",
+    "documents": 25,
+    "gain": 0.04,
+    "p": 0.301
+   },
+   {
+    "string": "february",
+    "documents": 6,
+    "gain": 0.3333,
+    "p": 0.404
+   },
+   {
+    "string": "two children",
+    "documents": 11,
+    "gain": 0.0909,
+    "p": 0.4595
+   },
+   {
+    "string": "three months",
+    "documents": 9,
+    "gain": 0.1111,
+    "p": 0.577
+   },
+   {
+    "string": "six months",
+    "documents": 10,
+    "gain": 0.1,
+    "p": 0.5775
+   },
+   {
+    "string": "age of 65",
+    "documents": 6,
+    "gain": 0.1667,
+    "p": 0.578
+   },
+   {
+    "string": "1995",
+    "documents": 10,
+    "gain": 0.1,
+    "p": 0.5915
+   },
+   {
+    "string": "three children",
+    "documents": 7,
+    "gain": 0.1429,
+    "p": 0.728
+   },
+   {
+    "string": "1 november 1998",
+    "documents": 35,
+    "gain": 0.0571,
+    "p": 0.769
+   },
+   {
+    "string": "united kingdom of great britain and northern ireland",
+    "documents": 113,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1955",
+    "documents": 12,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "ministry of foreign affairs",
+    "documents": 16,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1985",
+    "documents": 7,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1971",
+    "documents": 8,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "england",
+    "documents": 6,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "daughter",
+    "documents": 7,
+    "gain": 0.1429,
+    "p": 1.0
+   },
+   {
+    "string": "counsel",
+    "documents": 11,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "five years",
+    "documents": 8,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "high court",
+    "documents": 34,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "four",
+    "documents": 7,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1981",
+    "documents": 11,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1984",
+    "documents": 12,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "six years",
+    "documents": 7,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1998",
+    "documents": 8,
+    "gain": 0.125,
+    "p": 1.0
+   },
+   {
+    "string": "1991",
+    "documents": 9,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1 november 2001",
+    "documents": 20,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr r. ryssdal",
+    "documents": 19,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr b. walsh",
+    "documents": 7,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr c. russo",
+    "documents": 6,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr a. spielmann",
+    "documents": 7,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr ryssdal",
+    "documents": 17,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr r. macdonald",
+    "documents": 10,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr l. wildhaber",
+    "documents": 13,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr f. g\u00f6lc\u00fckl\u00fc",
+    "documents": 8,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr f. matscher",
+    "documents": 6,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "two years",
+    "documents": 13,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1989",
+    "documents": 14,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "two",
+    "documents": 20,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "delegate of the commission",
+    "documents": 15,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1996",
+    "documents": 12,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1983",
+    "documents": 9,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr i. foighel",
+    "documents": 7,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "three",
+    "documents": 12,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "1988",
+    "documents": 8,
+    "gain": 0.125,
+    "p": 1.0
+   },
+   {
+    "string": "three years",
+    "documents": 6,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "city court",
+    "documents": 7,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "2001",
+    "documents": 6,
+    "gain": 0.0,
+    "p": 1.0
+   },
+   {
+    "string": "mr j. makarczyk",
+    "documents": 6,
+    "gain": 0.0,
+    "p": 1.0
+   }
+  ]
+ },
+ "verdict_context": "CONTEXT-DEPENDENCE IS NOT ESTABLISHED HERE. Strings do draw different decisions in different documents (28.3%), but only modestly above a noise-only simulation (21.1%), and for NO string does the document's country predict which decision it gets once 57 tests are corrected for. The variation is real and its cause is not shown to be context",
+ "primary": {
+  "label": "DIRECT or QUASI",
+  "kappa": 0.8136,
+  "kappa_ci95": [
+   0.7981,
+   0.8293
+  ],
+  "exact_kappa": 0.8069,
+  "equal_marginal_pair_kappa": 0.8016,
+  "annotator_rate_spread": 0.1522,
+  "approximation_bias": 0.0054,
+  "prevalence_matched": {
+   "target_annotator_rate": 0.2431,
+   "positives_kept": 878,
+   "contested_share": 0.0733,
+   "ours_contested_share": 0.1245,
+   "kappa": 0.8002,
+   "ci95": [
+    0.7758,
+    0.8247
+   ]
+  }
+ },
+ "verdict_agreement": "even matched on class balance, a published privacy benchmark agrees better than our annotators (kappa 0.800 [0.776, 0.825] against 0.662): contested judgement is NOT simply given in this kind of task, and our lower agreement is ours to explain",
+ "verdict_approximation": "the approximation our corpus forces moves kappa by 0.005 at a fixed aggregation, and annotators' positive rates differ by 0.152 on average, so our kappa is a number about the annotators and not about the assumption",
+ "filter": {
+  "sentences": 8182,
+  "documents": 207,
+  "positive_rate": 0.6347,
+  "rows": [
+   {
+    "requested": 0.02,
+    "auto_share": 0.5392,
+    "auto_allowed": 0,
+    "auto_blocked": 4412,
+    "leak": 0.0,
+    "block_precision": 0.9669,
+    "leak_ok": true,
+    "block_ok": true,
+    "error_among_auto": 0.0331,
+    "held": true
+   },
+   {
+    "requested": 0.05,
+    "auto_share": 0.7282,
+    "auto_allowed": 1546,
+    "auto_blocked": 4412,
+    "leak": 0.0204,
+    "block_precision": 0.9669,
+    "leak_ok": true,
+    "block_ok": true,
+    "error_among_auto": 0.0423,
+    "held": true
+   },
+   {
+    "requested": 0.1,
+    "auto_share": 0.8009,
+    "auto_allowed": 2141,
+    "auto_blocked": 4412,
+    "leak": 0.0462,
+    "block_precision": 0.9669,
+    "leak_ok": true,
+    "block_ok": true,
+    "error_among_auto": 0.0589,
+    "held": true
+   }
+  ]
+ },
+ "verdict_contract": "BOTH halves of the contract hold at every request on a corpus the system was never designed for, with documents as groups",
+ "declined": {
+  "escalation_contested": 0.3946,
+  "escalation_unanimous": 0.2453,
+  "difference": 0.1493,
+  "ci95": [
+   0.1113,
+   0.1858
+  ],
+  "verdict": "the system escalates what people argued over more often than what they agreed on, and the interval excludes zero"
+ }
+}
