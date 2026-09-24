@@ -1,0 +1,134 @@
+{
+ "environment": {
+  "python": "3.14.0",
+  "scikit_learn": "1.9.1",
+  "numpy": "2.4.2"
+ },
+ "note": "a policy set on validation threads, measured on the thread-disjoint test folds it was not set on",
+ "requests": [
+  0.01,
+  0.02,
+  0.03,
+  0.05,
+  0.08,
+  0.1,
+  0.15,
+  0.2
+ ],
+ "rows": [
+  {
+   "requested": 0.01,
+   "delivered_leak": 0.0,
+   "delivered_false_block": 0.0,
+   "leak_ratio": 0.0,
+   "block_ratio": 0.0,
+   "auto_share": 0.0,
+   "error_rate_among_auto": 0.0,
+   "escalated_share": 1.0
+  },
+  {
+   "requested": 0.02,
+   "delivered_leak": 0.0,
+   "delivered_false_block": 0.0627,
+   "leak_ratio": 0.0,
+   "block_ratio": 3.14,
+   "auto_share": 0.0883,
+   "error_rate_among_auto": 0.582,
+   "escalated_share": 0.9117
+  },
+  {
+   "requested": 0.03,
+   "delivered_leak": 0.0,
+   "delivered_false_block": 0.0671,
+   "leak_ratio": 0.0,
+   "block_ratio": 2.24,
+   "auto_share": 0.0941,
+   "error_rate_among_auto": 0.5846,
+   "escalated_share": 0.9059
+  },
+  {
+   "requested": 0.05,
+   "delivered_leak": 0.04,
+   "delivered_false_block": 0.0795,
+   "leak_ratio": 0.8,
+   "block_ratio": 1.59,
+   "auto_share": 0.2598,
+   "error_rate_among_auto": 0.2786,
+   "escalated_share": 0.7402
+  },
+  {
+   "requested": 0.08,
+   "delivered_leak": 0.048,
+   "delivered_false_block": 0.1122,
+   "leak_ratio": 0.6,
+   "block_ratio": 1.4,
+   "auto_share": 0.3329,
+   "error_rate_among_auto": 0.3022,
+   "escalated_share": 0.6671
+  },
+  {
+   "requested": 0.1,
+   "delivered_leak": 0.052,
+   "delivered_false_block": 0.1157,
+   "leak_ratio": 0.52,
+   "block_ratio": 1.16,
+   "auto_share": 0.3437,
+   "error_rate_among_auto": 0.3032,
+   "escalated_share": 0.6563
+  },
+  {
+   "requested": 0.15,
+   "delivered_leak": 0.088,
+   "delivered_false_block": 0.167,
+   "leak_ratio": 0.59,
+   "block_ratio": 1.11,
+   "auto_share": 0.474,
+   "error_rate_among_auto": 0.3221,
+   "escalated_share": 0.526
+  },
+  {
+   "requested": 0.2,
+   "delivered_leak": 0.14,
+   "delivered_false_block": 0.2359,
+   "leak_ratio": 0.7,
+   "block_ratio": 1.18,
+   "auto_share": 0.6252,
+   "error_rate_among_auto": 0.3495,
+   "escalated_share": 0.3748
+  }
+ ],
+ "honoured": [
+  {
+   "target": 0.01,
+   "reachable": true,
+   "request": 0.01,
+   "delivered_leak": 0.0,
+   "delivered_false_block": 0.0,
+   "auto_share": 0.0
+  },
+  {
+   "target": 0.02,
+   "reachable": true,
+   "request": 0.01,
+   "delivered_leak": 0.0,
+   "delivered_false_block": 0.0,
+   "auto_share": 0.0
+  },
+  {
+   "target": 0.05,
+   "reachable": true,
+   "request": 0.01,
+   "delivered_leak": 0.0,
+   "delivered_false_block": 0.0,
+   "auto_share": 0.0
+  },
+  {
+   "target": 0.1,
+   "reachable": true,
+   "request": 0.05,
+   "delivered_leak": 0.04,
+   "delivered_false_block": 0.0795,
+   "auto_share": 0.2598
+  }
+ ]
+}

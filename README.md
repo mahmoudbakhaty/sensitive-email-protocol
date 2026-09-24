@@ -319,6 +319,38 @@ conclusion.
 python scripts/selective.py        # ~4 minutes on CPU
 ```
 
+## The filter as a system, and what it can promise
+
+`scripts/filter_system.py` is the framework as something you can call: a
+message in, one of ALLOW / ESCALATE / BLOCK out. Its thresholds are a contract
+rather than an accuracy target - *at most this share of sensitive messages may
+be auto-allowed* - because a leak and an interruption do not cost the same.
+
+At the default contract, out of fold: 15.1% of traffic handled automatically,
+4.0% of sensitive messages auto-allowed against a 5% promise, nothing
+auto-blocked, 4.8% error among the automatic decisions.
+
+The contract did not hold at first, and the three reasons are in
+`results/RESULTS_FILTER_SYSTEM.md`. The one worth naming here: the binomial
+bound assumes independent draws, and messages in a thread are not independent
+- the premise of this whole protocol. Counting threads instead of messages
+moved the block-side overshoot from 6.3x the promise to 3.1x.
+
+**The guarantee is one-sided.** "No more than X% of sensitive messages pass
+automatically" holds at every request measured. "No more than Y% of harmless
+messages are blocked automatically" does not.
+
+**And one promise this benchmark cannot support at all.** At a 1% request the
+system automates nothing, correctly: promising a 1% leak rate at 90%
+confidence needs 230 threads carrying a sensitive message and validation has
+69. With 1,382 messages the tightest promise available is about 5%, and no
+model changes that.
+
+```
+python scripts/filter_system.py
+python scripts/policy_transfer.py
+```
+
 ## Does it decline what the annotators argued over?
 
 The benchmark carries 172 messages two trained annotators settled differently.

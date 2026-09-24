@@ -1,0 +1,61 @@
+{
+ "environment": {
+  "python": "3.14.0",
+  "scikit_learn": "1.9.1",
+  "numpy": "2.4.2"
+ },
+ "policy": {
+  "max_leak_rate": 0.05,
+  "max_false_block_rate": 0.01,
+  "val_frac": 0.3,
+  "folds": 5
+ },
+ "components": [
+  "word tf-idf",
+  "character n-grams"
+ ],
+ "absent": [
+  "fine-tuned encoder",
+  "instruction-tuned model"
+ ],
+ "note": "thresholds chosen on validation threads inside each training fold; the test fold sees neither the fit nor the policy",
+ "per_fold_thresholds": [
+  {
+   "allow": 0.308,
+   "block": Infinity
+  },
+  {
+   "allow": 0.3068,
+   "block": Infinity
+  },
+  {
+   "allow": 0.3433,
+   "block": Infinity
+  },
+  {
+   "allow": 0.3338,
+   "block": Infinity
+  },
+  {
+   "allow": 0.3453,
+   "block": Infinity
+  }
+ ],
+ "operating_characteristics": {
+  "messages": 1382,
+  "auto_handled": 209,
+  "auto_share": 0.1512,
+  "escalated": 1173,
+  "escalated_share": 0.8488,
+  "auto_allowed": 209,
+  "auto_blocked": 0,
+  "sensitive_auto_allowed": 10,
+  "leak_rate_of_sensitive": 0.04,
+  "harmless_auto_blocked": 0,
+  "false_block_rate_of_harmless": 0.0,
+  "errors_among_auto": 10,
+  "error_rate_among_auto": 0.0478,
+  "sensitive_in_escalated": 240,
+  "escalated_precision": 0.2046
+ }
+}
