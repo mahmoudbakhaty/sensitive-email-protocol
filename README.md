@@ -398,6 +398,38 @@ python scripts/filter_system.py
 python scripts/policy_transfer.py
 ```
 
+## The design works; 5.5% is the task, not the policy
+
+The filter automates 5.5% of this benchmark's traffic. That admits two
+readings - a hard task, or a design too conservative to be useful - and the
+single-corpus weakness means the task cannot be tested elsewhere. The *design*
+can. `scripts/system_elsewhere.py` runs the system unchanged on three public
+corpora: same contract, same confidence, same precision requirement, same
+calibrator, only the folds differ.
+
+At a 5% leak request:
+
+| corpus | automated | allowed / blocked | leak | contract |
+|---|---|---|---|---|
+| SMS Spam | **98.2%** | 4,705 / 768 | 0.029 | held |
+| tweet_eval/hate | **36.3%** | 2,471 / 793 | 0.044 | held |
+| Enron-Spam | **100.0%** | 17,005 / 16,340 | 0.035 | held |
+| this benchmark | **5.5%** | 76 / 0 | 0.012 | held |
+
+The same system clears nearly all of an easy corpus and almost none of a hard
+one, keeping its promise in both. **The design is not the limit.**
+
+It also blocks readily elsewhere - 768, 793 and 16,340 messages - and zero
+here. The precision requirement is not a rule that never fires; it refuses
+here because precision at the top of the risk score is 28.6%.
+
+Eight of nine external contracts held. The exception is Enron-Spam at a 0.02
+request, delivering 0.035 - a real miss, not a boundary rounding, and reported
+as one. `results/RESULTS_SYSTEM_ELSEWHERE.md` has the detail.
+
+This tests the filter, not the task: none of these corpora is
+context-dependent sensitivity, none has threads, none has two annotators.
+
 ## The GPU run, and what it has to hand over
 
 `scripts/hybrid_framework.py` is the framework the registered title promises,
