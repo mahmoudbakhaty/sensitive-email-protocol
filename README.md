@@ -491,10 +491,17 @@ Isotonic regression did it. It is a step function, chosen for calibration
 quality, and it destroys the resolution a rate guarantee needs. Platt scaling
 is strictly monotone:
 
-| calibrator | distinct values | on the cut | Brier | block contract |
+| calibrator | distinct values | on the cut | Brier | block contract, **as it was then** |
 |---|---|---|---|---|
-| isotonic | 48.6 | 4.8% | **0.2268** | **breaks at every request** |
-| Platt | **275.6** | **0.0%** | 0.2449 | **holds at every request** |
+| isotonic | 48.6 | 4.8% | **0.2268** | **broke at every request** |
+| Platt | **275.6** | **0.0%** | 0.2449 | **held at every request** |
+
+The last column is a record, not a description of the system now. It was
+measured when the block side bounded a *rate*. It bounds *precision* now and
+refuses to block at all on this benchmark, so both calibrators keep the block
+promise - by blocking nothing. What still separates them, and what the default
+rests on, is the first three columns: isotonic leaves a score with a fiftieth
+of Platt's resolution.
 
 The price is about 8% worse calibration and roughly half the automation.
 `results/RESULTS_WHY_BLOCK_FAILS.md` has the full tables.

@@ -51,14 +51,21 @@ OUT = io_paths.result_out("RESULTS_CALIBRATOR_TIES.json")
 REQUESTS = (0.02, 0.05, 0.10)
 
 
-class PlattFilter(FS.SensitivityFilter):
-    """The same system with a strictly monotone calibrator."""
+class IsotonicFilter(FS.SensitivityFilter):
+    """The same system with the step-function calibrator.
+
+    The base class is Platt now, because that is the calibrator measured to
+    keep the contract. This subclass is what the comparison needs: isotonic,
+    which calibrates a little better and cannot keep it."""
 
     def _calibrate(self, s_va, y_va):
-        lr = LogisticRegression(max_iter=1000).fit(
-            np.asarray(s_va).reshape(-1, 1), y_va)
-        return lambda s: lr.predict_proba(
-            np.asarray(s).reshape(-1, 1))[:, 1]
+        return _iso_calibrate(s_va, y_va)
+
+
+# Kept as a name because two other scripts import it, and it is now simply
+# the default system. A subclass that overrides nothing is a copy waiting to
+# drift out of step with what it copies.
+PlattFilter = FS.SensitivityFilter
 
 
 def _iso_calibrate(s_va, y_va):
@@ -82,8 +89,8 @@ def main():
     print("  %-10s %10s %12s %14s %10s"
           % ("calibrator", "distinct", "on the cut", "of harmless", "Brier"))
     res = {}
-    for name, cls in (("isotonic", FS.SensitivityFilter),
-                      ("Platt", PlattFilter)):
+    for name, cls in (("isotonic", IsotonicFilter),
+                      ("Platt", FS.SensitivityFilter)):
         distinct, on_cut, share, briers = [], [], [], []
         for tr, te in GroupKFold(n_splits=FS.FOLDS).split(texts, y, g):
             f = cls()
@@ -112,8 +119,8 @@ def main():
     print("  %-10s %8s %10s %10s %12s"
           % ("calibrator", "request", "leak", "false block", "automated"))
     rows = []
-    for name, cls in (("isotonic", FS.SensitivityFilter),
-                      ("Platt", PlattFilter)):
+    for name, cls in (("isotonic", IsotonicFilter),
+                      ("Platt", FS.SensitivityFilter)):
         for q in REQUESTS:
             actions = np.full(len(y), FS.ESCALATE, dtype=object)
             for tr, te in GroupKFold(n_splits=FS.FOLDS).split(texts, y, g):

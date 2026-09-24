@@ -23,43 +23,43 @@
    "calibrator": "isotonic",
    "requested": 0.02,
    "delivered_leak": 0.0,
-   "delivered_false_block": 0.0627,
-   "auto_share": 0.0883
+   "delivered_false_block": 0.0,
+   "auto_share": 0.0
   },
   {
    "calibrator": "isotonic",
    "requested": 0.05,
    "delivered_leak": 0.04,
-   "delivered_false_block": 0.0795,
-   "auto_share": 0.2598
+   "delivered_false_block": 0.0,
+   "auto_share": 0.1512
   },
   {
    "calibrator": "isotonic",
    "requested": 0.1,
    "delivered_leak": 0.052,
-   "delivered_false_block": 0.1157,
-   "auto_share": 0.3437
+   "delivered_false_block": 0.0,
+   "auto_share": 0.1918
   },
   {
    "calibrator": "Platt",
    "requested": 0.02,
    "delivered_leak": 0.0,
-   "delivered_false_block": 0.0141,
-   "auto_share": 0.0145
+   "delivered_false_block": 0.0,
+   "auto_share": 0.0
   },
   {
    "calibrator": "Platt",
    "requested": 0.05,
    "delivered_leak": 0.012,
-   "delivered_false_block": 0.0345,
-   "auto_share": 0.1064
+   "delivered_false_block": 0.0,
+   "auto_share": 0.055
   },
   {
    "calibrator": "Platt",
    "requested": 0.1,
    "delivered_leak": 0.024,
-   "delivered_false_block": 0.0857,
-   "auto_share": 0.2236
+   "delivered_false_block": 0.0,
+   "auto_share": 0.1064
   }
  ],
  "note": "isotonic against Platt: ties, calibration quality, and whether the rate contract can be honoured"

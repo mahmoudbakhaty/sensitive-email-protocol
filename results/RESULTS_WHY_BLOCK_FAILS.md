@@ -75,6 +75,24 @@ roughly half the automation at the same request. A filter that honours its
 contract while automating less is worth more than one that automates more and
 breaks it.
 
+## A note on what has changed since
+
+This file measured a block side that bounded a **rate** - at most Y% of
+harmless messages blocked. That contract was later found to be the wrong shape
+(`RESULTS_BLOCK_IS_NOT_VIABLE.md`): it says nothing about how many blocks are
+right, and the system was blocking 42 messages at 40% precision while
+promising 90%.
+
+The block side bounds **precision** now, and on this benchmark no cut
+qualifies, so the system blocks nothing and both calibrators keep the block
+promise trivially. Everything below is a true record of the rate-based
+contract and of why it could not be honoured; it is not a description of the
+system's current behaviour.
+
+What survives into the current system is the resolution finding: isotonic
+leaves about fifty distinct values against Platt's two hundred and seventy-six,
+and that is why the default calibrator changed.
+
 ## What generalises, and what does not
 
 An earlier version of this file claimed that anyone putting a rate guarantee
