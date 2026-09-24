@@ -415,11 +415,21 @@ is strictly monotone:
 The price is about 8% worse calibration and roughly half the automation.
 `results/RESULTS_WHY_BLOCK_FAILS.md` has the full tables.
 
-**This generalises.** Anyone putting a rate guarantee on an isotonically
-calibrated score meets the same wall, and it does not announce itself: the
-score looks like a probability, the bound looks sound, and the contract fails
-in one direction only. The diagnosis is one line - count how many items share
-the threshold's exact value.
+**Half of this generalises, and the claim that it all did was wrong.** An
+earlier version of this section said anyone putting a rate guarantee on an
+isotonically calibrated score meets the same wall.
+`scripts/external_calibration.py` tested that on SMS Spam, tweet_eval/hate and
+Enron-Spam, at three requests each.
+
+The mechanism replicates and is large - isotonic leaves 19 to 59 distinct
+values against Platt's 1,059 to 4,556, and puts up to **59.5%** of negatives
+on the threshold's exact value. The contract failure does not replicate:
+isotonic held all nine external contracts and Platt held eight. Our benchmark's
+ties fell on the permissive side; theirs fell on the conservative side.
+
+So: isotonic makes the delivered rate **unpredictable**, not systematically too
+high. Which side of the promise the tie falls on is a property of the data, and
+the bound does not control it.
 
 ```
 python scripts/why_block_fails.py

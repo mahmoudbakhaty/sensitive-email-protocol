@@ -1,0 +1,185 @@
+{
+ "note": "the isotonic tie finding, tested on three public corpora",
+ "requests": [
+  0.02,
+  0.05,
+  0.1
+ ],
+ "alpha": 0.1,
+ "corpora": {
+  "SMS Spam": {
+   "n": 5574,
+   "positive_rate": 0.134,
+   "results": {
+    "isotonic": [
+     {
+      "delivered": 0.0139,
+      "tie_share": 0.0168,
+      "distinct": 19.2,
+      "brier": 0.0133,
+      "requested": 0.02,
+      "held": true
+     },
+     {
+      "delivered": 0.0305,
+      "tie_share": 0.036,
+      "distinct": 19.2,
+      "brier": 0.0133,
+      "requested": 0.05,
+      "held": true
+     },
+     {
+      "delivered": 0.0731,
+      "tie_share": 0.093,
+      "distinct": 19.2,
+      "brier": 0.0133,
+      "requested": 0.1,
+      "held": true
+     }
+    ],
+    "Platt": [
+     {
+      "delivered": 0.0201,
+      "tie_share": 0.0,
+      "distinct": 1058.8,
+      "brier": 0.0137,
+      "requested": 0.02,
+      "held": false
+     },
+     {
+      "delivered": 0.0468,
+      "tie_share": 0.0,
+      "distinct": 1058.8,
+      "brier": 0.0137,
+      "requested": 0.05,
+      "held": true
+     },
+     {
+      "delivered": 0.0992,
+      "tie_share": 0.0,
+      "distinct": 1058.8,
+      "brier": 0.0137,
+      "requested": 0.1,
+      "held": true
+     }
+    ]
+   }
+  },
+  "tweet_eval hate": {
+   "n": 9000,
+   "positive_rate": 0.4203,
+   "results": {
+    "isotonic": [
+     {
+      "delivered": 0.0123,
+      "tie_share": 0.0121,
+      "distinct": 58.8,
+      "brier": 0.1524,
+      "requested": 0.02,
+      "held": true
+     },
+     {
+      "delivered": 0.0374,
+      "tie_share": 0.0205,
+      "distinct": 58.8,
+      "brier": 0.1524,
+      "requested": 0.05,
+      "held": true
+     },
+     {
+      "delivered": 0.0818,
+      "tie_share": 0.028,
+      "distinct": 58.8,
+      "brier": 0.1524,
+      "requested": 0.1,
+      "held": true
+     }
+    ],
+    "Platt": [
+     {
+      "delivered": 0.018,
+      "tie_share": 0.0,
+      "distinct": 1794.0,
+      "brier": 0.152,
+      "requested": 0.02,
+      "held": true
+     },
+     {
+      "delivered": 0.0481,
+      "tie_share": 0.0,
+      "distinct": 1794.0,
+      "brier": 0.152,
+      "requested": 0.05,
+      "held": true
+     },
+     {
+      "delivered": 0.0935,
+      "tie_share": 0.0,
+      "distinct": 1794.0,
+      "brier": 0.152,
+      "requested": 0.1,
+      "held": true
+     }
+    ]
+   }
+  },
+  "Enron-Spam": {
+   "n": 33345,
+   "positive_rate": 0.5054,
+   "results": {
+    "isotonic": [
+     {
+      "delivered": 0.017,
+      "tie_share": 0.0047,
+      "distinct": 34.4,
+      "brier": 0.0088,
+      "requested": 0.02,
+      "held": true
+     },
+     {
+      "delivered": 0.0401,
+      "tie_share": 0.0194,
+      "distinct": 34.4,
+      "brier": 0.0088,
+      "requested": 0.05,
+      "held": true
+     },
+     {
+      "delivered": 0.0727,
+      "tie_share": 0.5949,
+      "distinct": 34.4,
+      "brier": 0.0088,
+      "requested": 0.1,
+      "held": true
+     }
+    ],
+    "Platt": [
+     {
+      "delivered": 0.0194,
+      "tie_share": 0.0,
+      "distinct": 4556.4,
+      "brier": 0.0086,
+      "requested": 0.02,
+      "held": true
+     },
+     {
+      "delivered": 0.0493,
+      "tie_share": 0.0,
+      "distinct": 4556.4,
+      "brier": 0.0086,
+      "requested": 0.05,
+      "held": true
+     },
+     {
+      "delivered": 0.0974,
+      "tie_share": 0.0,
+      "distinct": 4556.4,
+      "brier": 0.0086,
+      "requested": 0.1,
+      "held": true
+     }
+    ]
+   }
+  }
+ }
+}

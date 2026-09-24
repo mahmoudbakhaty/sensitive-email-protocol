@@ -75,16 +75,44 @@ roughly half the automation at the same request. A filter that honours its
 contract while automating less is worth more than one that automates more and
 breaks it.
 
-## What generalises
+## What generalises, and what does not
 
-This is not a fact about this corpus. Anyone building a filter with a rate
-guarantee on an isotonically calibrated score meets the same wall, and it
-does not announce itself: the score looks like a probability, the bound looks
-sound, and the contract quietly fails in one direction only. The diagnosis is
-one line - count how many messages share the threshold's exact value.
+An earlier version of this file claimed that anyone putting a rate guarantee
+on an isotonically calibrated score meets the same wall. **That claim was
+tested on three public corpora and it is wrong.** The correction is kept here
+rather than quietly edited out.
 
-Isotonic calibration and a rate contract are in tension. Pick the calibrator
-for the guarantee you need, not for the Brier score alone.
+`scripts/external_calibration.py` repeats the measurement on SMS Spam (5,574
+messages, 13.4% positive), tweet_eval/hate (9,000 tweets, 42%) and Enron-Spam
+(33,716 messages, 50.9%), at 2%, 5% and 10% requests.
+
+**The mechanism replicates everywhere, and it is large.**
+
+| | distinct values | negatives on the cut |
+|---|---|---|
+| isotonic | 19 to 59 | 0.5% to **59.5%** |
+| Platt | 1,059 to 4,556 | 0.0% |
+
+On Enron-Spam at a 10% request, **59.5% of the negatives sit on one value**.
+The resolution loss is not a property of this benchmark.
+
+**The contract failure does not replicate.** Isotonic held all nine external
+contracts; Platt held eight of nine. Where our benchmark's ties landed on the
+permissive side and broke the promise, the external ties landed on the
+conservative side and kept it.
+
+So the honest statement is narrower than the one it replaces:
+
+> Isotonic calibration makes the delivered rate **unpredictable**, not
+> systematically too high. A large share of items can sit on the threshold's
+> exact value, and which side of the promise they fall on is a property of the
+> data, not something the bound controls. On this benchmark it fell the wrong
+> way.
+
+The practical advice survives and the reasoning behind it changes. The
+diagnosis is still one line - count how many items share the threshold's exact
+value - but what it tells you is that the contract is at the mercy of a tie,
+not that it will fail.
 
 ## Reproduce
 
