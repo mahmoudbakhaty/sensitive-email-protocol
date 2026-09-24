@@ -30,6 +30,8 @@ These artifacts exist so both can be checked rather than taken on trust.
 
 - [The four controls](#the-four-controls)
 - [Known limitations](#known-limitations)
+- [Does the conclusion depend on our label mapping?](#does-the-conclusion-depend-on-our-label-mapping)
+- [The one thing left that needs a person, and the hour it takes](#the-one-thing-left-that-needs-a-person-and-the-hour-it-takes)
 - [The two control files, and why their numbers are higher](#the-two-control-files-and-why-their-numbers-are-higher)
 
 **The system, and what it can promise**
@@ -37,6 +39,7 @@ These artifacts exist so both can be checked rather than taken on trust.
 - [The filter as a system, and what it can promise](#the-filter-as-a-system-and-what-it-can-promise)
 - [The system blocks nothing, and that is the answer](#the-system-blocks-nothing-and-that-is-the-answer)
 - [The design works; 5.5% is the task, not the policy](#the-design-works-55-is-the-task-not-the-policy)
+- [A second privacy corpus, with human annotators](#a-second-privacy-corpus-with-human-annotators)
 - [What a model is worth when it is allowed to decline](#what-a-model-is-worth-when-it-is-allowed-to-decline)
 - [Does it decline what the annotators argued over?](#does-it-decline-what-the-annotators-argued-over)
 - [The GPU run, and what it has to hand over](#the-gpu-run-and-what-it-has-to-hand-over)
@@ -103,6 +106,14 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `scripts/verify_references.py` | Fetches every reference target and compares the returned title and authors with the printed ones. Exits non-zero on any failure. |
 | `fig_v2_*.png` | The three paper figures. |
 | `scripts/fig_ladder.py` | Builds Fig. 3 straight from the results file, so the figure cannot drift from the numbers. |
+| `scripts/make_annotation_sample.py` | Draws a blind, stratified, thread-disjoint sample with a repeat block and builds a self-contained browser instrument for annotating it against Section III. |
+| `scripts/score_annotation.py` | Scores a completed annotation against our mapping, weighted back to corpus prevalence and read against the annotator's own noise floor. |
+| `scripts/test_annotation.py` | Checks the sample is blind, the tool's rule matches the scorer's, and the verdict can come back against the mapping. |
+| `scripts/mapping_sensitivity.py` | Seventeen defensible label mappings, and what changes. Answers whether construct error in the mapping can reach the conclusions. |
+| `results/RESULTS_MAPPING_SENSITIVITY.md` | The table, the two verdicts, and what the analysis cannot see. |
+| `scripts/second_corpus_tab.py` | The Text Anonymization Benchmark: a second privacy corpus with two to ten annotators per document and document-level grouping. Fetches and fingerprints it, never redistributes it. |
+| `results/RESULTS_SECOND_CORPUS.md` | What that corpus settles - the contract, the abstention, the kappa approximation, and the one result that goes against us. |
+| `results/RESULTS_SECOND_CORPUS.json` | The same, raw. |
 | `scripts/agreement_metrics.py` | Cohen's kappa beside Gwet's AC1 and the raw agreement, after the kappa paradox was raised against us. |
 | `scripts/perm_thread.py` | The permutation null repeated at thread level, to check the message-level version was not flattered by clustering. |
 | `results/RESULTS_agreement_metrics.json` | Four agreement measures with intervals. |
@@ -193,12 +204,101 @@ and seed produced thread-grouped F1 = 0.3220 under scikit-learn 1.6.1 and
 paper pins 1.9.1. `results/FINDING_sklearn_groupkfold.md` has the full
 account, including the fact that we first read the evidence backwards.
 
+## Does the conclusion depend on our label mapping?
+
+The first limitation below is the one no amount of re-running can check: the
+Enron subset was annotated against a 1990s genre taxonomy by people who were
+not thinking about sensitivity, and **seven of its category pairs were chosen
+as sensitive by us**. That choice is defensible and it is not the only
+defensible one.
+
+The usual remedy needs annotators. `scripts/mapping_sensitivity.py` asks a
+different question that needs nobody: **whether the mapping is right is
+unanswerable without people; whether it matters is measurable now.** Seventeen
+mappings, declared in the script before any ran - ours, each weak member
+dropped in turn, each plausible addition added in turn, five holistic
+alternatives - each a position someone could defend from the taxonomy text.
+
+**The automation ceiling is robust.** Across 15 mappings the filter automates
+**0.0% to 7.1%** of the corpus at a 5% request, median 4.9%, and the contract
+holds in **15 of 15**. Move the sensitivity line anywhere a reasonable person
+would put it and the system still sends almost everything to a human.
+
+**The leakage effect holds, and the one flag is what chance predicts.** Across
+17 mappings the thread-disjoint gap runs -0.106 to +0.035, median -0.019. A
+flag requires the gap to be positive by more than two paired standard errors,
+and exactly one mapping flags - `legal only`, 47 sensitive messages, clearing
+the bar by 0.0022.
+
+Seventeen mappings is seventeen tests, though, and that is paid for: at
+alpha 0.023 the expected number of spurious flags is **0.39**, at least one
+turns up **32%** of the time when every mapping is null, and **0 survive Holm
+correction**. An earlier version of this README reported "1 of 17 flags"
+without that context, which reads as a finding when it is the single most
+likely outcome from nothing at all.
+
+`results/RESULTS_MAPPING_SENSITIVITY.md` has the full table and two claims that
+were made and are withdrawn: that the split scores lower under "every mapping
+with a workable number of positives" (`broad`, the largest, is +0.0005), and a
+post-hoc reading that narrower mappings show larger effects - which held for
+three of the four narrowest and omitted the narrowest of all, `legal only`,
+which goes the other way.
+
+This does not establish that our mapping is correct. Seventeen mappings drawn
+from one taxonomy share that taxonomy's blind spots, and nothing here compares
+a label to the paper's Section III definition. It bounds how much that could
+matter; it does not replace it.
+
+## The one thing left that needs a person, and the hour it takes
+
+Everything above bounds the construct-error limitation. None of it closes it:
+no label in this release has ever been checked against the paper's own
+Section III definition, and no computation can do that.
+
+`scripts/make_annotation_sample.py` builds what is needed so that doing it
+costs an hour rather than a project.
+
+```bash
+python scripts/make_annotation_sample.py     # draws the sample, builds the tool
+# open annotation/annotate.html, work through it, press Export
+python scripts/score_annotation.py annotation/annotations.json
+```
+
+Five things make the result worth having, and all five are structural:
+
+* **The annotator never sees our label.** It is written to a separate file the
+  instrument does not read and does not contain. `scripts/test_annotation.py`
+  checks that against the key rather than taking it on trust.
+* **The label is derived, not asked.** Section III's own test is operational -
+  *"an annotator must be unable to justify the label by quoting a term"* - so
+  the tool asks the three questions the definition is made of and computes the
+  label. Asking "is this sensitive?" would collect an intuition and call it a
+  definition. The quoted term is recorded, so a disagreement is adjudicable
+  rather than an assertion.
+* **Stratified, one message per thread, shuffled**, with prevalence weighted
+  back when scoring.
+* **A repeat block.** Twenty messages appear twice, far apart, under different
+  ids. Without them the score is uninterpretable: simulating annotators against
+  this instrument showed that one who is 90% self-consistent and a mapping
+  genuinely blind to a tenth of the definition produce *the same recall*. The
+  repeats measure the annotator's own noise floor, and every other rate is read
+  against it.
+* **The verdict can come back against us**, and the test exercises that: a
+  clean annotator yields "nothing clears the noise floor", an over-broad
+  mapping yields `OVER-LABELS`, a blind one yields `BLIND`.
+
+One annotator who is also an author is not an independent panel, and the
+scorer's output says so. It is a construct-validity check, not an agreement
+study - and it is what closes the gap this release cannot close by computing.
+
 ## Known limitations
 
 Stated in the paper and repeated here so nobody is surprised.
 
 * Labels are the Enron subset's original category judgements mapped to our
   definition. The mapping is ours and is a source of construct error.
+  Seventeen alternative mappings leave both headline conclusions standing:
+  `results/RESULTS_MAPPING_SENSITIVITY.md`.
 * One corpus, one organisation, one era. Generalisation to contemporary
   enterprise email is unestablished.
 * Threads are approximated by normalised subject line, which both over- and
@@ -211,6 +311,9 @@ Stated in the paper and repeated here so nobody is surprised.
   PR-AUC to a bag-of-words baseline.
 * RoBERTa and AraBERT were fine-tuned at a competent default configuration,
   not a searched one.
+* Our annotators agree less well than a guideline-driven privacy
+  benchmark's (kappa 0.662 against 0.800 matched on class balance). See
+  `results/RESULTS_SECOND_CORPUS.md`.
 * The Arabic results are a transfer experiment on machine-translated text, not
   an Arabic benchmark. 3.1% of translations were materially damaged, and
   translationese, pretraining-corpus differences and translation quality are
@@ -431,6 +534,62 @@ as one. `results/RESULTS_SYSTEM_ELSEWHERE.md` has the detail.
 
 This tests the filter, not the task: none of these corpora is
 context-dependent sensitivity, none has threads, none has two annotators.
+
+## A second privacy corpus, with human annotators
+
+The section above ends by saying what it does not establish: none of those
+corpora is context-dependent sensitivity, none has group structure, none has
+more than one annotator. The **Text Anonymization Benchmark** (Pilan et al.,
+TACL 2022) - European Court of Human Rights judgments annotated span by span
+for what must be masked so the applicant cannot be re-identified - closes
+**two** of those three: **207 documents annotated by two to ten people each**,
+every sentence inside a document.
+
+`scripts/second_corpus_tab.py` fetches it, checks its digest against the one
+these numbers came from, and asks five questions with the system unchanged and
+documents standing in for threads.
+
+**Both halves of the contract hold**, on 8,182 sentences it was never designed
+for. The filter promises a leak rate *and* a block precision of at least 0.90,
+and both are tested - an earlier version tested the leak half alone, which is
+not a check, since a policy that blocks everything keeps any leak contract
+trivially:
+
+| request | automated | allowed / blocked | leak | block precision | contract |
+|---|---|---|---|---|---|
+| 0.02 | 53.9% | 0 / 4,412 | 0.000 | 0.967 | held |
+| 0.05 | **72.8%** | 1,546 / 4,412 | 0.020 | 0.967 | held |
+| 0.10 | 80.1% | 2,141 / 4,412 | 0.046 | 0.967 | held |
+
+**It declines what people argued over.** Of sentences the annotators split on,
+39.5% are escalated; of unanimous ones, 24.5%. A difference of **+14.9 points,
+95% CI [+11.1, +18.6]** on a document-level bootstrap. The abstention tracks
+something real about the judgement, not the quirks of our own labels. This is
+the strongest result in that file.
+
+**Our kappa is not an artefact of the approximation our corpus forces.** Ours
+records how many annotators chose a category, never which, so kappa must assume
+equal marginals. Computed per annotator pair both ways, the assumption moves
+kappa by **0.005** - even though annotators' positive rates differ by 0.152
+within a document.
+
+**One result against us.** Matched on class balance - the annotator-level rate,
+24.3%, not the 18.1% label rate - TAB reaches kappa **0.800 [0.776, 0.825]**
+against our **0.662**. Our annotators agree less well than a guideline-driven
+benchmark's, and that is a limitation rather than something to explain away.
+
+**And one claim withdrawn.** TAB was chosen because its `QUASI` label looked
+context-dependent, and an earlier version of this README said so, citing
+`turkish` - masked in 21 documents, not masked in 22. Measured rather than
+asserted, that does not hold: the variation across documents (28.3%) sits only
+modestly above a noise-only simulation (21.1%), and for **no string out of 57
+tested** does the document's country predict which decision it gets once the
+tests are corrected for multiplicity. `turkish` itself ranks 9th, at p = 0.234.
+The variation is real; its cause is not shown to be context. TAB closes two of
+the three gaps, not all three.
+
+`results/RESULTS_SECOND_CORPUS.md` has the full detail, including a second
+defence that was made and is withdrawn.
 
 ## The GPU run, and what it has to hand over
 

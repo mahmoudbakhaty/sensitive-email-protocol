@@ -1,6 +1,7 @@
 {
  "checked": 54,
  "entries_with_a_problem": [],
+ "unreachable_network": [],
  "log": [
   {
    "n": 1,
