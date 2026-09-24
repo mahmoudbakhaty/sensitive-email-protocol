@@ -172,13 +172,28 @@ def check_one(n, ref):
             if verdict == "MISMATCH":
                 c.update(not_on_paper=extra, missing_from_ours=missing)
         except Exception as e:                                # noqa: BLE001
-            c.update(status="UNREACHABLE",
-                     error=("%s: %s" % (type(e).__name__, e))[:140])
+            # A name that will not resolve, or a refused connection, says
+            # nothing about the reference. Separated from an answer the server
+            # actually gave, because when the connection dropped mid-run this
+            # check reported twelve dead citations and every one was DNS.
+            msg = "%s: %s" % (type(e).__name__, e)
+            low = msg.lower()
+            network = any(k in low for k in (
+                "getaddrinfo", "name or service", "temporary failure",
+                "connection refused", "connection reset", "connection aborted",
+                "timed out", "timeout", "unreachable", "max retries",
+                "ssl", "handshake", "remote end closed"))
+            c.update(status="NETWORK" if network else "UNREACHABLE",
+                     error=msg[:140])
         rec["checks"].append(c)
     return rec
 
 
 def bad_checks(rec):
+    # "NETWORK" is deliberately absent from this list: only an answer the
+    # server actually gave counts against a reference. When the connection
+    # dropped mid-run this check reported twelve dead citations, every one of
+    # them a DNS failure.
     out = []
     for c in rec["checks"]:
         s = c.get("status")
@@ -205,8 +220,16 @@ def main():
                      c.get("error") or c.get("authors") or c.get("status")))
         log.append(rec)
 
+    unreached = sorted({r["n"] for r in log for c in r["checks"]
+                        if c.get("status") == "NETWORK"})
+    if unreached:
+        print()
+        print("%d reference(s) could not be reached: %s"
+              % (len(unreached), unreached))
+        print("These are network failures, not citation problems. Re-run when "
+              "the connection is stable; they do not fail this check.")
     json.dump({"checked": len(log), "entries_with_a_problem": problems,
-               "log": log},
+               "unreachable_network": unreached, "log": log},
               io.open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("\n%d references, %d targets, problems: %s"
           % (len(log), sum(len(r["checks"]) for r in log), problems or "none"))
