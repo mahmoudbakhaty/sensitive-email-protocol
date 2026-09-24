@@ -351,6 +351,47 @@ python scripts/filter_system.py
 python scripts/policy_transfer.py
 ```
 
+## Why the block promise breaks, and the calibrator that fixes it
+
+The system keeps one half of its contract. The leak bound holds at every
+request; the false-block bound overshoots by 1.2x to 3.1x. Same thresholds,
+same validation threads, same bound - only one holds.
+
+The obvious explanation is wrong. Measured across folds, the block threshold
+is **four times more stable** than the leak one (0.063 against 0.252 standard
+deviations), so distribution shift is not the cause. It was the hypothesis and
+it is refuted.
+
+The cause is ties. On one test fold the risk score takes **62 distinct values
+over 277 messages**, and at the block threshold **28 of 225 harmless messages
+sit on exactly that value** - against 0 at the leak threshold. So "at most 5%
+above this cut" has no solution: a hair down and 12% go over, a hair up and 0%
+do. The bound was not failing to estimate a quantile; there was no quantile to
+estimate.
+
+Isotonic regression did it. It is a step function, chosen for calibration
+quality, and it destroys the resolution a rate guarantee needs. Platt scaling
+is strictly monotone:
+
+| calibrator | distinct values | on the cut | Brier | block contract |
+|---|---|---|---|---|
+| isotonic | 48.6 | 4.8% | **0.2268** | **breaks at every request** |
+| Platt | **275.6** | **0.0%** | 0.2449 | **holds at every request** |
+
+The price is about 8% worse calibration and roughly half the automation.
+`results/RESULTS_WHY_BLOCK_FAILS.md` has the full tables.
+
+**This generalises.** Anyone putting a rate guarantee on an isotonically
+calibrated score meets the same wall, and it does not announce itself: the
+score looks like a probability, the bound looks sound, and the contract fails
+in one direction only. The diagnosis is one line - count how many items share
+the threshold's exact value.
+
+```
+python scripts/why_block_fails.py
+python scripts/calibrator_ties.py
+```
+
 ## Does it decline what the annotators argued over?
 
 The benchmark carries 172 messages two trained annotators settled differently.

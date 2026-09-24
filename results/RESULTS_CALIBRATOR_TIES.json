@@ -1,0 +1,66 @@
+{
+ "environment": {
+  "python": "3.14.0",
+  "scikit_learn": "1.9.1",
+  "numpy": "2.4.2"
+ },
+ "resolution": {
+  "isotonic": {
+   "distinct": 48.6,
+   "on_cut": 10.6,
+   "share_on_cut": 0.0477,
+   "brier": 0.2268
+  },
+  "Platt": {
+   "distinct": 275.6,
+   "on_cut": 0.0,
+   "share_on_cut": 0.0,
+   "brier": 0.2449
+  }
+ },
+ "contract": [
+  {
+   "calibrator": "isotonic",
+   "requested": 0.02,
+   "delivered_leak": 0.0,
+   "delivered_false_block": 0.0627,
+   "auto_share": 0.0883
+  },
+  {
+   "calibrator": "isotonic",
+   "requested": 0.05,
+   "delivered_leak": 0.04,
+   "delivered_false_block": 0.0795,
+   "auto_share": 0.2598
+  },
+  {
+   "calibrator": "isotonic",
+   "requested": 0.1,
+   "delivered_leak": 0.052,
+   "delivered_false_block": 0.1157,
+   "auto_share": 0.3437
+  },
+  {
+   "calibrator": "Platt",
+   "requested": 0.02,
+   "delivered_leak": 0.0,
+   "delivered_false_block": 0.0141,
+   "auto_share": 0.0145
+  },
+  {
+   "calibrator": "Platt",
+   "requested": 0.05,
+   "delivered_leak": 0.012,
+   "delivered_false_block": 0.0345,
+   "auto_share": 0.1064
+  },
+  {
+   "calibrator": "Platt",
+   "requested": 0.1,
+   "delivered_leak": 0.024,
+   "delivered_false_block": 0.0857,
+   "auto_share": 0.2236
+  }
+ ],
+ "note": "isotonic against Platt: ties, calibration quality, and whether the rate contract can be honoured"
+}

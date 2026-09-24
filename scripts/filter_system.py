@@ -139,6 +139,20 @@ class SensitivityFilter(object):
         been produced without seeing the messages it will be asked about."""
         self.extra.append((name, scorer))
 
+    def _calibrate(self, s_va, y_va):
+        """Map a component's raw score to a probability, fitted on validation.
+
+        Isotonic by default. It calibrates well and it is a step function:
+        whole intervals of input collapse to one output, and with a few
+        hundred validation points those steps are wide. calibrator_ties.py
+        measures what that costs a rate contract - at the block threshold,
+        12% of harmless messages land on a single value, so "at most 5% above
+        this cut" has no solution. Override to trade calibration quality for
+        resolution."""
+        iso = IsotonicRegression(out_of_bounds="clip", y_min=0.0,
+                                 y_max=1.0).fit(s_va, y_va)
+        return iso.predict
+
     def _specs(self):
         return [
             ("word tf-idf",
@@ -176,11 +190,10 @@ class SensitivityFilter(object):
             s_tr = m.predict_proba(Xtr)[:, 1]
             s_va = m.predict_proba(vec.transform(va_txt))[:, 1]
             # calibrated on VALIDATION, so the fusion sees honest probabilities
-            iso = IsotonicRegression(out_of_bounds="clip", y_min=0.0,
-                                     y_max=1.0).fit(s_va, y[va])
-            self.components.append((name, vec, m, iso))
-            cols_tr.append(iso.predict(s_tr))
-            cols_va.append(iso.predict(s_va))
+            cal = self._calibrate(s_va, y[va])
+            self.components.append((name, vec, m, cal))
+            cols_tr.append(cal(s_tr))
+            cols_va.append(cal(s_va))
 
         for name, scorer in self.extra:
             cols_tr.append(np.asarray(scorer(tr_txt), dtype=float))
@@ -236,8 +249,8 @@ class SensitivityFilter(object):
 
     def risk(self, texts):
         cols = []
-        for _name, vec, m, iso in self.components:
-            cols.append(iso.predict(m.predict_proba(vec.transform(texts))[:, 1]))
+        for _name, vec, m, cal in self.components:
+            cols.append(cal(m.predict_proba(vec.transform(texts))[:, 1]))
         for _name, scorer in self.extra:
             cols.append(np.asarray(scorer(texts), dtype=float))
         return self.fusion.predict_proba(np.column_stack(cols))[:, 1]
@@ -254,7 +267,7 @@ class SensitivityFilter(object):
         return {"action": action, "risk": round(r, 4), "reason": why,
                 "thresholds": {"allow": round(self.t_allow, 4),
                                "block": round(self.t_block, 4)},
-                "components": [n for n, _v, _m, _i in self.components]
+                "components": [n for n, _v, _m, _c in self.components]
                               + [n for n, _s in self.extra]}
 
     def actions(self, texts):
