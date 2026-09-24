@@ -21,41 +21,41 @@
  "note": "thresholds chosen on validation threads inside each training fold; the test fold sees neither the fit nor the policy",
  "per_fold_thresholds": [
   {
-   "allow": 0.308,
+   "allow": 0.464,
    "block": Infinity
   },
   {
-   "allow": 0.3068,
+   "allow": 0.4625,
    "block": Infinity
   },
   {
-   "allow": 0.3433,
+   "allow": 0.4838,
    "block": Infinity
   },
   {
-   "allow": 0.3338,
+   "allow": 0.4686,
    "block": Infinity
   },
   {
-   "allow": 0.3453,
+   "allow": 0.4786,
    "block": Infinity
   }
  ],
  "operating_characteristics": {
   "messages": 1382,
-  "auto_handled": 209,
-  "auto_share": 0.1512,
-  "escalated": 1173,
-  "escalated_share": 0.8488,
-  "auto_allowed": 209,
+  "auto_handled": 76,
+  "auto_share": 0.055,
+  "escalated": 1306,
+  "escalated_share": 0.945,
+  "auto_allowed": 76,
   "auto_blocked": 0,
-  "sensitive_auto_allowed": 10,
-  "leak_rate_of_sensitive": 0.04,
+  "sensitive_auto_allowed": 3,
+  "leak_rate_of_sensitive": 0.012,
   "harmless_auto_blocked": 0,
   "false_block_rate_of_harmless": 0.0,
-  "errors_among_auto": 10,
-  "error_rate_among_auto": 0.0478,
-  "sensitive_in_escalated": 240,
-  "escalated_precision": 0.2046
+  "errors_among_auto": 3,
+  "error_rate_among_auto": 0.0395,
+  "sensitive_in_escalated": 247,
+  "escalated_precision": 0.1891
  }
 }

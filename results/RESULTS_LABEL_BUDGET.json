@@ -1,0 +1,186 @@
+{
+ "environment": {
+  "python": "3.14.0",
+  "scikit_learn": "1.9.1",
+  "numpy": "2.4.2"
+ },
+ "request": 0.05,
+ "budgets": [
+  200,
+  400,
+  600,
+  800,
+  1000,
+  1200,
+  1382
+ ],
+ "repeats": 3,
+ "full": {
+  "messages": 1382,
+  "threads": 1103,
+  "sensitive_threads": 230,
+  "auto_share": 0.055,
+  "delivered_leak": 0.012,
+  "held": true,
+  "error_among_auto": 0.0395
+ },
+ "curves": {
+  "random": [
+   {
+    "messages": 201.0,
+    "threads": 167.33333333333334,
+    "sensitive_threads": 33.0,
+    "auto_share": 0.0,
+    "delivered_leak": 0.0,
+    "error_among_auto": 0.0,
+    "held_in": "3/3",
+    "budget": 200
+   },
+   {
+    "messages": 400.0,
+    "threads": 322.6666666666667,
+    "sensitive_threads": 63.333333333333336,
+    "auto_share": 0.0,
+    "delivered_leak": 0.0,
+    "error_among_auto": 0.0,
+    "held_in": "3/3",
+    "budget": 400
+   },
+   {
+    "messages": 600.0,
+    "threads": 481.0,
+    "sensitive_threads": 98.0,
+    "auto_share": 0.0,
+    "delivered_leak": 0.0,
+    "error_among_auto": 0.0,
+    "held_in": "3/3",
+    "budget": 600
+   },
+   {
+    "messages": 800.0,
+    "threads": 639.3333333333334,
+    "sensitive_threads": 134.33333333333334,
+    "auto_share": 0.0,
+    "delivered_leak": 0.0,
+    "error_among_auto": 0.0,
+    "held_in": "3/3",
+    "budget": 800
+   },
+   {
+    "messages": 1002.0,
+    "threads": 807.0,
+    "sensitive_threads": 169.0,
+    "auto_share": 0.006666666666666667,
+    "delivered_leak": 0.0017333333333333333,
+    "error_among_auto": 0.016666666666666666,
+    "held_in": "3/3",
+    "budget": 1000
+   },
+   {
+    "messages": 1203.3333333333333,
+    "threads": 965.6666666666666,
+    "sensitive_threads": 204.0,
+    "auto_share": 0.05123333333333333,
+    "delivered_leak": 0.0105,
+    "error_among_auto": 0.035300000000000005,
+    "held_in": "3/3",
+    "budget": 1200
+   },
+   {
+    "messages": 1382.0,
+    "threads": 1103.0,
+    "sensitive_threads": 230.0,
+    "auto_share": 0.055,
+    "delivered_leak": 0.012000000000000002,
+    "error_among_auto": 0.0395,
+    "held_in": "3/3",
+    "budget": 1382
+   }
+  ],
+  "nearest-threshold first": [
+   {
+    "messages": 201.0,
+    "threads": 148.0,
+    "sensitive_threads": 14.0,
+    "auto_share": 0.0,
+    "delivered_leak": 0.0,
+    "error_among_auto": 0.0,
+    "held_in": "1/1",
+    "budget": 200
+   },
+   {
+    "messages": 400.0,
+    "threads": 308.0,
+    "sensitive_threads": 26.0,
+    "auto_share": 0.0,
+    "delivered_leak": 0.0,
+    "error_among_auto": 0.0,
+    "held_in": "1/1",
+    "budget": 400
+   },
+   {
+    "messages": 600.0,
+    "threads": 477.0,
+    "sensitive_threads": 49.0,
+    "auto_share": 0.0,
+    "delivered_leak": 0.0,
+    "error_among_auto": 0.0,
+    "held_in": "1/1",
+    "budget": 600
+   },
+   {
+    "messages": 800.0,
+    "threads": 633.0,
+    "sensitive_threads": 84.0,
+    "auto_share": 0.0,
+    "delivered_leak": 0.0,
+    "error_among_auto": 0.0,
+    "held_in": "1/1",
+    "budget": 800
+   },
+   {
+    "messages": 1000.0,
+    "threads": 795.0,
+    "sensitive_threads": 126.0,
+    "auto_share": 0.0,
+    "delivered_leak": 0.0,
+    "error_among_auto": 0.0,
+    "held_in": "1/1",
+    "budget": 1000
+   },
+   {
+    "messages": 1200.0,
+    "threads": 946.0,
+    "sensitive_threads": 168.0,
+    "auto_share": 0.0025,
+    "delivered_leak": 0.0,
+    "error_among_auto": 0.0,
+    "held_in": "1/1",
+    "budget": 1200
+   },
+   {
+    "messages": 1382.0,
+    "threads": 1103.0,
+    "sensitive_threads": 230.0,
+    "auto_share": 0.055,
+    "delivered_leak": 0.012,
+    "error_among_auto": 0.0395,
+    "held_in": "1/1",
+    "budget": 1382
+   }
+  ]
+ },
+ "points_per_100_overall": 0.466,
+ "points_per_100_at_the_margin": 0.211,
+ "automation_starts_at": {
+  "messages": 1002.0,
+  "threads": 807.0,
+  "sensitive_threads": 169.0,
+  "auto_share": 0.006666666666666667,
+  "delivered_leak": 0.0017333333333333333,
+  "error_among_auto": 0.016666666666666666,
+  "held_in": "3/3",
+  "budget": 1000
+ },
+ "targeting_verdict": "worse than random: boundary threads carry fewer sensitive messages, and the bound counts sensitive threads"
+}

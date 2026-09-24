@@ -189,16 +189,26 @@ class SensitivityFilter(object):
     def _calibrate(self, s_va, y_va):
         """Map a component's raw score to a probability, fitted on validation.
 
-        Isotonic by default. It calibrates well and it is a step function:
-        whole intervals of input collapse to one output, and with a few
-        hundred validation points those steps are wide. calibrator_ties.py
-        measures what that costs a rate contract - at the block threshold,
-        12% of harmless messages land on a single value, so "at most 5% above
-        this cut" has no solution. Override to trade calibration quality for
-        resolution."""
-        iso = IsotonicRegression(out_of_bounds="clip", y_min=0.0,
-                                 y_max=1.0).fit(s_va, y_va)
-        return iso.predict
+        PLATT BY DEFAULT, AND ISOTONIC IS THE ONE TO JUSTIFY.
+
+        Isotonic calibrates slightly better - Brier 0.227 against 0.245 - and
+        it is a step function, so whole intervals of input collapse to one
+        output. calibrator_ties.py measures what that costs: the calibrated
+        score takes 49 distinct values against Platt's 276, 4.8% of harmless
+        messages land on the threshold's exact value against 0.0%, and the
+        block-side contract breaks at every request while Platt's holds at
+        every request.
+
+        The default was isotonic until that was measured. A system whose point
+        is an operating contract should not default to the calibrator that
+        cannot keep one, so the eight percent of calibration quality is the
+        thing being traded away rather than the guarantee.
+
+        Pass a different one if the guarantee does not matter for your use."""
+        lr = LogisticRegression(max_iter=1000).fit(
+            np.asarray(s_va).reshape(-1, 1), y_va)
+        return lambda s: lr.predict_proba(
+            np.asarray(s).reshape(-1, 1))[:, 1]
 
     def _specs(self):
         return [
