@@ -332,14 +332,28 @@ def run(df, lab, llm_all, OUT, SCORES):
         # Calibrate every component on the validation threads. Without this
         # the LLM's mass sits at the extremes and dominates any linear
         # combination for reasons that have nothing to do with its accuracy.
+        #
+        # PLATT, NOT ISOTONIC, AND THE REASON IS MEASURED. This script was
+        # written before calibrator_ties.py. Isotonic calibrates a little
+        # better - Brier 0.227 against 0.245 on this benchmark - and it is a
+        # step function: it collapses the score to about fifty distinct values
+        # and puts a tenth of the negatives on a single one. A score with that
+        # little resolution cannot carry an operating guarantee, and
+        # filter_system.py, which consumes these components, exists to carry
+        # one. Isotonic breaks its block-side contract at every request
+        # measured and Platt keeps it at every request.
+        #
+        # The GPU run costs quota and is hard to repeat, so it should not
+        # produce scores that the system downstream cannot use.
         cal, sv, st = {}, {}, {}
         for nm, v, t in (("llm", l_va, l_te), ("encoder", e_va, e_te),
                          ("classical", c_va, c_te)):
-            iso = IsotonicRegression(out_of_bounds="clip",
-                                     y_min=0.0, y_max=1.0)
-            iso.fit(v, y[va])
-            cal[nm] = iso
-            sv[nm], st[nm] = iso.predict(v), iso.predict(t)
+            lr = LogisticRegression(max_iter=1000).fit(
+                np.asarray(v).reshape(-1, 1), y[va])
+            f = (lambda m: (lambda s: m.predict_proba(
+                np.asarray(s).reshape(-1, 1))[:, 1]))(lr)
+            cal[nm] = f
+            sv[nm], st[nm] = f(v), f(t)
 
         # Fuse on the validation threads only.
         Fva = np.column_stack([sv[n] for n in ("llm", "encoder", "classical")])
