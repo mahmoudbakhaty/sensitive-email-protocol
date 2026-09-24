@@ -36,8 +36,10 @@ These artifacts exist so both can be checked rather than taken on trust.
 
 - [The filter as a system, and what it can promise](#the-filter-as-a-system-and-what-it-can-promise)
 - [The system blocks nothing, and that is the answer](#the-system-blocks-nothing-and-that-is-the-answer)
+- [The design works; 5.5% is the task, not the policy](#the-design-works-55-is-the-task-not-the-policy)
 - [What a model is worth when it is allowed to decline](#what-a-model-is-worth-when-it-is-allowed-to-decline)
 - [Does it decline what the annotators argued over?](#does-it-decline-what-the-annotators-argued-over)
+- [The GPU run, and what it has to hand over](#the-gpu-run-and-what-it-has-to-hand-over)
 
 **What the measurements found**
 

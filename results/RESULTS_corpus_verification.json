@@ -11,13 +11,13 @@
   "fold_fingerprint_sklearn": "1.9.1"
  },
  "observed": {
-  "corpus_digest": "85e1e813649ff86e",
-  "messages": 1383,
+  "corpus_digest": "493f90a5df5b8f40",
+  "messages": 1382,
   "threads": 1103,
-  "strict_positives": 251,
-  "broad_positives": 423
+  "strict_positives": 250,
+  "broad_positives": 422
  },
- "fold_fingerprint_here": "11ca24f9aab130ab",
- "sklearn_here": "1.8.0",
- "corpus_ok": false
+ "fold_fingerprint_here": "63e3aea5c3d37629",
+ "sklearn_here": "1.9.1",
+ "corpus_ok": true
 }

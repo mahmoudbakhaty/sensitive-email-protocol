@@ -123,10 +123,33 @@ def check_readme_headline_is_current():
     return same
 
 
+def check_readme_contents_is_current():
+    """The contents list must cover every heading.
+
+    Written by hand once, it was two sections out of date the next time one
+    was added. It is generated; this checks it was regenerated."""
+    import subprocess
+    readme = os.path.join(REPO, "README.md")
+    before = io.open(readme, encoding="utf-8").read()
+    r = subprocess.run([sys.executable,
+                        os.path.join(HERE, "readme_contents.py")],
+                       capture_output=True, text=True)
+    after = io.open(readme, encoding="utf-8").read()
+    if r.returncode != 0:
+        print("  regenerating the contents failed: %s"
+              % r.stderr.strip()[:120])
+        return False
+    same = before == after
+    print("  README contents covers every section      : %s"
+          % ("yes" if same else "NO - it was stale and has been regenerated"))
+    return same
+
+
 def main():
     ok = True
     print("=== the README front table ===")
     ok &= check_readme_headline_is_current()
+    ok &= check_readme_contents_is_current()
     print()
     print("=== one copy of each file ===")
     ok &= check_no_duplicate_files()
