@@ -6,9 +6,14 @@ session is the bookkeeping: that no thread crosses a fold boundary, that no
 in-context example is ever drawn from a test thread, and that the threshold is
 chosen without touching the test fold. A stub judge makes all three checkable
 on a laptop.
+
+The stub reads the label, so every score it produces is meaningless as a
+result. Its output is written to a temp directory for that reason - see
+L.OUT_JSON below.
 """
 import os
 import sys
+import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import corpus_path                                       # noqa: E402
@@ -19,6 +24,12 @@ import llm_protocol as L
 
 L.DATA_DIR = corpus_path.resolve(required=True)
 L.N_BOOT = 200
+# L.run() writes its record to L.OUT_JSON, which is a bare relative name - so
+# running this test from the repository root left a RESULTS_LLM.json there
+# reporting F1 0.7898, beside a real one reporting 0.4005. The stub judge below
+# reporting F1 0.7898, beside a real one reporting 0.4005. The stub below
+# construction, and nothing in the file said so. Redirected to a temp path.
+L.OUT_JSON = os.path.join(tempfile.mkdtemp(), "RESULTS_LLM.json")
 
 
 class StubJudge(object):

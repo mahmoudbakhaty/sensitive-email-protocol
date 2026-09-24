@@ -6,3 +6,17 @@ word_f1_cache.json
 
 # scripts/verify_corpus.py extracts the archive here; it is not redistributed
 scripts/_corpus_check/
+
+# second_corpus_tab.py and external_calibration.py fetch corpora here;
+# they are fingerprinted in the results, not redistributed
+scripts/_external/
+
+# make_annotation_sample.py generates these; sample.json carries corpus text
+# and key.json carries the labels the annotator must not see
+annotation/
+
+# llm_protocol.run() writes to a bare relative name, so running its test from
+# the repo root or scripts/ drops a stub-judge record named exactly like the
+# real GPU result. The real one lives in results/ and stays tracked.
+/RESULTS_LLM.json
+scripts/RESULTS_LLM.json
