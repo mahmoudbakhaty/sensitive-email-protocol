@@ -398,6 +398,29 @@ python scripts/filter_system.py
 python scripts/policy_transfer.py
 ```
 
+## The GPU run, and what it has to hand over
+
+`scripts/hybrid_framework.py` is the framework the registered title promises,
+with the instruction-tuned model and the fine-tuned encoder in place. It costs
+about two hours of a weekly thirty-hour quota and the quota has been exhausted
+since 22 September, so it has to be right the first time.
+
+Everything measured since it was written is now in it: Platt calibration
+rather than isotonic, because `filter_system.py` consumes its components and
+cannot carry a contract on an isotonic score; the LLM pass checkpointed the
+moment it finishes, so an encoder crash an hour later does not cost the
+expensive part twice; a corpus fingerprint on the cache, so scores from one
+build cannot attach to another's labels.
+
+`scripts/test_gpu_handoff.py` checks the join the run depends on, against a
+stand-in file, before the quota is spent rather than after: the shape of the
+scores it writes, the fingerprint that guards them, and whether
+`filter_system.py` can actually fit on them and return a decision. It can.
+
+```
+python scripts/test_gpu_handoff.py
+```
+
 ## What more labels buy, and which labels to buy
 
 Better components will not raise the system's automation - the encoder's
