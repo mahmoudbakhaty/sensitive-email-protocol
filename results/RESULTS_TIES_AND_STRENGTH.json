@@ -1,0 +1,177 @@
+{
+ "request": 0.05,
+ "fractions": [
+  1.0,
+  0.3,
+  0.1,
+  0.05,
+  0.02,
+  0.01
+ ],
+ "reference": {
+  "corpus": "this benchmark",
+  "brier": 0.2268,
+  "held": false
+ },
+ "corpora": {
+  "SMS Spam": [
+   {
+    "train_fraction": 1.0,
+    "brier": 0.014,
+    "delivered": 0.0365,
+    "tie_share": 0.0489,
+    "distinct": 18.6,
+    "held": true
+   },
+   {
+    "train_fraction": 0.3,
+    "brier": 0.018,
+    "delivered": 0.0468,
+    "tie_share": 0.0319,
+    "distinct": 20.6,
+    "held": true
+   },
+   {
+    "train_fraction": 0.1,
+    "brier": 0.0244,
+    "delivered": 0.0514,
+    "tie_share": 0.0199,
+    "distinct": 24.6,
+    "held": false
+   },
+   {
+    "train_fraction": 0.05,
+    "brier": 0.0348,
+    "delivered": 0.0443,
+    "tie_share": 0.0276,
+    "distinct": 31.4,
+    "held": true
+   },
+   {
+    "train_fraction": 0.02,
+    "brier": 0.0478,
+    "delivered": 0.0493,
+    "tie_share": 0.0302,
+    "distinct": 26.4,
+    "held": true
+   },
+   {
+    "train_fraction": 0.01,
+    "brier": 0.0656,
+    "delivered": 0.0309,
+    "tie_share": 0.0278,
+    "distinct": 30.6,
+    "held": true
+   }
+  ],
+  "tweet_eval hate": [
+   {
+    "train_fraction": 1.0,
+    "brier": 0.1533,
+    "delivered": 0.0397,
+    "tie_share": 0.027,
+    "distinct": 56.8,
+    "held": true
+   },
+   {
+    "train_fraction": 0.3,
+    "brier": 0.1702,
+    "delivered": 0.0473,
+    "tie_share": 0.0194,
+    "distinct": 43.2,
+    "held": true
+   },
+   {
+    "train_fraction": 0.1,
+    "brier": 0.1899,
+    "delivered": 0.0454,
+    "tie_share": 0.0184,
+    "distinct": 45.2,
+    "held": true
+   },
+   {
+    "train_fraction": 0.05,
+    "brier": 0.2016,
+    "delivered": 0.0355,
+    "tie_share": 0.0318,
+    "distinct": 40.8,
+    "held": true
+   },
+   {
+    "train_fraction": 0.02,
+    "brier": 0.2222,
+    "delivered": 0.0265,
+    "tie_share": 0.0663,
+    "distinct": 43.8,
+    "held": true
+   },
+   {
+    "train_fraction": 0.01,
+    "brier": 0.2332,
+    "delivered": 0.037,
+    "tie_share": 0.0684,
+    "distinct": 29.4,
+    "held": true
+   }
+  ],
+  "Enron-Spam": [
+   {
+    "train_fraction": 1.0,
+    "brier": 0.0088,
+    "delivered": 0.0401,
+    "tie_share": 0.0219,
+    "distinct": 37.4,
+    "held": true
+   },
+   {
+    "train_fraction": 0.3,
+    "brier": 0.0122,
+    "delivered": 0.0422,
+    "tie_share": 0.0241,
+    "distinct": 33.2,
+    "held": true
+   },
+   {
+    "train_fraction": 0.1,
+    "brier": 0.0155,
+    "delivered": 0.0464,
+    "tie_share": 0.0052,
+    "distinct": 54.2,
+    "held": true
+   },
+   {
+    "train_fraction": 0.05,
+    "brier": 0.0179,
+    "delivered": 0.0452,
+    "tie_share": 0.0102,
+    "distinct": 47.2,
+    "held": true
+   },
+   {
+    "train_fraction": 0.02,
+    "brier": 0.0216,
+    "delivered": 0.0464,
+    "tie_share": 0.0127,
+    "distinct": 50.0,
+    "held": true
+   },
+   {
+    "train_fraction": 0.01,
+    "brier": 0.0274,
+    "delivered": 0.0484,
+    "tie_share": 0.0055,
+    "distinct": 55.0,
+    "held": true
+   }
+  ]
+ },
+ "first_break_briers": [
+  0.0244
+ ],
+ "max_brier_reached": [
+  0.0656,
+  0.2332,
+  0.0274
+ ],
+ "verdict": "REFUTED: a corpus reached Brier 0.2332, above this benchmark's 0.2268, and never broke; the only breaks are at low Brier and do not persist as it worsens"
+}
