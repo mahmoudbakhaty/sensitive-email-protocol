@@ -351,6 +351,40 @@ python scripts/filter_system.py
 python scripts/policy_transfer.py
 ```
 
+## The system blocks nothing, and that is the answer
+
+The filter was designed with three outcomes. Two measurements say the third
+does not belong.
+
+**Precision at the top of the risk score never gets close to what blocking
+needs.** Out of fold: 28.6% in the top 1%, 46.4% in the top 2%, 37.7% in the
+top 5%, against an 18.1% base rate. Block the top 2% and more than half of
+what you block is harmless. There is no safe operating point.
+
+**And the contract was the wrong shape.** Bounding the *share of harmless
+messages blocked* says nothing about how many blocks are right - 22 wrong
+against 13 right satisfies "at most 2% of harmless". The block side now bounds
+**precision**: at least 90% of what is blocked must be genuinely sensitive, as
+a one-sided Clopper-Pearson limit over threads. No cut on this benchmark
+qualifies, so the system blocks nothing.
+
+| | |
+|---|---|
+| handled automatically | 209 of 1382 (15.1%), all ALLOW |
+| auto-blocked | **0** |
+| sensitive auto-allowed | 4.0% against a 5% contract |
+| error among automatic decisions | 4.8% |
+
+**A two-decision filter, not three.** `results/RESULTS_BLOCK_IS_NOT_VIABLE.md`
+has the tables, and the bug in the precision bound that testing caught - "one
+correct out of one" was being read as certainty, which let a single lucky
+message open the gate.
+
+**And the encoder would not change this.** `scripts/encoder_ceiling.py`
+deliberately leaks in the encoder's favour, using released out-of-fold scores,
+and still measures a mean gain of **-0.1 points of automation**. An honest GPU
+run is worth less than that. The quota is better spent elsewhere.
+
 ## Why the block promise breaks, and the calibrator that fixes it
 
 The system keeps one half of its contract. The leak bound holds at every

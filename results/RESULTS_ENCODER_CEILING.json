@@ -1,0 +1,59 @@
+{
+ "environment": {
+  "python": "3.14.0",
+  "scikit_learn": "1.9.1",
+  "numpy": "2.4.2"
+ },
+ "rows": [
+  {
+   "system": "two components",
+   "requested": 0.02,
+   "delivered_leak": 0.0,
+   "delivered_false_block": 0.0,
+   "auto_share": 0.0,
+   "error_rate_among_auto": 0.0
+  },
+  {
+   "system": "two components",
+   "requested": 0.05,
+   "delivered_leak": 0.012,
+   "delivered_false_block": 0.0,
+   "auto_share": 0.055,
+   "error_rate_among_auto": 0.0395
+  },
+  {
+   "system": "two components",
+   "requested": 0.1,
+   "delivered_leak": 0.024,
+   "delivered_false_block": 0.0,
+   "auto_share": 0.1064,
+   "error_rate_among_auto": 0.0408
+  },
+  {
+   "system": "+ encoder (UPPER BOUND)",
+   "requested": 0.02,
+   "delivered_leak": 0.0,
+   "delivered_false_block": 0.0,
+   "auto_share": 0.0,
+   "error_rate_among_auto": 0.0
+  },
+  {
+   "system": "+ encoder (UPPER BOUND)",
+   "requested": 0.05,
+   "delivered_leak": 0.008,
+   "delivered_false_block": 0.0,
+   "auto_share": 0.0601,
+   "error_rate_among_auto": 0.0241
+  },
+  {
+   "system": "+ encoder (UPPER BOUND)",
+   "requested": 0.1,
+   "delivered_leak": 0.016,
+   "delivered_false_block": 0.0,
+   "auto_share": 0.0948,
+   "error_rate_among_auto": 0.0305
+  }
+ ],
+ "mean_upper_bound_gain_in_auto_share": -0.0022,
+ "caveat": "the encoder column is built from released out-of-fold scores, so it carries information about the test fold through the models that produced the training messages' scores. Deliberately optimistic; an upper bound, not a result."
+}

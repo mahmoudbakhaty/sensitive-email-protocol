@@ -64,6 +64,11 @@ MAX_FALSE_BLOCK_RATE = 0.01
 # One-sided confidence for the threshold bounds. 0.5 is the point estimate,
 # which is what broke the contract; 0.10 is a 90% bound.
 CONF_ALPHA = 0.10
+# What share of what the system blocks must actually be sensitive.
+# Measured: precision at the top of the risk score reaches 28.6% in the
+# top 1% and 46.4% in the top 2%, so on this benchmark nothing qualifies
+# and the system blocks nothing. That is the finding, not a failure.
+MIN_BLOCK_PRECISION = 0.90
 
 ALLOW, ESCALATE, BLOCK = "ALLOW", "ESCALATE", "BLOCK"
 
@@ -113,15 +118,56 @@ def _upper_bound_quantile(sorted_vals, q, alpha, n_eff=None):
     return float(sorted_vals[n - j]) if j > 0 else float("inf")
 
 
+def _precision_threshold(risk, y, min_precision, alpha, n_eff=None):
+    """The lowest cut above which precision is at least `min_precision`, with
+    confidence 1 - alpha. Infinity when no cut qualifies, which blocks nothing.
+
+    Blocking is not a rate problem. Bounding the share of harmless messages
+    blocked says nothing about how many of the blocks are right: 2% of 1,132
+    harmless messages is 22 wrong blocks, against perhaps 13 right ones. What
+    a deployment needs is that what it blocks is usually sensitive.
+
+    The bound is a one-sided Clopper-Pearson lower limit on the precision of
+    the messages above each candidate cut, with the effective sample size
+    taken as threads rather than messages for the reason in _set_policy."""
+    from scipy.stats import beta
+    order = np.argsort(-np.asarray(risk))
+    yy = np.asarray(y)[order]
+    rr = np.asarray(risk)[order]
+    best = float("inf")
+    hits = 0
+    for i in range(len(yy)):
+        hits += int(yy[i])
+        n = i + 1
+        if n_eff is not None:                 # clustered: discount the count
+            n = max(1, int(round(n * float(n_eff) / len(yy))))
+            h = max(0, int(round(hits * float(n_eff) / len(yy))))
+        else:
+            h = hits
+        if h == 0:
+            continue
+        # Clopper-Pearson lower limit on h/n. The h == n case is NOT
+        # certainty: "one correct out of one" bounds precision at
+        # alpha**(1/n), which is 0.10 for n = 1, not 1.0. Returning 1.0 there
+        # let a single lucky message open the gate, and the system blocked 42
+        # messages at 40% precision while promising 90%.
+        lo = alpha ** (1.0 / n) if h >= n else beta.ppf(alpha, h, n - h + 1)
+        if lo >= min_precision:
+            best = float(rr[i])               # cut low enough to include i
+    return best
+
+
 class SensitivityFilter(object):
     """Fit on labelled threads, then decide about one message at a time."""
 
     def __init__(self, max_leak=MAX_LEAK_RATE,
                  max_false_block=MAX_FALSE_BLOCK_RATE,
-                 conf_alpha=CONF_ALPHA):
+                 conf_alpha=CONF_ALPHA,
+                 min_block_precision=MIN_BLOCK_PRECISION):
         self.max_leak = max_leak
-        self.max_false_block = max_false_block
+        self.max_false_block = max_false_block   # kept for the old comparison
         self.conf_alpha = conf_alpha
+        self.min_block_precision = min_block_precision
         self.components = []          # (name, vectoriser, model, calibrator)
         self.fusion = None
         self.t_allow = None
@@ -129,6 +175,7 @@ class SensitivityFilter(object):
         self.extra = []               # (name, scorer) supplied from outside
         self._n_eff_pos = None        # threads, not messages
         self._n_eff_neg = None
+        self._n_eff_total = None
 
     # ---- fitting ---------------------------------------------------------
 
@@ -208,6 +255,7 @@ class SensitivityFilter(object):
         va_groups = groups[va]
         self._n_eff_pos = len(set(va_groups[y[va] == 1]))
         self._n_eff_neg = len(set(va_groups[y[va] == 0]))
+        self._n_eff_total = len(set(va_groups))
         self._set_policy(risk_va, y[va])
         return self
 
@@ -226,6 +274,20 @@ class SensitivityFilter(object):
         confidence 1 - conf_alpha. It automates less, which is the price of a
         bound meaning what it says. policy_transfer.py measures both the price
         and whether the contract now holds."""
+        # BLOCKING IS A PRECISION PROBLEM, NOT A RATE ONE.
+        #
+        # The first contract bounded the share of harmless messages blocked.
+        # At a 2% request that is 22 messages out of 1,132 - enough to swamp
+        # the 13 correct blocks, and the automatic decisions came out 80%
+        # wrong. The measurement that settles it: precision at the top of the
+        # risk score is 28.6% in the top 1% and 46.4% in the top 2%, against
+        # an 18.1% base rate. The model lifts precision to about twice base
+        # and nowhere near what blocking something automatically requires.
+        #
+        # So the block side asks a different question: is there a cut above
+        # which at least `min_block_precision` of messages are genuinely
+        # sensitive, with confidence? If no cut qualifies, the system blocks
+        # nothing and says so. On this benchmark none does.
         pos, neg = np.sort(risk[y == 1]), np.sort(risk[y == 0])
         # The binomial assumes independent draws. These are not: messages in a
         # thread share a topic, an author and often a label, which is the whole
@@ -238,10 +300,9 @@ class SensitivityFilter(object):
                                               self.conf_alpha,
                                               n_eff=self._n_eff_pos)
                         if len(pos) else 0.0)
-        self.t_block = (_upper_bound_quantile(neg, self.max_false_block,
-                                              self.conf_alpha,
-                                              n_eff=self._n_eff_neg)
-                        if len(neg) else 1.0)
+        self.t_block = _precision_threshold(risk, y, self.min_block_precision,
+                                            self.conf_alpha,
+                                            n_eff=self._n_eff_total)
         if self.t_block <= self.t_allow:      # degenerate: escalate nothing
             self.t_block = self.t_allow = float(np.median(risk))
 
