@@ -130,7 +130,7 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `results/RESULTS_ROBERTA_SEEDS.json` | The seeded encoder runs. |
 | `results/RESULTS_threading_v2.json` | The finer-threading comparison. |
 | `scripts/ladder_v2.py` | The corrected leakage ladder: one control per rung, twenty seeded partitions, fold class balance held fixed. **Supersedes the ladder in `strengthen.py`.** |
-| `scripts/ladder_stratified.py` | Separates the thread-grouping cost from the class-marginal term that plain GroupKFold introduces. |
+| `scripts/ladder_stratified.py` | Separates the thread-grouping cost from the class-marginal term that plain GroupKFold introduces. Its `class_marginal_share` is a single partition against a mean of twenty and is smaller than the noise; read `drop_balance_held` instead. |
 | `results/RESULTS_ladder_v2.json` | The corrected ladder. Source of Table VII and Fig. 3. |
 | `results/RESULTS_ladder_stratified.json` | The leakage / class-imbalance separation. |
 | `scripts/strengthen.py` | The leakage ladder, the permutation null, the repeated cross-validation and the agreement interval. Runs on CPU. |
@@ -141,9 +141,9 @@ extension: ~35 min given a cached translation, ~105 min without one.
 | `results/RESULTS_FINAL.json` | The run behind Tables III to V, raw. Environment, fold fingerprint, per-fold dispersion and bootstrap intervals. |
 | `results/PREDICTIONS_FINAL.json` | Per-message predictions and scores for all ten classical configurations, so any figure can be recomputed. |
 | `results/RESULTS_LLM.json` | Qwen2.5-7B-Instruct under the protocol, four runs. Source of Table IX. |
-| `results/RESULTS_strengthen_sklearn191.json` | The strengthening run under the pinned library. The figures in Sections VII-G and VII-H come from this file. |
-| `results/RESULTS_strengthen_sklearn180.json` | The same suite under 1.8.0, with every other library held fixed. |
-| `results/RESULTS_strengthen.md` | The four measurements, written up, with what each does and does not establish. |
+| `results/RESULTS_strengthen_sklearn191.json` | The strengthening run under the pinned library. **Pre-fix build (21 Sep)** - its thread-dependent figures are superseded by `RESULTS_ladder_v2.json` and `RESULTS_perm_thread.json`; quote those for Sections VII-G and VII-H. |
+| `results/RESULTS_strengthen_sklearn180.json` | The same suite under 1.8.0, with every other library held fixed. Same pre-fix build; the 1.8.0-vs-1.9.1 comparison is valid on it. |
+| `results/RESULTS_strengthen.md` | The four measurements, written up. Opens with which of them the corpus fix invalidated and what replaced each. |
 | `results/RESULTS_version_effect.md` | What the library version alone changes, with six ungrouped controls that do not move. |
 | `quoted_figures.py` | Every figure quoted from another paper, with the page it was read from. These cannot be regenerated here. |
 | `LITERATURE_SURVEY_2026-09-21.md` | Where the field stands and where this work sits in it, with each figure attributed. |
@@ -194,15 +194,25 @@ threads, and Cohen's kappa = 0.662 from the counts 250 / 172 / 960.
 
 ## Check the fingerprint before comparing anything
 
-    fold-assignment fingerprint: 50b3daba1a99ae32
+    fold-assignment fingerprint: 63e3aea5c3d37629
 
 If your run prints a different value you do not have our partition, and no
-score comparison is meaningful. This is not hypothetical. The same code, data
-and seed produced thread-grouped F1 = 0.3220 under scikit-learn 1.6.1 and
-1.8.0 (fingerprint 3556420f17e7e4fa) and 0.3458 under 1.9.1 (fingerprint
-50b3daba1a99ae32), because 1.9.0 changed `GroupKFold` to stable sorting. The
-paper pins 1.9.1. `results/FINDING_sklearn_groupkfold.md` has the full
-account, including the fact that we first read the evidence backwards.
+score comparison is meaningful.
+
+**This section published the wrong value until 25 September.** It said
+`50b3daba1a99ae32`, which is the fingerprint of the *withdrawn* 1,069-thread
+build - the one the subject-header bug produced, described above. A reader
+following this instruction on the released build prints `63e3aea5c3d37629`,
+sees a mismatch, and concludes they do not have our partition when they do.
+`scripts/audit_final.py` asserted the stale value was present in this file,
+so the release's own checker kept it in place rather than catching it.
+
+The version story behind the fingerprint still stands, and was measured on the
+pre-fix build: the same code, data and seed produced thread-grouped F1 = 0.3220
+under scikit-learn 1.6.1 and 1.8.0 (fingerprint 3556420f17e7e4fa) and 0.3458
+under 1.9.1, because 1.9.0 changed `GroupKFold` to stable sorting. The paper
+pins 1.9.1. `results/FINDING_sklearn_groupkfold.md` has the full account,
+including the fact that we first read the evidence backwards.
 
 ## Does the conclusion depend on our label mapping?
 
@@ -319,8 +329,14 @@ Stated in the paper and repeated here so nobody is surprised.
   folds, the encoder beats logistic regression in 4 of 5 folds on the strict
   labels and 3 of 5 on the broad, and with n = 5 a Wilcoxon test cannot return
   below p = 0.0625 regardless. Make no ranking claim from these numbers.
-* On the strict labels the encoder leads on F1 and loses MCC, ROC-AUC and
-  PR-AUC to a bag-of-words baseline.
+* On the strict labels the encoder leads Table III's bag-of-words baselines on
+  all four metrics (F1 0.4099, MCC 0.2529, ROC-AUC 0.7104, PR-AUC 0.3642 against best
+  baselines 0.3814 / 0.2032 / 0.7012 / 0.3135). This bullet said the opposite until
+  25 September - "leads on F1 and loses MCC, ROC-AUC and PR-AUC" - which was
+  true of the withdrawn 1,069-thread build, where the encoder scored 0.051
+  lower. It is false against every record this release ships. The bullet above
+  still applies and matters more: none of these differences is statistically
+  separable.
 * RoBERTa and AraBERT were fine-tuned at a competent default configuration,
   not a searched one.
 * Our annotators agree less well than a guideline-driven privacy
@@ -526,23 +542,31 @@ calibrator, only the folds differ.
 
 At a 5% leak request:
 
-| corpus | automated | allowed / blocked | leak | contract |
-|---|---|---|---|---|
-| SMS Spam | **98.2%** | 4,705 / 768 | 0.029 | held |
-| tweet_eval/hate | **36.3%** | 2,471 / 793 | 0.044 | held |
-| Enron-Spam | **100.0%** | 17,005 / 16,340 | 0.035 | held |
-| this benchmark | **5.5%** | 76 / 0 | 0.012 | held |
+| corpus | automated | allowed / blocked | leak | block precision | contract |
+|---|---|---|---|---|---|
+| SMS Spam | **98.2%** | 4,705 / 768 | 0.029 | 0.928 | held |
+| tweet_eval/hate | **36.3%** | 2,471 / 793 | 0.044 | 0.938 | held |
+| Enron-Spam | **51.5%** | 17,180 / 0 | 0.044 | - | held |
+| this benchmark | **5.5%** | 76 / 0 | 0.012 | - | held |
 
 The same system clears nearly all of an easy corpus and almost none of a hard
 one, keeping its promise in both. **The design is not the limit.**
 
-It also blocks readily elsewhere - 768, 793 and 16,340 messages - and zero
-here. The precision requirement is not a rule that never fires; it refuses
-here because precision at the top of the risk score is 28.6%.
+It also blocks readily elsewhere - 768 and 793 messages - and zero here. The
+precision requirement is not a rule that never fires; it refuses here because
+precision at the top of the risk score is 28.6%.
 
-Eight of nine external contracts held. The exception is Enron-Spam at a 0.02
-request, delivering 0.035 - a real miss, not a boundary rounding, and reported
-as one. `results/RESULTS_SYSTEM_ELSEWHERE.md` has the detail.
+**Nine of nine external contracts held, on both halves of the promise** - and
+this is the first run in which the block half was tested at all. Until
+25 September this section read "eight of nine held", with Enron-Spam at 0.02
+named as a real miss. Two defects produced that: the check computed
+`held = leak <= q` and never looked at the block side, and a fallback in
+`_set_policy` discarded BOTH bounds whenever the thresholds crossed, replacing
+them with the median risk score. SMS Spam at a 10% request was blocking 2,823
+messages at 0.264 precision against a 0.90 promise, recorded as held; and
+Enron-Spam's 0.035 leak was the discarded contract, not the data - it is 0.018
+once the policy is fixed. `results/RESULTS_SYSTEM_ELSEWHERE.md` has the
+before-and-after.
 
 This tests the filter, not the task: none of these corpora is
 context-dependent sensitivity, none has threads, none has two annotators.
@@ -682,10 +706,15 @@ qualifies, so the system blocks nothing.
 
 | | |
 |---|---|
-| handled automatically | 209 of 1382 (15.1%), all ALLOW |
+| handled automatically | 76 of 1382 (5.5%), all ALLOW |
 | auto-blocked | **0** |
-| sensitive auto-allowed | 4.0% against a 5% contract |
-| error among automatic decisions | 4.8% |
+| sensitive auto-allowed | 1.2% against a 5% contract |
+| error among automatic decisions | 4.0% |
+
+This table carried the isotonic-era figures until 25 September - 209 of 1382
+(15.1%), 4.0% leak, 4.8% error - two hundred lines after the same README
+states 5.5% for the same system. They are now read from
+`results/RESULTS_FILTER_SYSTEM.json`.
 
 **A two-decision filter, not three.** `results/RESULTS_BLOCK_IS_NOT_VIABLE.md`
 has the tables, and the bug in the precision bound that testing caught - "one
@@ -742,13 +771,20 @@ Enron-Spam, at three requests each.
 
 The mechanism replicates and is large - isotonic leaves 19 to 59 distinct
 values against Platt's 1,059 to 4,556, and puts up to **59.5%** of negatives
-on the threshold's exact value. The contract failure does not replicate:
-isotonic held all nine external contracts and Platt held eight. Our benchmark's
-ties fell on the permissive side; theirs fell on the conservative side.
+on the threshold's exact value.
 
-So: isotonic makes the delivered rate **unpredictable**, not systematically too
-high. Which side of the promise the tie falls on is a property of the data, and
-the bound does not control it.
+**And so does the contract failure. Isotonic breaks 9 of 9; Platt holds 8 of 9**
+(the miss is 0.0201 against 0.0200, half a message in 4,824). The generalisation
+stands.
+
+This section said the opposite until 25 September - "isotonic held all nine
+external contracts" - and withdrew the claim on that basis. The withdrawal was
+wrong, and the cause was one character: the replication counted a negative as
+compliant unless it sat *strictly above* the cut, while the system acts at
+`>=`. That excludes exactly the population isotonic creates. On Enron-Spam at a
+10% request, **76.2% of test negatives sit exactly on the cut**: counting them
+gives 0.8367 delivered against 0.10 requested; excluding them gives 0.0748 and
+the word "held".
 
 **Three explanations for the direction have been tested and all three are
 refuted.**

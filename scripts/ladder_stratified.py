@@ -12,6 +12,18 @@ the measured drop is a nuisance term rather than leakage.
 StratifiedGroupKFold holds both: groups stay intact AND folds stay balanced.
 Comparing R2 against a stratified-grouped R3 isolates the leakage.
 
+WHAT `class_marginal_share` IS AND IS NOT. It is r3_plain - r3_stratified_mean:
+a SINGLE deterministic GroupKFold partition minus the MEAN of twenty seeded
+stratified-grouped ones. Plain GroupKFold cannot be seeded - being one fixed
+partition is the whole point of it - so that difference carries the class
+marginal AND whatever that one partition's luck happened to be, and the two
+cannot be separated. On this corpus it comes to +0.0034 strict against a
+per-draw sd of 0.0190, and -0.0074 broad against 0.0133: five times and twice
+smaller than the noise, and of opposite signs. It is reported because it was
+computed, not because it is measurable. `drop_balance_held` is the quantity to
+read - a mean of twenty against a mean of twenty, with balance held on both
+sides.
+
 Run under the same pinned environment as everything else.
 """
 import os

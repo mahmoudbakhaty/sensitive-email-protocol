@@ -27,15 +27,24 @@ training fold:
 
 | | |
 |---|---|
-| handled automatically | 209 of 1382 (15.1%) |
-| escalated to a person | 1173 (84.9%) |
-| sensitive auto-allowed | 10 = **4.0%**, contract allows 5% |
-| harmless auto-blocked | 0 = **0.0%**, contract allows 1% |
-| error rate among automatic decisions | 4.8% |
+| handled automatically | 76 of 1382 (5.5%) |
+| escalated to a person | 1306 (94.5%) |
+| sensitive auto-allowed | 3 = **1.2%**, contract allows 5% |
+| harmless auto-blocked | 0, because nothing is blocked at all |
+| error rate among automatic decisions | 4.0% |
 
-Both sides hold. The block side holds by blocking nothing at all, which is the
-honest answer: the sample cannot support a 1% promise, so the system declines
-to make automatic blocks rather than make them and break the contract.
+The leak side holds. The block side holds by blocking nothing: no cut in the
+risk score can be certified at 90% precision with confidence, so the system
+declines to make automatic blocks rather than make them and break the promise.
+
+**This table published different numbers until 25 September** - 209 of 1382
+(15.1%), 10 auto-allowed (4.0%), 4.8% error. Those are the isotonic-era
+figures, left behind when the default calibrator changed to Platt, and every
+cell of them is contradicted by `RESULTS_FILTER_SYSTEM.json` written by the
+same script. The earlier text also described a false-block RATE contract
+("contract allows 1%"); the shipped code has no such bound - `max_false_block`
+is assigned and never read - and the block side is governed by a precision
+requirement instead.
 
 ## The contract did not hold at first, and why
 

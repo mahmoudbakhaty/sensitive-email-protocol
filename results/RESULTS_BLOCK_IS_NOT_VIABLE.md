@@ -69,11 +69,15 @@ and never breaks it.
 
 | | |
 |---|---|
-| handled automatically | 209 of 1382 (15.1%) - all ALLOW |
+| handled automatically | 76 of 1382 (5.5%) - all ALLOW |
 | auto-blocked | **0** |
-| escalated | 1173 (84.9%) |
-| sensitive auto-allowed | 10 = 4.0%, contract allows 5% |
-| error rate among automatic decisions | 4.8% |
+| escalated | 1306 (94.5%) |
+| sensitive auto-allowed | 3 = 1.2%, contract allows 5% |
+| error rate among automatic decisions | 4.0% |
+
+Read from `RESULTS_FILTER_SYSTEM.json`. This was the third copy of an
+isotonic-era table (209 / 15.1% / 10 / 4.8%) still presented as current after
+the default calibrator changed to Platt.
 
 **A two-decision filter, not a three-decision one**, and the reason is
 measured rather than assumed.
