@@ -13,28 +13,28 @@
    "results": {
     "isotonic": [
      {
-      "delivered": 0.0139,
+      "delivered": 0.0307,
       "tie_share": 0.0168,
       "distinct": 19.2,
       "brier": 0.0133,
       "requested": 0.02,
-      "held": true
+      "held": false
      },
      {
-      "delivered": 0.0305,
+      "delivered": 0.0665,
       "tie_share": 0.036,
       "distinct": 19.2,
       "brier": 0.0133,
       "requested": 0.05,
-      "held": true
+      "held": false
      },
      {
-      "delivered": 0.0731,
+      "delivered": 0.1661,
       "tie_share": 0.093,
       "distinct": 19.2,
       "brier": 0.0133,
       "requested": 0.1,
-      "held": true
+      "held": false
      }
     ],
     "Platt": [
@@ -71,28 +71,28 @@
    "results": {
     "isotonic": [
      {
-      "delivered": 0.0123,
+      "delivered": 0.0243,
       "tie_share": 0.0121,
       "distinct": 58.8,
       "brier": 0.1524,
       "requested": 0.02,
-      "held": true
+      "held": false
      },
      {
-      "delivered": 0.0374,
+      "delivered": 0.0579,
       "tie_share": 0.0205,
       "distinct": 58.8,
       "brier": 0.1524,
       "requested": 0.05,
-      "held": true
+      "held": false
      },
      {
-      "delivered": 0.0818,
+      "delivered": 0.1098,
       "tie_share": 0.028,
       "distinct": 58.8,
       "brier": 0.1524,
       "requested": 0.1,
-      "held": true
+      "held": false
      }
     ],
     "Platt": [
@@ -129,28 +129,28 @@
    "results": {
     "isotonic": [
      {
-      "delivered": 0.017,
+      "delivered": 0.0217,
       "tie_share": 0.0047,
       "distinct": 34.4,
       "brier": 0.0088,
       "requested": 0.02,
-      "held": true
+      "held": false
      },
      {
-      "delivered": 0.0401,
+      "delivered": 0.0595,
       "tie_share": 0.0194,
       "distinct": 34.4,
       "brier": 0.0088,
       "requested": 0.05,
-      "held": true
+      "held": false
      },
      {
-      "delivered": 0.0727,
+      "delivered": 0.6676,
       "tie_share": 0.5949,
       "distinct": 34.4,
       "brier": 0.0088,
       "requested": 0.1,
-      "held": true
+      "held": false
      }
     ],
     "Platt": [

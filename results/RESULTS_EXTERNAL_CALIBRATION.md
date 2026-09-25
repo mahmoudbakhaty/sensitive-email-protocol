@@ -36,32 +36,62 @@ value**. Platt leaves thousands of distinct values and never ties anything to
 the threshold. The resolution loss is a property of the calibrator, not of this
 benchmark.
 
-## The contract failure does not replicate
+## The contract failure replicates everywhere
 
 | calibrator | contracts held, of 9 |
 |---|---|
-| isotonic | **9** |
-| Platt | 8 |
+| isotonic | **0** |
+| Platt | **8** |
 
-Every external isotonic contract held. The one Platt miss is SMS Spam at a 2%
-request, delivered 0.020 against a requested 0.02 - at the boundary.
+Isotonic breaks the promise on every corpus at every request. Platt keeps it
+except at one boundary — SMS Spam at a 2% request, delivering 0.0201 against
+0.0200, a miss of one ten-thousandth, about half a message in 4,824.
 
-Where our benchmark's ties landed on the permissive side and broke the
-promise, the external ties landed on the conservative side and kept it. The
-ties are real everywhere; which way they fall is not.
+## This section said the opposite until 25 September
 
-## The corrected statement
+It read "the contract failure does not replicate — isotonic 9 of 9, every
+external isotonic contract held", and on that basis it **withdrew** the claim
+that a rate guarantee on an isotonically calibrated score meets the same wall
+everywhere. The withdrawal was wrong. The claim was right.
 
-> Isotonic calibration makes the delivered rate **unpredictable**, not
-> systematically too high. A large share of items can sit on the threshold's
-> exact value, and which side of the promise they fall on is a property of the
-> data rather than something the bound controls. On this benchmark it fell the
-> wrong way.
+The cause was one character. This script counted a test negative as compliant
+unless it sat *strictly above* the cut:
 
-The earlier claim - that any rate guarantee on an isotonically calibrated
-score meets the same wall - is withdrawn. It was published in this repository
-for about an hour before this measurement contradicted it, and the correction
-is recorded here rather than edited away.
+```python
+n_over += int((neg_te > t).sum())        # the system blocks at r >= t_block
+```
+
+The system acts at `>=`, so an item sitting exactly **on** the cut is acted on.
+Excluding those items is not a rounding choice here — it removes precisely the
+population isotonic creates. Isotonic collapses the score into a few dozen
+values, so the cut *is* one of those values and a large share of the data sits
+exactly on it.
+
+Enron-Spam at a 10% request, the two counts side by side over the same folds:
+
+| | delivered | verdict |
+|---|---|---|
+| counting `neg > t` (what this script did) | 0.0748 | held |
+| counting `neg >= t` (what the system does) | **0.8367** | broke, by 8.4× |
+| items sitting exactly on the cut | **12,567 of 16,493 negatives (76.2%)** | |
+
+The measurement was biased in exactly the direction that reversed the
+conclusion, on exactly the calibrator whose defining property is ties on the
+threshold.
+
+## The statement that stands
+
+> **Isotonic calibration cannot keep a rate guarantee.** It collapses a
+> continuous score into a few dozen values; the threshold lands on one of them;
+> a large share of the data sits on it; and every one of those items is acted
+> on. Nine of nine external contracts broken, on three corpora spanning Brier
+> 0.009 to 0.152. Platt leaves thousands of distinct values, ties nothing to
+> the threshold, and holds eight of nine with the ninth missing by 0.0001.
+
+This is the original claim, withdrawn on a faulty measurement and reinstated on
+a corrected one. Both the withdrawal and the reinstatement are recorded here
+rather than edited away, because the sequence is the point: a one-character
+comparison decided which of two opposite conclusions this release published.
 
 ## What it does not settle
 
@@ -78,5 +108,7 @@ not a conclusion.
 python scripts/external_calibration.py
 ```
 
-The three corpora download from UCI, HuggingFace and a GitHub mirror; the
-script reads them from `$EXTERNAL_DATA`.
+The three corpora download from UCI, HuggingFace and a GitHub mirror on first
+use, into `$EXTERNAL_DATA`, and each is fingerprinted. **They did not until
+25 September** - the loaders read local files a clean clone never had, so this
+block died on `FileNotFoundError` before printing anything.

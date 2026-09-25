@@ -54,8 +54,51 @@ REQUESTS = (0.02, 0.05, 0.10)
 
 # ---- the three corpora, each returning (texts, labels) --------------------
 
+# RESULTS_EXTERNAL_CALIBRATION.md told readers "the three corpora download from
+# UCI, HuggingFace and a GitHub mirror". They did not: the loaders read local
+# files and a clean clone died on FileNotFoundError before printing anything.
+# In a release whose whole claim is that a reader can re-run it, a Reproduce
+# block that cannot run is the worst kind of defect. They download now.
+SOURCES = {
+    "sms.zip":
+        "https://archive.ics.uci.edu/static/public/228/"
+        "sms+spam+collection.zip",
+    "hate.parquet":
+        "https://huggingface.co/datasets/cardiffnlp/tweet_eval/resolve/main/"
+        "hate/train-00000-of-00001.parquet",
+    "enron_spam.zip":
+        "https://github.com/MWiechmann/enron_spam_data/raw/master/"
+        "enron_spam_data.zip",
+}
+UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0"}
+
+
+def ensure(name):
+    """Local path for `name`, fetched on first use and fingerprinted.
+
+    Not redistributed here - fetched from the source the write-up names, and
+    the digest is printed so two readers can tell whether they have the same
+    bytes."""
+    import hashlib
+    import urllib.request as UR
+    if not os.path.isdir(DATA):
+        os.makedirs(DATA)
+    p = os.path.join(DATA, name)
+    if not os.path.exists(p):
+        url = SOURCES[name]
+        sys.stderr.write("fetching %s ...\n" % name)
+        io.open(p, "wb").write(
+            UR.urlopen(UR.Request(url, headers=UA), timeout=600).read())
+    sha = hashlib.sha256(io.open(p, "rb").read()).hexdigest()[:16]
+    FETCHED[name] = sha
+    return p
+
+
+FETCHED = {}
+
+
 def load_sms():
-    z = zipfile.ZipFile(os.path.join(DATA, "sms.zip"))
+    z = zipfile.ZipFile(ensure("sms.zip"))
     name = [n for n in z.namelist() if "SMSSpam" in n][0]
     raw = z.read(name).decode("utf-8", "replace")
     rows = [l.split("\t", 1) for l in raw.splitlines() if "\t" in l]
@@ -65,13 +108,13 @@ def load_sms():
 
 def load_hate():
     import pandas as pd
-    d = pd.read_parquet(os.path.join(DATA, "hate.parquet"))
+    d = pd.read_parquet(ensure("hate.parquet"))
     return d.text.tolist(), d.label.values.astype(int)
 
 
 def load_enron_spam():
     import pandas as pd
-    z = zipfile.ZipFile(os.path.join(DATA, "enron_spam.zip"))
+    z = zipfile.ZipFile(ensure("enron_spam.zip"))
     d = pd.read_csv(z.open(z.namelist()[0]))
     d = d.dropna(subset=["Message"])
     txt = (d["Subject"].fillna("") + " " + d["Message"]).tolist()
@@ -126,7 +169,13 @@ def evaluate(texts, y, calibrate, q):
 
         t = float(np.quantile(r_va[y[va] == 0], 1.0 - q))
         neg_te = r_te[y[te] == 0]
-        n_over += int((neg_te > t).sum())
+        # >= , not > . The system this replicates blocks at `r >= t_block`
+        # (filter_system.actions), so a message sitting exactly ON the cut is
+        # acted on. Counting it as compliant excluded precisely the cases this
+        # script exists to measure: the tie share on the line below is large
+        # under isotonic and ~0 under Platt, so the old comparison flattered
+        # isotonic - the calibrator the published conclusion is against.
+        n_over += int((neg_te >= t).sum())
         n_neg += len(neg_te)
         ties.append(float(np.mean(np.abs(neg_te - t) < 1e-9)))
         distinct.append(len(set(np.round(r_te, 6))))
