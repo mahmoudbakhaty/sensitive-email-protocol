@@ -1,0 +1,13 @@
+{
+ "corpus": "Enron-Spam",
+ "request": 0.1,
+ "calibrator": "isotonic",
+ "negatives": 16493,
+ "on_cut": 9812,
+ "on_cut_share": 0.5949,
+ "delivered_strict": 0.0727,
+ "delivered_inclusive": 0.6676,
+ "factor_over_request": 6.7,
+ "published_inclusive": 0.6676,
+ "agrees_with_release": true
+}

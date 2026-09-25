@@ -782,9 +782,13 @@ external contracts" - and withdrew the claim on that basis. The withdrawal was
 wrong, and the cause was one character: the replication counted a negative as
 compliant unless it sat *strictly above* the cut, while the system acts at
 `>=`. That excludes exactly the population isotonic creates. On Enron-Spam at a
-10% request, **76.2% of test negatives sit exactly on the cut**: counting them
-gives 0.8367 delivered against 0.10 requested; excluding them gives 0.0748 and
-the word "held".
+10% request, **59.5% of test negatives sit exactly on the cut** (9,812 of
+16,493): counting them gives 0.6676 delivered against 0.10 requested;
+excluding them gives 0.0727 and the word "held". These four figures are
+measured by `scripts/tie_diagnostic.py`, which checks its own inclusive rate
+against the released record before reporting. They were typed from a
+superseded run until 26 September, as 76.2%, 0.8367 and 0.0748 - the direction
+was right, the magnitudes were not.
 
 **Three explanations for the direction have been tested and all three are
 refuted.**

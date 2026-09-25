@@ -143,7 +143,14 @@ def cal_platt(s_va, y_va):
 CALIBRATORS = [("isotonic", cal_isotonic), ("Platt", cal_platt)]
 
 
-def evaluate(texts, y, calibrate, q):
+def default_rule(neg_va, neg_te, q, rng):
+    """The cut this study uses: a quantile of validation negatives, acted on
+    at r >= t. Returns (share of test negatives acted on, per-fold detail)."""
+    t = float(np.quantile(neg_va, 1.0 - q))
+    return int((neg_te >= t).sum()), t
+
+
+def evaluate(texts, y, calibrate, q, rule=None, rng=None):
     """Out-of-fold: the score's resolution, and whether the contract holds.
 
     The contract is the block side of filter_system.py stated plainly: set a
@@ -167,15 +174,20 @@ def evaluate(texts, y, calibrate, q):
         cal = calibrate(s_va, y[va])
         r_va, r_te = cal(s_va), cal(s_te)
 
-        t = float(np.quantile(r_va[y[va] == 0], 1.0 - q))
+        neg_va = r_va[y[va] == 0]
         neg_te = r_te[y[te] == 0]
+        # The threshold rule is a parameter so that a remedy - randomising the
+        # cut across a tied block, for instance - can be measured through THIS
+        # loop rather than a reimplementation of it. A reimplementation of this
+        # split gave a delivered rate twice the real one.
+        n_hit, t = (rule or default_rule)(neg_va, neg_te, q, rng)
         # >= , not > . The system this replicates blocks at `r >= t_block`
         # (filter_system.actions), so a message sitting exactly ON the cut is
         # acted on. Counting it as compliant excluded precisely the cases this
         # script exists to measure: the tie share on the line below is large
         # under isotonic and ~0 under Platt, so the old comparison flattered
         # isotonic - the calibrator the published conclusion is against.
-        n_over += int((neg_te >= t).sum())
+        n_over += n_hit
         n_neg += len(neg_te)
         ties.append(float(np.mean(np.abs(neg_te - t) < 1e-9)))
         distinct.append(len(set(np.round(r_te, 6))))

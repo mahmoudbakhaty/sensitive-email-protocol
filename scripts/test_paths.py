@@ -13,6 +13,7 @@ carries a user-specific absolute path, and it checks that the two resolvers
 prefer the repository's own copies over anything on the machine.
 """
 import io
+import json
 import os
 import re
 import sys
@@ -169,12 +170,48 @@ def check_final_md_is_current():
     return same
 
 
+def check_tie_diagnostic_figures():
+    """The strict-vs-inclusive box must match the measurement it reports.
+
+    RESULTS_EXTERNAL_CALIBRATION.md and README.md both carry the Enron-Spam
+    contrast between counting `neg > t` and `neg >= t`. Both were typed, and
+    both drifted onto a superseded run: they said 0.8367 delivered and 76.2%
+    on the cut while the released record said 0.6676 and 59.5% for the same
+    cell. The figures come from RESULTS_TIE_DIAGNOSTIC.json now; this checks
+    the two documents still print what that record holds."""
+    rec = os.path.join(REPO, "results", "RESULTS_TIE_DIAGNOSTIC.json")
+    if not os.path.isfile(rec):
+        print("  tie-diagnostic figures                    : "
+              "NO - run scripts/tie_diagnostic.py")
+        return False
+    r = json.load(io.open(rec, encoding="utf-8"))
+    want = ["%.4f" % r["delivered_strict"],
+            "%.4f" % r["delivered_inclusive"],
+            "%.1f%%" % (100 * r["on_cut_share"]),
+            "{:,}".format(r["on_cut"]),
+            "{:,}".format(r["negatives"])]
+    ok = True
+    for name in ("README.md", os.path.join(
+            "results", "RESULTS_EXTERNAL_CALIBRATION.md")):
+        txt = io.open(os.path.join(REPO, name), encoding="utf-8").read()
+        # The superseded figures may still be named as history, but only in a
+        # sentence that says so; they must not stand as the current values.
+        missing = [w for w in want if w not in txt]
+        if missing:
+            ok = False
+            print("  %-41s: NO - missing %s" % (name, ", ".join(missing)))
+    print("  tie-diagnostic figures                    : %s"
+          % ("yes" if ok else "NO"))
+    return ok
+
+
 def main():
     ok = True
     print("=== the README front table ===")
     ok &= check_readme_headline_is_current()
     ok &= check_readme_contents_is_current()
     ok &= check_final_md_is_current()
+    ok &= check_tie_diagnostic_figures()
     print()
     print("=== one copy of each file ===")
     ok &= check_no_duplicate_files()

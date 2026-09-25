@@ -71,9 +71,15 @@ Enron-Spam at a 10% request, the two counts side by side over the same folds:
 
 | | delivered | verdict |
 |---|---|---|
-| counting `neg > t` (what this script did) | 0.0748 | held |
-| counting `neg >= t` (what the system does) | **0.8367** | broke, by 8.4× |
-| items sitting exactly on the cut | **12,567 of 16,493 negatives (76.2%)** | |
+| counting `neg > t` (what this script did) | 0.0727 | held |
+| counting `neg >= t` (what the system does) | **0.6676** | broke, by 6.7× |
+| items sitting exactly on the cut | **9,812 of 16,493 negatives (59.5%)** | |
+
+Both rows come off one pass of `evaluate` - the same folds, the same split and
+the same fitted models - via `scripts/tie_diagnostic.py`, which refuses to
+report unless its inclusive rate matches this release's record for the cell.
+The table read 0.0748, 0.8367, 8.4× and 76.2% until 26 September, from a run
+this release superseded.
 
 The measurement was biased in exactly the direction that reversed the
 conclusion, on exactly the calibrator whose defining property is ties on the
