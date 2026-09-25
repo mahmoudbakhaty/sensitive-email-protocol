@@ -305,6 +305,67 @@ def context_dependence():
                          for s, m in worst]}
 
 
+def projection_inflation():
+    """Does projecting spans onto sentences manufacture agreement?
+
+    Our corpus asks two people to judge a whole message. TAB asks them to mark
+    SPANS, and this work projects those onto sentences: a sentence is positive
+    for an annotator if any of their spans overlaps it. Two people who mark
+    COMPLETELY DIFFERENT text in the same sentence therefore both make it
+    positive and are recorded as agreeing.
+
+    Projection can only merge disagreements into agreements, never the reverse,
+    so if that happened often TAB's sentence-level kappa would be inflated, the
+    comparison with our 0.662 would be biased in TAB's favour, and the
+    self-critical conclusion drawn from it would not be established. This
+    measures how often it happens."""
+    both = hit = 0
+    for name in SPLITS:
+        for doc in json.load(io.open(os.path.join(DATA, "tab_" + name),
+                                     encoding="utf-8")):
+            anns = list(doc["annotations"].values())
+            if len(anns) < 2:
+                continue
+            marks = [spans(a, PRIMARY) for a in anns]
+            for s0, s1, _txt in sentences(doc["text"]):
+                inside = [[(b, e) for b, e in m if not (e <= s0 or b >= s1)]
+                          for m in marks]
+                for i in range(len(inside)):
+                    for j in range(i + 1, len(inside)):
+                        A, B = inside[i], inside[j]
+                        if not A or not B:
+                            continue
+                        both += 1
+                        if any(not (e2 <= b1 or b2 >= e1)
+                               for b1, e1 in A for b2, e2 in B):
+                            hit += 1
+    return {"both_positive_pairs": both, "spans_overlap": hit,
+            "overlap_share": round(hit / float(max(1, both)), 4),
+            "agreement_on_disjoint_spans": both - hit}
+
+
+def sentence_filter_sensitivity(values=(0, 25, 60)):
+    """Is the published kappa an artefact of MIN_SENT?
+
+    Short fragments in an ECHR judgment are numbering and headings. Dropping
+    them is defensible and it is also a free parameter, so the number that
+    rests on it is reported across the range rather than at one setting."""
+    global MIN_SENT
+    keep, out = MIN_SENT, []
+    for v in values:
+        MIN_SENT = v
+        texts, votes, docs = build(PRIMARY)
+        y = np.array([1 if sum(x) * 2 >= len(x) else 0 for x in votes])
+        m = from_counts(*pooled(votes, docs))
+        out.append({"min_sent": v, "sentences": len(y),
+                    "positive_rate": round(float(y.mean()), 4),
+                    "cohens_kappa": round(m["cohens_kappa"], 4)})
+    MIN_SENT = keep
+    ks = [r["cohens_kappa"] for r in out]
+    return {"rows": out, "kappa_range": [min(ks), max(ks)],
+            "spread": round(max(ks) - min(ks), 4)}
+
+
 # ---- agreement -----------------------------------------------------------
 
 def pair_counts(v):
@@ -722,6 +783,29 @@ def main():
           % (OUR["observed_agreement"], OUR["cohens_kappa"],
              OUR["gwets_ac1"], 100 * OUR["positive_rate"],
              100 * OUR["label_rate"]), flush=True)
+
+    print()
+    print("  two things the comparison rests on, checked rather than assumed:")
+    pi = projection_inflation()
+    out["projection_inflation"] = pi
+    print("    sentences both annotators call positive        : %d pairs"
+          % pi["both_positive_pairs"], flush=True)
+    print("      where their spans genuinely overlap          : %.1f%%"
+          % (100 * pi["overlap_share"]), flush=True)
+    print("      'agreement' resting on disjoint spans        : %d (%.1f%%)"
+          % (pi["agreement_on_disjoint_spans"],
+             100 * (1 - pi["overlap_share"])), flush=True)
+    fs = sentence_filter_sensitivity()
+    out["sentence_filter_sensitivity"] = fs
+    print("    kappa across MIN_SENT %s: %.3f to %.3f (spread %.3f)"
+          % (tuple(r["min_sent"] for r in fs["rows"]),
+             fs["kappa_range"][0], fs["kappa_range"][1], fs["spread"]),
+          flush=True)
+    if pi["overlap_share"] >= 0.95 and fs["spread"] <= 0.02:
+        print("      neither explains the gap with our 0.662", flush=True)
+    else:
+        print("      *** ONE OF THESE COULD EXPLAIN THE GAP - see the record",
+              flush=True)
 
     texts, votes, docs, y, m, kx, spread, kp = keep
     # Against the per-pair kappa computed with marginals FORCED equal, so the

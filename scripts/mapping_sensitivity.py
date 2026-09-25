@@ -50,6 +50,13 @@ Two conclusions are then tested on every one of them.
 Reported as the range across mappings, with the worst case named. A conclusion
 that only holds for the mapping its authors chose is not a conclusion.
 
+AND A FAMILY CHOSEN BY THE PEOPLE WHOSE CLAIM IT SUPPORTS IS NOT A TEST. The
+seventeen are all mappings we would defend, which is exactly the objection a
+reviewer will raise. Section C therefore searches for a mapping that BREAKS the
+effect, including ones nobody would defend - every frequent category at once,
+unions picked only to push the positive rate up. It finds them, and what they
+have in common is reported rather than buried.
+
 SEVENTEEN MAPPINGS MEANS SEVENTEEN TESTS, AND THAT IS CHARGED FOR. A one-sided
 "gap - 2 SE > 0" test has alpha 0.023, so across seventeen mappings the
 expected number of spurious flags is 0.39 and the chance of seeing at least one
@@ -205,6 +212,38 @@ def leakage_gap(tx, Xv, y, g):
     d = grp - rand
     se = float(np.std(d, ddof=1) / np.sqrt(len(d)))
     return (float(d.mean()), float(rand.mean()), float(grp.mean()), se)
+
+
+ADVERSARIAL = True       # section C; set False to skip the hostile search
+
+
+def hostile_candidates(rows):
+    """Mappings built to break the effect, not to be defended.
+
+    The released family tops out at 31.5% positive. The pattern across it says
+    the effect shrinks as the positive class widens, so the way to break it is
+    to widen further - past anything that could be called a definition of
+    sensitive. That is the point: a claim that survives a hostile search is
+    worth more than one that survives a friendly family, and a claim that does
+    not survive should say where it stops."""
+    seen = {}
+    for r in rows:
+        for t, sub_, f in r["cats"]:
+            if f >= 2:
+                seen[(t, sub_)] = seen.get((t, sub_), 0) + 1
+    common = [c for c, k in sorted(seen.items(), key=lambda kv: -kv[1])
+              if k >= 60]
+    by_size = sorted(common, key=lambda c: -seen[c])
+    out = [("every common category (indefensible, maximal)", set(common))]
+    for top in (1, 2, 3, 4):
+        grp = {c for c in common if c[0] == top}
+        if len(grp) >= 2:
+            out.append(("all of group %d" % top, grp))
+    for k in (2, 3, 5, 8):
+        if k <= len(by_size):
+            out.append(("the %d most frequent categories" % k,
+                        set(by_size[:k])))
+    return out
 
 
 def normal_sf(z):
@@ -394,6 +433,48 @@ def main():
               "the same corpus under the same contract. 5.5%% is a fact about "
               "our seven categories" % (auto_name, 100 * worst_auto))
     print("  " + vB, flush=True)
+
+    if ADVERSARIAL:
+        print()
+        print("=== C. can a mapping be BUILT to break the effect? ===",
+              flush=True)
+        print("  not defended - chosen only to push the positive rate up",
+              flush=True)
+        print("  %-44s %6s %7s %10s %8s"
+              % ("mapping", "sens.", "rate", "leak gap", "+-2SE"), flush=True)
+        hostile = []
+        for name, sens in hostile_candidates(rows):
+            yh = labels_for(rows, sens)
+            if yh.sum() < 30 or (1 - yh).sum() < 30:
+                continue
+            gh, _fr, _fg, seh = leakage_gap(tx_k, Xv_k, yh[keep], g_k)
+            flips = gh - 2 * seh > 0
+            hostile.append({"mapping": name, "sensitive": int(yh.sum()),
+                            "positive_rate": round(float(yh.mean()), 4),
+                            "leakage_gap": round(gh, 4),
+                            "leakage_gap_se": round(seh, 4),
+                            "reverses": bool(flips)})
+            print("  %-44s %6d %6.1f%% %+10.4f %8.4f%s"
+                  % (name[:44], yh.sum(), 100 * yh.mean(), gh, 2 * seh,
+                     "  REVERSES" if flips else ""), flush=True)
+        out["adversarial"] = hostile
+        flipped = [h for h in hostile if h["reverses"]]
+        if flipped:
+            lo = min(h["positive_rate"] for h in flipped)
+            hi = max(r["positive_rate"] for r in out["mappings"]
+                     if r["leakage_gap"] < 0)
+            vC = ("the effect CAN be broken, and every mapping that breaks it "
+                  "is a majority-sensitive one: the %d reversals all sit at "
+                  "%.0f%% positive or above, while every mapping that keeps it "
+                  "sits at or below %.0f%%. The effect is a property of the "
+                  "minority-class regime the task is actually in, and the "
+                  "paper should say so rather than claim universality"
+                  % (len(flipped), 100 * lo, 100 * hi))
+        else:
+            vC = ("no mapping breaks the effect, including ones built only to "
+                  "widen the positive class past anything defensible")
+        print("  " + vC, flush=True)
+        out["verdict_adversarial"] = vC
 
     out["reversals_beyond_noise"] = [r["mapping"] for r in real]
     out["reversals_after_holm"] = [r["mapping"] for r in survives]

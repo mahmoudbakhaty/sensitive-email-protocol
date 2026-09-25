@@ -391,6 +391,73 @@
    "contract_held": true
   }
  ],
+ "adversarial": [
+  {
+   "mapping": "every common category (indefensible, maximal)",
+   "sensitive": 956,
+   "positive_rate": 0.6918,
+   "leakage_gap": 0.0115,
+   "leakage_gap_se": 0.0027,
+   "reverses": true
+  },
+  {
+   "mapping": "all of group 1",
+   "sensitive": 884,
+   "positive_rate": 0.6397,
+   "leakage_gap": 0.0145,
+   "leakage_gap_se": 0.0033,
+   "reverses": true
+  },
+  {
+   "mapping": "all of group 2",
+   "sensitive": 645,
+   "positive_rate": 0.4667,
+   "leakage_gap": 0.002,
+   "leakage_gap_se": 0.004,
+   "reverses": false
+  },
+  {
+   "mapping": "all of group 3",
+   "sensitive": 253,
+   "positive_rate": 0.1831,
+   "leakage_gap": -0.0092,
+   "leakage_gap_se": 0.0041,
+   "reverses": false
+  },
+  {
+   "mapping": "the 2 most frequent categories",
+   "sensitive": 744,
+   "positive_rate": 0.5384,
+   "leakage_gap": 0.012,
+   "leakage_gap_se": 0.0031,
+   "reverses": true
+  },
+  {
+   "mapping": "the 3 most frequent categories",
+   "sensitive": 804,
+   "positive_rate": 0.5818,
+   "leakage_gap": 0.006,
+   "leakage_gap_se": 0.004,
+   "reverses": false
+  },
+  {
+   "mapping": "the 5 most frequent categories",
+   "sensitive": 907,
+   "positive_rate": 0.6563,
+   "leakage_gap": 0.007,
+   "leakage_gap_se": 0.0027,
+   "reverses": true
+  },
+  {
+   "mapping": "the 8 most frequent categories",
+   "sensitive": 937,
+   "positive_rate": 0.678,
+   "leakage_gap": 0.0052,
+   "leakage_gap_se": 0.0031,
+   "reverses": false
+  }
+ ],
+ "verdict_adversarial": "the effect CAN be broken, and every mapping that breaks it is a majority-sensitive one: the 4 reversals all sit at 54% positive or above, while every mapping that keeps it sits at or below 22%. The effect is a property of the minority-class regime the task is actually in, and the paper should say so rather than claim universality",
  "reversals_beyond_noise": [
   "legal only"
  ],

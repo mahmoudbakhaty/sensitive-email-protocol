@@ -237,6 +237,18 @@ correction**. An earlier version of this README reported "1 of 17 flags"
 without that context, which reads as a finding when it is the single most
 likely outcome from nothing at all.
 
+**And a family we chose is not a test.** Seventeen mappings we would all defend
+is the objection a reviewer raises first, so the script also searches for a
+mapping built to BREAK the effect - every frequent category at once, unions
+picked only to push the positive rate up, nothing anyone would defend. **Four
+of them reverse it.** The effect is not universal.
+
+What the reversals share is the point: every one sits at **53.8% positive or
+above**, while every mapping that keeps the effect sits at **22% or below**. The
+effect belongs to the minority-class regime - which is where any real definition
+of sensitive puts this task (ours is 18.1%) - but the paper should state that
+boundary rather than claim the effect holds everywhere.
+
 `results/RESULTS_MAPPING_SENSITIVITY.md` has the full table and two claims that
 were made and are withdrawn: that the split scores lower under "every mapping
 with a workable number of positives" (`broad`, the largest, is +0.0005), and a

@@ -514,6 +514,39 @@
   ]
  },
  "verdict_context": "CONTEXT-DEPENDENCE IS NOT ESTABLISHED HERE. Strings do draw different decisions in different documents (28.3%), but only modestly above a noise-only simulation (21.1%), and for NO string does the document's country predict which decision it gets once 57 tests are corrected for. The variation is real and its cause is not shown to be context",
+ "projection_inflation": {
+  "both_positive_pairs": 50480,
+  "spans_overlap": 50228,
+  "overlap_share": 0.995,
+  "agreement_on_disjoint_spans": 252
+ },
+ "sentence_filter_sensitivity": {
+  "rows": [
+   {
+    "min_sent": 0,
+    "sentences": 9228,
+    "positive_rate": 0.607,
+    "cohens_kappa": 0.8183
+   },
+   {
+    "min_sent": 25,
+    "sentences": 8182,
+    "positive_rate": 0.6347,
+    "cohens_kappa": 0.8136
+   },
+   {
+    "min_sent": 60,
+    "sentences": 6827,
+    "positive_rate": 0.6454,
+    "cohens_kappa": 0.8062
+   }
+  ],
+  "kappa_range": [
+   0.8062,
+   0.8183
+  ],
+  "spread": 0.0121
+ },
  "primary": {
   "label": "DIRECT or QUASI",
   "kappa": 0.8136,

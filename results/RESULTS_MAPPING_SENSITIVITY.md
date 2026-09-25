@@ -125,14 +125,68 @@ seventeen is what you get a third of the time from nothing at all.**
 
 `broad` at +0.0005 ± 0.0102 is not a reversal either; it is zero.
 
-> The thread-disjoint split scores lower across the family, and **no mapping
-> reverses it once the seventeen tests are corrected for.** The effect is not an
-> artefact of our seven categories.
+> The thread-disjoint split scores lower across the family, and **no mapping in
+> it reverses the effect once the seventeen tests are corrected for.** The
+> effect is not an artefact of our seven categories.
+
+That is a statement about *this family*. Section C asks whether any mapping
+breaks it, and finds four that do — so read the sentence above as bounded, not
+universal.
 
 **One claim from the earlier version is withdrawn.** It said the split "scores
 lower under every mapping with a workable number of positives". `broad` has 435
 positives — more than any other mapping in the family — and its gap is +0.0005.
 That is zero, not lower, and the sentence was wrong as written.
+
+## C. A family we chose is not a test — so here is a hostile one
+
+Seventeen mappings we would all defend is exactly the objection a reviewer
+raises: the family was picked by the people whose claim it supports. The
+pattern above gives that objection a concrete shape — the effect shrinks as the
+positive class widens, and `broad` at 31.5% is already at zero.
+
+So the adversarial question is not whether our family is fair. It is whether a
+mapping **exists** that reverses the effect. These are built only to widen the
+positive class, past anything anyone would call a definition of sensitive:
+
+| mapping | sens. | rate | leak gap | ±2SE | |
+|---|---|---|---|---|---|
+| every common category (indefensible, maximal) | 956 | 69.2% | **+0.0115** | 0.0054 | **reverses** |
+| all of group 1 | 884 | 64.0% | **+0.0145** | 0.0066 | **reverses** |
+| all of group 2 | 645 | 46.7% | +0.0020 | 0.0080 | — |
+| all of group 3 | 253 | 18.3% | −0.0092 | 0.0082 | — |
+| the 2 most frequent categories | 744 | 53.8% | **+0.0120** | 0.0062 | **reverses** |
+| the 3 most frequent categories | 804 | 58.2% | +0.0060 | 0.0080 | — |
+| the 5 most frequent categories | 907 | 65.6% | **+0.0070** | 0.0054 | **reverses** |
+| the 8 most frequent categories | 937 | 67.8% | +0.0052 | 0.0062 | — |
+
+**4 of them reverse it.** The effect is not universal, and an earlier draft of
+this document would have gone on implying that it was.
+
+What every reversal has in common is the thing that matters:
+
+| | |
+|---|---|
+| mappings that **reverse** the effect | all at **53.8% positive or above** |
+| mappings that **keep** it | all at **21.6% or below** |
+| in between | no effect either way |
+
+> **The effect is a property of the minority-class regime.** When the sensitive
+> class is rare it concentrates in a few threads, so thread membership carries
+> real information and thread-disjoint splitting takes it away. Make a majority
+> of the corpus sensitive and thread membership stops predicting anything —
+> then the grouped split scores slightly *higher*.
+
+Our corpus sits at 18.1% positive, and any definition of "sensitive" worth the
+name leaves it a minority. But the paper should state the boundary rather than
+claim the effect holds everywhere, because it does not.
+
+**This also settles the post-hoc observation below.** That section noticed the
+relationship after looking at the table and flagged it as untested. The search
+here varies prevalence deliberately, across a range the defensible family could
+not reach, and the relationship holds across all of it. It is no longer a
+noticing — though the counterexample `legal only` remains, and is discussed
+there.
 
 ## An observation, post hoc, and weaker than it first looked
 
@@ -161,12 +215,20 @@ counterexample in its own data, and is not a tested hypothesis.
 
 ## What this does and does not establish
 
-**Establishes.** The two conclusions the release rests on survive being relabelled
-by anyone who reads the same taxonomy and disagrees with us. The automation
-ceiling never rises above 7.1%; the leakage effect holds across the family and no
-mapping reverses it after correction for seventeen tests.
+**Establishes.** The two conclusions the release rests on survive being
+relabelled by anyone who reads the same taxonomy and disagrees with us. The
+automation ceiling never rises above 7.1%; the leakage effect holds across the
+family and no mapping in it reverses the effect after correction.
 
-**Does not establish.** That our mapping is *correct*. Nothing here compares any
+It also establishes a **boundary**, which is more than the family alone could
+give. A hostile search finds four mappings that do reverse the effect, every one
+of them at 53.8% positive or above, while every mapping that keeps it sits at
+22% or below. The effect belongs to the minority-class regime — which is the
+regime any real definition of sensitive puts the task in, but the paper should
+say so rather than claim it holds everywhere.
+
+**Does not establish.** That the effect is universal — Section C shows where it
+stops. Nor that our mapping is *correct*. Nothing here compares any
 label to the paper's Section III definition. Seventeen mappings drawn from the
 same taxonomy share the taxonomy's blind spots — if the 1990s genre categories
 systematically miss a kind of sensitivity, every mapping in this family misses it
