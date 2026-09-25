@@ -1,5 +1,5 @@
 {
- "checked": 54,
+ "checked": 55,
  "entries_with_a_problem": [],
  "unreachable_network": [],
  "log": [
@@ -915,6 +915,22 @@
      "registry_title": "No Language Left Behind: Scaling Human-Centered Machine Translation",
      "title_match": true,
      "authors": "et al. by design"
+    }
+   ],
+   "clean": true
+  },
+  {
+   "n": 55,
+   "printed_title": "The text anonymization benchmark (TAB): A dedicated corpus and evaluation framework for text anonymization",
+   "verified_note": "crossref 10.1162/coli_a_00458 - title and six author families match; Computational Linguistics 48(4) 1053-1101, 2022, checked 2026-09-25",
+   "checks": [
+    {
+     "kind": "doi",
+     "url": "https://doi.org/10.1162/coli_a_00458",
+     "status": 200,
+     "registry_title": "The Text Anonymization Benchmark (TAB): A Dedicated Corpus and Evaluation Framework for Text Anonymization",
+     "title_match": true,
+     "authors": "match"
     }
    ],
    "clean": true

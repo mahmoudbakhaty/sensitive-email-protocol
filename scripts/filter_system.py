@@ -481,7 +481,13 @@ def main():
              100 * oc["escalated_precision"], 100 * y.mean()))
 
     out = {"environment": S.ENV,
+           # Every constant the paper quotes about the contract lives here,
+           # so its prose can read them rather than restate them. The paper
+           # already had one paragraph asserting the opposite of the table
+           # above it because a figure was typed instead of read.
            "policy": {"max_leak_rate": MAX_LEAK_RATE,
+                      "min_block_precision": MIN_BLOCK_PRECISION,
+                      "confidence_alpha": CONF_ALPHA,
                       # not a bound the code enforces - see __init__
                       "max_false_block_rate_VESTIGIAL": MAX_FALSE_BLOCK_RATE,
                       "val_frac": VAL_FRAC, "folds": FOLDS},

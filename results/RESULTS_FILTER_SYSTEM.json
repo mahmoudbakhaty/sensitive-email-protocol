@@ -6,7 +6,9 @@
  },
  "policy": {
   "max_leak_rate": 0.05,
-  "max_false_block_rate": 0.01,
+  "min_block_precision": 0.9,
+  "confidence_alpha": 0.1,
+  "max_false_block_rate_VESTIGIAL": 0.01,
   "val_frac": 0.3,
   "folds": 5
  },

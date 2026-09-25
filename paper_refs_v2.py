@@ -96,6 +96,7 @@ REFS = [
     'G. Loiseau, D. Sileo, D. Riquet, M. Meyer and M. Tommasi, “Distilling human-aligned privacy sensitivity assessment from large language models,” arXiv:2603.29497, Mar. 2026. [Online]. Available: https://arxiv.org/abs/2603.29497',
     'W. Antoun, F. Baly and H. Hajj, “AraBERT: Transformer-based model for Arabic language understanding,” in Proc. 12th Int. Conf. Language Resources and Evaluation (LREC), Marseille, France, 2020. [Online]. Available: https://aclanthology.org/2020.osact-1.2/',
     'NLLB Team, M. R. Costa-jussà, J. Cross, O. Çelebi, M. Elbayad, K. Heafield, K. Heffernan, E. Kalbassi, J. Lam, D. Licht, J. Maillard, A. Sun, S. Wang, G. Wenzek, A. Youngblood et al., “No language left behind: Scaling human-centered machine translation,” arXiv:2207.04672, 2022.',
+    u"I. Pilán, P. Lison, L. Øvrelid, A. Papadopoulou, D. Sánchez and M. Batet, “The text anonymization benchmark (TAB): A dedicated corpus and evaluation framework for text anonymization,” Computational Linguistics, vol. 48, no. 4, pp. 1053-1101, Dec. 2022, doi:10.1162/coli_a_00458.",
 ]
 
 # How each entry was checked, for the artifact release. One key per line,
@@ -156,7 +157,10 @@ VERIFIED = {
     52: 'arxiv 2603.29497 - abstract read 2026-09-23; 5 authors, 31 Mar 2026',
     53: 'arxiv 2003.00104 / LREC 2020 proceedings',
     54: 'arxiv 2207.04672 - collective authorship, first 15 named then et al.',
+    55: "crossref 10.1162/coli_a_00458 - title and six author families "
+        "match; Computational Linguistics 48(4) 1053-1101, 2022, "
+        "checked 2026-09-25",
 }
 
-assert len(REFS) == 54, len(REFS)
-assert len(VERIFIED) == 54, len(VERIFIED)
+assert len(REFS) == 55, len(REFS)
+assert len(VERIFIED) == 55, len(VERIFIED)
