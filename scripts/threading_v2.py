@@ -158,7 +158,15 @@ def evaluate(X, y, g, Xv):
 def main():
     df = build()
     df["refined_key"] = refine(df)
+    # The paper quotes the largest group before and after refinement. It was
+    # right, and it was not in this record - the only way to check it was to
+    # rebuild the refinement. Recorded now.
+    import collections as _c
+    largest = {"subject": max(_c.Counter(df.subject_key).values()),
+               "refined": max(_c.Counter(df.refined_key).values())}
     print("messages                    %d" % len(df))
+    print("largest group  subject %d -> refined %d"
+          % (largest["subject"], largest["refined"]))
     print("subject-line threads        %d" % df.subject_key.nunique())
     print("refined threads             %d" % df.refined_key.nunique())
     split = df.groupby("subject_key").refined_key.nunique()
@@ -171,7 +179,8 @@ def main():
 
     X = df.text.tolist()
     Xv = S.vectorise(X)
-    out = {"environment": S.ENV, "seeds": len(SEEDS),
+    out = {
+        "largest_group": largest,"environment": S.ENV, "seeds": len(SEEDS),
            "window_days": WINDOW_DAYS, "min_share": MIN_SHARE,
            "subject_threads": int(df.subject_key.nunique()),
            "refined_threads": int(df.refined_key.nunique()),

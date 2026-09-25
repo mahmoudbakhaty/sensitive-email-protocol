@@ -480,7 +480,22 @@ def main():
           % (oc["escalated"], oc["sensitive_in_escalated"],
              100 * oc["escalated_precision"], 100 * y.mean()))
 
+    # Precision at the top of the fused risk score, recorded rather than
+    # left in prose. RESULTS_BLOCK_IS_NOT_VIABLE.md and the paper both quote
+    # 28.6% and 46.4% for it; the figures are right, but until now no machine
+    # record held them and the only way to check was to rebuild the fusion.
+    order = np.argsort(-risks)
+    top = {}
+    for frac in (0.01, 0.02, 0.05):
+        k = int(round(frac * len(y)))
+        sel = order[:k]
+        top["top_%d_pct" % round(100 * frac)] = {
+            "messages": int(k), "sensitive": int(y[sel].sum()),
+            "precision": round(float(y[sel].mean()), 4)}
+
     out = {"environment": S.ENV,
+           "precision_at_top_of_risk": top,
+           "base_rate": round(float(y.mean()), 4),
            # Every constant the paper quotes about the contract lives here,
            # so its prose can read them rather than restate them. The paper
            # already had one paragraph asserting the opposite of the table

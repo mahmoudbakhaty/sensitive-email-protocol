@@ -1,4 +1,8 @@
 {
+  "largest_group": {
+    "subject": 17,
+    "refined": 7
+  },
   "environment": {
     "python": "3.14.0",
     "scikit_learn": "1.9.1",

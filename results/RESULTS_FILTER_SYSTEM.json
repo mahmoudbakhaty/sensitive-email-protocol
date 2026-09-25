@@ -4,6 +4,24 @@
   "scikit_learn": "1.9.1",
   "numpy": "2.4.2"
  },
+ "precision_at_top_of_risk": {
+  "top_1_pct": {
+   "messages": 14,
+   "sensitive": 4,
+   "precision": 0.2857
+  },
+  "top_2_pct": {
+   "messages": 28,
+   "sensitive": 13,
+   "precision": 0.4643
+  },
+  "top_5_pct": {
+   "messages": 69,
+   "sensitive": 26,
+   "precision": 0.3768
+  }
+ },
+ "base_rate": 0.1809,
  "policy": {
   "max_leak_rate": 0.05,
   "min_block_precision": 0.9,
