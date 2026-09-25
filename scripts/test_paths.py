@@ -145,11 +145,36 @@ def check_readme_contents_is_current():
     return same
 
 
+def check_final_md_is_current():
+    """RESULTS_FINAL.md must match the record it describes.
+
+    It was hand-written, and by 25 September it had drifted onto the withdrawn
+    1,069-thread build: fingerprint 50b3daba1a99ae32, and five of the ten
+    record F1s in it appeared nowhere in the JSON the same session wrote. The
+    README points a reader at it as the source of Tables I-VI. It is generated
+    now; this checks it was regenerated."""
+    import subprocess
+    p = os.path.join(REPO, "results", "RESULTS_FINAL.md")
+    before = io.open(p, encoding="utf-8").read()
+    r = subprocess.run([sys.executable, os.path.join(HERE, "final_md.py")],
+                       capture_output=True, text=True)
+    after = io.open(p, encoding="utf-8").read()
+    if r.returncode != 0:
+        print("  regenerating RESULTS_FINAL.md failed: %s"
+              % r.stderr.strip()[:120])
+        return False
+    same = before == after
+    print("  RESULTS_FINAL.md matches its record       : %s"
+          % ("yes" if same else "NO - it was stale and has been regenerated"))
+    return same
+
+
 def main():
     ok = True
     print("=== the README front table ===")
     ok &= check_readme_headline_is_current()
     ok &= check_readme_contents_is_current()
+    ok &= check_final_md_is_current()
     print()
     print("=== one copy of each file ===")
     ok &= check_no_duplicate_files()

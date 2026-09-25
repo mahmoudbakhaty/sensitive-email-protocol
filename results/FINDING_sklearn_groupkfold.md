@@ -22,6 +22,12 @@ Fold-assignment fingerprint (md5 of the concatenated test-index lists):
     1.8.0  3556420f17e7e4fa   <- two independent environments agree
     1.9.1  50b3daba1a99ae32   <- different partition
 
+These were measured on the PRE-FIX 1,069-thread build, before the
+subject-header bug was found. The released build's 1.9.1 fingerprint is
+63e3aea5c3d37629. The version effect is unchanged by that - it is a comparison
+between library versions on one build - but a reader matching 1.9.1 against
+50b3daba1a99ae32 today will not reproduce it.
+
 Fold sizes are identical (277/277/276/276/276); the MEMBERSHIP differs.
 
 ## What this means for the paper

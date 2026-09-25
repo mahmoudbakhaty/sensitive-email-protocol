@@ -1,5 +1,20 @@
 # Four measurements that make the leakage claim quantitative
 
+> **This suite ran on 21 September, the day before the subject-header bug was
+> found.** It is the withdrawn 1,069-thread build. Which parts that affects:
+>
+> | part | build-dependent? | superseded by |
+> |---|---|---|
+> | ladder R0/R1/R2 (random splits, dedup) | no - no thread keys involved | - |
+> | ladder R3 (thread-disjoint) | **yes** | `RESULTS_ladder_v2.json` (23 Sep) |
+> | repeated CV over thread-to-fold assignments | **yes** | `RESULTS_ladder_v2.json` |
+> | thread-level permutation null | **yes** | `RESULTS_perm_thread.json` (23 Sep) |
+> | annotator agreement | no - independent of threading | `RESULTS_agreement_metrics.json` adds AC1 |
+>
+> Every build-dependent figure here has a post-fix replacement. Quote those.
+> `scripts/ladder_v2.py` supersedes this ladder, as the README says.
+
+
 Runs of 21 September 2026, Python 3.14.0, numpy 2.4.2, scipy 1.17.1,
 pandas 3.0.1. Source: `scratchpad/strengthen.py`.
 

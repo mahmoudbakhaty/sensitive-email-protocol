@@ -43,7 +43,10 @@ checks = {
     "pinned library versions recorded": "scikit-learn 1.9.1" in final_md
                                         or "sklearn 1.9.1" in final_md,
     "reference verification log": "paper_refs_v2.py" in have,
-    "fold fingerprint published": "50b3daba1a99ae32" in readme,
+    # The released build's fingerprint. This asserted 50b3daba1a99ae32 - the
+    # WITHDRAWN 1,069-thread build's - so the checker required the stale value
+    # to be present and kept it there for as long as it was wrong.
+    "fold fingerprint published": "63e3aea5c3d37629" in readme,
     "repository URL resolves to content": len(have) > 10,
 }
 print("=== does the repo contain each promise? ===")
