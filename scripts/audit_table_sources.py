@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """Every table row must match the record its caption points at.
 
-Table X's caption said its English figures were "FROM THE RUN OF TABLE III".
+The cross-lingual table's caption said its English figures were "FROM THE RUN
+OF TABLE III". (It was Table X when this was written and is Table XIV now -
+the paper derives its table numerals from a declared order, so they move when
+a section is inserted. This file refers to it by what it contains.)
 They were not, and had not been since Tables III and IV were rebuilt under one
-treatment: Table X prints LinearSVM 0.264 where Table III prints 0.381, a gap
+treatment: it prints LinearSVM 0.264 where the strict table prints 0.381, a gap
 of 0.117 F1. The figures themselves were right - they are the cross-lingual
 run's own English arm - but the caption sent a reader to a table they do not
 come from, which is the same defect as a mis-attributed citation.
@@ -56,7 +59,7 @@ ROWS = [
      ["f1", "precision", "recall", "mcc", "roc_auc"]),
     ("IV", "RoBERTa", F["transformer_grouped_broad"],
      ["f1", "precision", "recall", "mcc", "roc_auc"]),
-    # Table X prints the cross-lingual run's OWN arms, English included.
+    # The cross-lingual table prints that run's OWN arms, English included.
     ("X", "LinearSVMEnglish", A["LinearSVM_english"],
      ["f1", "mcc", "roc_auc", "pr_auc"]),
     ("X", "LogRegEnglish", A["LogReg_english"],
@@ -187,9 +190,10 @@ print("rows not matching their record:", bad)
 # and the caption must not claim a source the numbers do not have
 CAPTION_CLAIMS = [
     ("ENGLISHFIGURESAREFROMTHERUNOFTABLEIII", False,
-     "Table X's English rows are the cross-lingual run's own, not Table III's"),
+     "the cross-lingual English rows are that run's own, not the strict "
+     "table's"),
     ("THEENGLISHROWSARETHEREFORENOTTHETABLEIIIFIGURES", True,
-     "Table X says where its English rows come from"),
+     "the cross-lingual caption says where its English rows come from"),
 ]
 print()
 for probe, want, why in CAPTION_CLAIMS:
