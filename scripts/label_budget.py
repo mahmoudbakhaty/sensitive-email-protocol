@@ -91,12 +91,15 @@ def measure(texts, y, g, idx):
         a, _r = f.actions([t2[i] for i in te])
         actions[te] = a
     oc = FS.operating_characteristics(actions, y2)
+    ch = FS.contract_held(oc, REQUEST)
     return {"messages": int(len(idx)),
             "threads": int(len(set(g2))),
             "sensitive_threads": int(len(set(g2[y2 == 1]))),
             "auto_share": oc["auto_share"],
             "delivered_leak": oc["leak_rate_of_sensitive"],
-            "held": bool(oc["leak_rate_of_sensitive"] <= REQUEST),
+            "auto_blocked": oc["auto_blocked"],
+            "block_precision": ch["block_precision"],
+            "held": ch["held"],
             "error_among_auto": oc["error_rate_among_auto"]}
 
 

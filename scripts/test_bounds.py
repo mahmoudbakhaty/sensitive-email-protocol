@@ -56,6 +56,10 @@ def check_lower(rng):
 
 
 def check_upper(rng):
+    """NOTE: _upper_bound_quantile is not called by the system. _set_policy
+    uses the lower bound and the precision threshold only. These checks are
+    kept because the function is correct, but they bind nothing the guarantee
+    runs through - crossed_thresholds_withdraw_blocking() below does."""
     """Share ABOVE the cut must be <= q, in at least 1 - alpha of draws."""
     ok = True
     print("  upper bound: share above the cut should be <= q")
@@ -140,6 +144,38 @@ def check_clustering(rng):
     return ok
 
 
+def crossed_thresholds_withdraw_blocking():
+    """When the two thresholds cross, is the block side actually withdrawn?
+
+    The old code set both to the median risk score, which is neither a leak
+    bound nor a precision bound. Everything above the middle of the score
+    distribution was then blocked with nothing behind the decision. Nothing
+    caught it, because the contract checks in the repo tested the leak half
+    only - so this asserts the policy directly rather than the rate it happens
+    to produce.
+
+    Built so the thresholds MUST cross: a large leak allowance pushes t_allow
+    up, and a class this separable puts the certifiable precision cut low."""
+    rng = np.random.RandomState(7)
+    n = 3000
+    y = (rng.rand(n) < 0.45).astype(int)
+    texts = ["spam win prize %d" % i if y[i]
+             else "meeting notes %d" % i for i in range(n)]
+    f = FS.SensitivityFilter(max_leak=0.40, max_false_block=0.40)
+    f.fit(texts, y, np.arange(n))
+    crossed = not np.isfinite(f.t_block)
+    print("  %-56s %s"
+          % ("thresholds crossed -> blocking withdrawn",
+             "yes" if crossed else "*** NO: t_block %.4f ***" % f.t_block))
+    if crossed:
+        a, _r = f.actions(texts)
+        blocked = int((a == FS.BLOCK).sum())
+        print("  %-56s %d" % ("messages blocked once withdrawn", blocked))
+        return blocked == 0
+    return False
+
+
+
 def main():
     rng = np.random.RandomState(SEED)
     print("bounds checked against populations with a known answer, "
@@ -156,9 +192,11 @@ def main():
     print()
     ok &= check_clustering(rng)
     print()
+    print("the policy when the two thresholds cross")
+    ok &= crossed_thresholds_withdraw_blocking()
+    print()
     print("bounds hold" if ok else "A BOUND DOES NOT HOLD")
     return 0 if ok else 1
-
 
 if __name__ == "__main__":
     sys.exit(main())

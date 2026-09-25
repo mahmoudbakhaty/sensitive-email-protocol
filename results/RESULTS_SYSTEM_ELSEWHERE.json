@@ -21,6 +21,9 @@
      "auto_allowed": 2166,
      "auto_blocked": 768,
      "leak": 0.0054,
+     "block_precision": 0.9284,
+     "leak_ok": true,
+     "block_ok": true,
      "error_among_auto": 0.0201,
      "escalated_share": 0.4736,
      "held": true
@@ -31,18 +34,24 @@
      "auto_allowed": 4705,
      "auto_blocked": 768,
      "leak": 0.0295,
+     "block_precision": 0.9284,
+     "leak_ok": true,
+     "block_ok": true,
      "error_among_auto": 0.0141,
      "escalated_share": 0.0181,
      "held": true
     },
     {
      "requested": 0.1,
-     "auto_share": 1.0,
-     "auto_allowed": 2751,
-     "auto_blocked": 2823,
-     "leak": 0.004,
-     "error_among_auto": 0.3735,
-     "escalated_share": 0.0,
+     "auto_share": 0.8705,
+     "auto_allowed": 4852,
+     "auto_blocked": 0,
+     "leak": 0.0656,
+     "block_precision": null,
+     "leak_ok": true,
+     "block_ok": true,
+     "error_among_auto": 0.0101,
+     "escalated_share": 0.1295,
      "held": true
     }
    ]
@@ -57,6 +66,9 @@
      "auto_allowed": 1580,
      "auto_blocked": 793,
      "leak": 0.0169,
+     "block_precision": 0.9382,
+     "leak_ok": true,
+     "block_ok": true,
      "error_among_auto": 0.0476,
      "escalated_share": 0.7363,
      "held": true
@@ -67,6 +79,9 @@
      "auto_allowed": 2471,
      "auto_blocked": 793,
      "leak": 0.0444,
+     "block_precision": 0.9382,
+     "leak_ok": true,
+     "block_ok": true,
      "error_among_auto": 0.0665,
      "escalated_share": 0.6373,
      "held": true
@@ -77,6 +92,9 @@
      "auto_allowed": 3465,
      "auto_blocked": 793,
      "leak": 0.0952,
+     "block_precision": 0.9382,
+     "leak_ok": true,
+     "block_ok": true,
      "error_among_auto": 0.0961,
      "escalated_share": 0.5269,
      "held": true
@@ -89,38 +107,47 @@
    "rows": [
     {
      "requested": 0.02,
-     "auto_share": 1.0,
-     "auto_allowed": 17005,
-     "auto_blocked": 16340,
-     "leak": 0.0345,
-     "error_among_auto": 0.0195,
-     "escalated_share": 0.0,
-     "held": false
+     "auto_share": 0.5002,
+     "auto_allowed": 16679,
+     "auto_blocked": 0,
+     "leak": 0.0176,
+     "block_precision": null,
+     "leak_ok": true,
+     "block_ok": true,
+     "error_among_auto": 0.0178,
+     "escalated_share": 0.4998,
+     "held": true
     },
     {
      "requested": 0.05,
-     "auto_share": 1.0,
-     "auto_allowed": 17005,
-     "auto_blocked": 16340,
-     "leak": 0.0345,
-     "error_among_auto": 0.0195,
-     "escalated_share": 0.0,
+     "auto_share": 0.5152,
+     "auto_allowed": 17180,
+     "auto_blocked": 0,
+     "leak": 0.0441,
+     "block_precision": null,
+     "leak_ok": true,
+     "block_ok": true,
+     "error_among_auto": 0.0433,
+     "escalated_share": 0.4848,
      "held": true
     },
     {
      "requested": 0.1,
-     "auto_share": 1.0,
-     "auto_allowed": 17005,
-     "auto_blocked": 16340,
-     "leak": 0.0345,
-     "error_among_auto": 0.0195,
-     "escalated_share": 0.0,
+     "auto_share": 0.5404,
+     "auto_allowed": 18020,
+     "auto_blocked": 0,
+     "leak": 0.0927,
+     "block_precision": null,
+     "leak_ok": true,
+     "block_ok": true,
+     "error_among_auto": 0.0867,
+     "escalated_share": 0.4596,
      "held": true
     }
    ]
   }
  },
- "verdict": "the design works: on an easier corpus the same system automates 100% of traffic under the same contract, so 5.5% here is the task and not the policy",
- "all_contracts_held": false,
- "total_auto_blocked": 55758
+ "verdict": "the design works: on an easier corpus the same system automates 98% of traffic under the same contract, so 5.5% here is the task and not the policy",
+ "all_contracts_held": true,
+ "total_auto_blocked": 3915
 }

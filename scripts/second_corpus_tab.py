@@ -643,20 +643,11 @@ def run_filter(texts, y, docs, q):
     return actions, FS.operating_characteristics(actions, y)
 
 
-def contract_held(oc, q):
-    """BOTH halves. The filter promises a leak rate AND a block precision.
+# the contract is defined in filter_system; this used to be a
+# one-sided copy of it, which is how it came to print "held" on a
+# policy that broke the block half
+contract_held = FS.contract_held
 
-    An earlier version tested `leak <= q` alone and printed "held" for every
-    row. A one-sided check on a two-sided promise is not a check: a policy that
-    blocks the entire corpus keeps any leak contract trivially."""
-    blocked = oc["auto_blocked"]
-    prec = ((blocked - oc["harmless_auto_blocked"]) / float(blocked)
-            if blocked else None)
-    return {"leak_ok": oc["leak_rate_of_sensitive"] <= q,
-            "block_precision": None if prec is None else round(prec, 4),
-            "block_ok": prec is None or prec >= FS.MIN_BLOCK_PRECISION,
-            "held": (oc["leak_rate_of_sensitive"] <= q
-                     and (prec is None or prec >= FS.MIN_BLOCK_PRECISION))}
 
 
 def main():

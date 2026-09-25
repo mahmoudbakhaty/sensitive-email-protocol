@@ -103,6 +103,13 @@ def _lower_bound_quantile(sorted_vals, q, alpha, n_eff=None):
 
 
 def _upper_bound_quantile(sorted_vals, q, alpha, n_eff=None):
+    """NOT USED BY THE SYSTEM. _set_policy calls _lower_bound_quantile and
+    _precision_threshold only; this is the false-block-RATE bound from the
+    superseded block contract. test_bounds.py still exercises it, which is
+    eight of its checks spent on a code path the guarantee never runs
+    through - kept because the function is correct and may be wanted again,
+    but the checks that bind are the ones that exercise _set_policy.
+    """
     """Mirror of the above for the block side: the smallest cut above which at
     most a q share of the population sits. Plus infinity when the sample
     cannot support the promise, which auto-blocks nothing."""
@@ -165,7 +172,12 @@ class SensitivityFilter(object):
                  conf_alpha=CONF_ALPHA,
                  min_block_precision=MIN_BLOCK_PRECISION):
         self.max_leak = max_leak
-        self.max_false_block = max_false_block   # kept for the old comparison
+        # VESTIGIAL. The block side bounds PRECISION, not a false-block rate,
+        # so this is assigned and never read. It is kept because seven scripts
+        # pass it, and named here so nobody mistakes it for a live contract:
+        # results/RESULTS_FILTER_SYSTEM.md described "contract allows 1%" on
+        # the strength of this field for a bound the code does not have.
+        self.max_false_block = max_false_block
         self.conf_alpha = conf_alpha
         self.min_block_precision = min_block_precision
         self.components = []          # (name, vectoriser, model, calibrator)
@@ -313,8 +325,23 @@ class SensitivityFilter(object):
         self.t_block = _precision_threshold(risk, y, self.min_block_precision,
                                             self.conf_alpha,
                                             n_eff=self._n_eff_total)
-        if self.t_block <= self.t_allow:      # degenerate: escalate nothing
-            self.t_block = self.t_allow = float(np.median(risk))
+        if self.t_block <= self.t_allow:
+            # THE THRESHOLDS CROSSED, SO THE BLOCK SIDE IS WITHDRAWN.
+            #
+            # This used to set both to the median risk score and comment that
+            # nothing escalates. That throws away both bounds: the median is
+            # not a leak bound and not a precision bound, it is just the middle
+            # of the scores. Everything above it was then blocked with nothing
+            # behind the decision, and on SMS Spam at a 10% request that meant
+            # 2,823 messages auto-blocked at 26.4% precision against a promise
+            # of 90% - a contract the release reported as held, because only
+            # the leak half was ever tested.
+            #
+            # The allow threshold is the primary contract and is kept. No cut
+            # above it can be certified for precision - that is what crossing
+            # means - so the system blocks nothing, which is what it already
+            # does on this benchmark and says it will do when no cut qualifies.
+            self.t_block = float("inf")
 
     # ---- deciding --------------------------------------------------------
 
@@ -330,9 +357,11 @@ class SensitivityFilter(object):
         """One message in, one decision out."""
         r = float(self.risk([text])[0])
         if r >= self.t_block:
-            action, why = BLOCK, "risk %.3f at or above the block threshold" % r
+            action = BLOCK
+            why = "risk %.3f at or above the block threshold" % r
         elif r <= self.t_allow:
-            action, why = ALLOW, "risk %.3f at or below the allow threshold" % r
+            action = ALLOW
+            why = "risk %.3f at or below the allow threshold" % r
         else:
             action, why = ESCALATE, "risk %.3f between the thresholds" % r
         return {"action": action, "risk": round(r, 4), "reason": why,
@@ -347,6 +376,26 @@ class SensitivityFilter(object):
         out[r >= self.t_block] = BLOCK
         out[r <= self.t_allow] = ALLOW
         return out, r
+
+
+def contract_held(oc, q, min_precision=MIN_BLOCK_PRECISION):
+    """Did BOTH halves of the promise hold?
+
+    The filter promises a leak rate AND a block precision. Three separate
+    scripts wrote `held = leak <= q` and published the answer:
+    system_elsewhere on "eight of nine contracts held", second_corpus_tab
+    on a second corpus, label_budget on a label sweep. A one-sided check on a two-sided promise is
+    not a check: a policy that blocks the whole corpus keeps any leak contract
+    trivially, and that is exactly what a bug in _set_policy made it do. One
+    definition now, here, where the contract is defined."""
+    blocked = oc["auto_blocked"]
+    prec = ((blocked - oc["harmless_auto_blocked"]) / float(blocked)
+            if blocked else None)
+    return {"leak_ok": oc["leak_rate_of_sensitive"] <= q,
+            "block_precision": None if prec is None else round(prec, 4),
+            "block_ok": prec is None or prec >= min_precision,
+            "held": (oc["leak_rate_of_sensitive"] <= q
+                     and (prec is None or prec >= min_precision))}
 
 
 def operating_characteristics(actions, y):
@@ -433,7 +482,8 @@ def main():
 
     out = {"environment": S.ENV,
            "policy": {"max_leak_rate": MAX_LEAK_RATE,
-                      "max_false_block_rate": MAX_FALSE_BLOCK_RATE,
+                      # not a bound the code enforces - see __init__
+                      "max_false_block_rate_VESTIGIAL": MAX_FALSE_BLOCK_RATE,
                       "val_frac": VAL_FRAC, "folds": FOLDS},
            "components": ["word tf-idf", "character n-grams"],
            "absent": ["fine-tuned encoder", "instruction-tuned model"],

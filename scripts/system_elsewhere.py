@@ -50,6 +50,13 @@ OURS = {"corpus": "this benchmark (thread-grouped)", "n": 1382,
         "positive_rate": 0.1809, "brier": 0.2449}
 
 
+# the contract is defined in filter_system; this used to be a
+# one-sided copy of it, which is how it came to print "held" on a
+# policy that broke the block half
+contract_held = FS.contract_held
+
+
+
 def run(texts, y, q):
     """The system, unchanged, on stratified folds."""
     actions = np.full(len(y), FS.ESCALATE, dtype=object)
@@ -69,28 +76,33 @@ def main():
     print("this benchmark automates 5.5%% at a 5%% request, leak 1.2%%, "
           "blocks nothing", flush=True)
     print()
-    print("  %-17s %8s %10s %9s %11s %9s %7s"
-          % ("corpus", "request", "automated", "of which", "leak", "err|auto",
-             "held?"), flush=True)
+    print("  %-17s %7s %9s %10s %8s %8s %8s %6s"
+          % ("corpus", "request", "automated", "of which", "leak", "blk prec",
+             "err|auto", "held?"), flush=True)
     out = {"ours": OURS, "requests": list(REQUESTS), "corpora": {}}
     for cname, load in EC.CORPORA:
         texts, y = load()
         rows = []
         for q in REQUESTS:
             oc = run(texts, y, q)
-            held = oc["leak_rate_of_sensitive"] <= q
+            c = contract_held(oc, q)
+            held = c["held"]
             rows.append({"requested": q, "auto_share": oc["auto_share"],
                          "auto_allowed": oc["auto_allowed"],
                          "auto_blocked": oc["auto_blocked"],
                          "leak": oc["leak_rate_of_sensitive"],
+                         "block_precision": c["block_precision"],
+                         "leak_ok": c["leak_ok"], "block_ok": c["block_ok"],
                          "error_among_auto": oc["error_rate_among_auto"],
                          "escalated_share": oc["escalated_share"],
                          "held": bool(held)})
-            print("  %-17s %8.2f %9.1f%% %10s %9.3f %8.1f%% %7s"
+            print("  %-17s %7.2f %8.1f%% %10s %8.3f %8s %7.1f%% %6s"
                   % (cname if q == REQUESTS[0] else "", q,
                      100 * oc["auto_share"],
                      "%d/%d" % (oc["auto_allowed"], oc["auto_blocked"]),
                      oc["leak_rate_of_sensitive"],
+                     "-" if c["block_precision"] is None
+                     else "%.3f" % c["block_precision"],
                      100 * oc["error_rate_among_auto"],
                      "yes" if held else "NO"), flush=True)
         out["corpora"][cname] = {"n": int(len(y)),
@@ -112,7 +124,8 @@ def main():
           "(this benchmark: 5.5%%)"
           % (100 * min(r["auto_share"] for r in at5.values()),
              100 * max(r["auto_share"] for r in at5.values())))
-    print("  every contract held: %s" % ("yes" if held_all else "NO"), flush=True)
+    print("  every contract held: %s" % ("yes" if held_all else "NO"),
+          flush=True)
     print("  messages auto-blocked anywhere: %d" % blocks, flush=True)
     print()
     if best["auto_share"] > 0.40:
