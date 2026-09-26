@@ -174,9 +174,23 @@ def llm_scores(texts, subjects):
             LLM_MODEL, quantization_config=cfg, device_map="auto")
         print("  LLM loaded in 4-bit", flush=True)
     except Exception as exc:
-        print("  4-bit unavailable (%s); fp16" % type(exc).__name__, flush=True)
+        # Reserve headroom exactly as llm_protocol._load does. That fallback
+        # is the one path that can end a two-hour run on a sixteen-gigabyte
+        # card: a seven-billion-parameter model in fp16 is about fourteen
+        # gigabytes of weights, and accelerate's default ten-percent buffer
+        # leaves under a gigabyte and a half for activations and the KV
+        # cache. These four lines are the ones that completed the published
+        # LLM run on the same hardware, copied rather than re-derived.
+        print("  4-bit unavailable (%s); fp16 with reserved headroom"
+              % type(exc).__name__, flush=True)
+        _n = torch.cuda.device_count()
+        _free = int(torch.cuda.get_device_properties(0).total_memory
+                    / (1024 ** 3)) - 3
+        _mm = {i: "%dGiB" % max(_free, 4) for i in range(_n)}
         model = AutoModelForCausalLM.from_pretrained(
-            LLM_MODEL, dtype=torch.float16, device_map="auto")
+            LLM_MODEL, dtype=torch.float16, device_map="auto",
+            max_memory=_mm)
+        print("  loaded in fp16, max_memory=%s" % _mm, flush=True)
     model.eval()
 
     def ids_for(word):
@@ -435,9 +449,17 @@ def main():
              torch.cuda.get_device_name(0)))
     fetch_data()
     df = build()
-    print("messages %d | threads %d | strict %d | broad %d"
-          % (len(df), df.thread_key.nunique(), df.label.sum(),
-             df.label_either.sum()), flush=True)
+    _got = (len(df), int(df.thread_key.nunique()), int(df.label.sum()),
+            int(df.label_either.sum()))
+    print("messages %d | threads %d | strict %d | broad %d" % _got, flush=True)
+    # Printed, and now also asserted. An unattended run on a drifted corpus
+    # would otherwise spend the whole quota producing numbers that cannot be
+    # set beside the paper's, with nothing but a line of stdout to say so.
+    # The values are the released benchmark's; verify_corpus.py is the
+    # quota-free version of this check.
+    assert _got == (1382, 1103, 250, 422), (
+        "this is not the released benchmark: got %s, expected "
+        "(1382, 1103, 250, 422). Run scripts/verify_corpus.py." % (_got,))
 
     print()
     fp = corpus_fingerprint(df)
@@ -454,8 +476,13 @@ def main():
           % (llm_all.mean(),
              100.0 * np.mean((llm_all < 0.01) | (llm_all > 0.99))), flush=True)
 
+    import scipy
+    import transformers
     OUT = {"environment": {"python": sys.version.split()[0],
                            "scikit_learn": sklearn.__version__,
+                           "numpy": np.__version__,
+                           "scipy": scipy.__version__,
+                           "transformers": transformers.__version__,
                            "torch": torch.__version__,
                            "gpu": torch.cuda.get_device_name(0)},
            "llm_model": LLM_MODEL, "encoder_model": ENC_MODEL,
