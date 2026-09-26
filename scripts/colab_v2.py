@@ -268,7 +268,8 @@ def main():
             for mdl, name, meth in (
                     (LogisticRegression(max_iter=2000, class_weight="balanced"),
                      "LogReg", "predict_proba"),
-                    (LinearSVC(C=0.5, class_weight="balanced"),
+                    (LinearSVC(C=0.5, class_weight="balanced",
+                                      random_state=42),
                      "LinearSVM", "decision_function")):
                 p = cross_val_predict(mdl, Xv, yt, cv=cv, groups=groups)
                 s = cross_val_predict(mdl, Xv, yt, cv=cv, groups=groups,

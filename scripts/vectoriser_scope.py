@@ -47,7 +47,8 @@ OUT = io_paths.result_out("RESULTS_VECTORISER_SCOPE.json")
 FOLDS, SEED, VAL_FRAC = 5, 42, 0.30
 
 MODELS = (
-    ("LinearSVM", lambda: LinearSVC(C=0.5, class_weight="balanced"),
+    ("LinearSVM", lambda: LinearSVC(C=0.5, class_weight="balanced",
+                                      random_state=42),
      lambda m, X: m.decision_function(X), False),
     ("LogReg", lambda: LogisticRegression(max_iter=2000,
                                           class_weight="balanced"),

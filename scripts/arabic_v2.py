@@ -167,7 +167,8 @@ def classical(X, y, g, tag, OUT):
     for mdl, name, meth in (
             (LogisticRegression(max_iter=2000, class_weight="balanced"),
              "LogReg", "predict_proba"),
-            (LinearSVC(C=0.5, class_weight="balanced"),
+            (LinearSVC(C=0.5, class_weight="balanced",
+                                      random_state=42),
              "LinearSVM", "decision_function")):
         cv = GroupKFold(n_splits=FOLDS)
         p = cross_val_predict(mdl, Xv, y, cv=cv, groups=g)

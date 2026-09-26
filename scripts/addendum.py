@@ -80,7 +80,8 @@ def per_fold_and_ci(X, y, g, label_name, OUT, PRED):
             (lambda: LogisticRegression(max_iter=2000,
                                         class_weight="balanced"),
              "LogReg", "predict_proba"),
-            (lambda: LinearSVC(C=0.5, class_weight="balanced"),
+            (lambda: LinearSVC(C=0.5, class_weight="balanced",
+                                      random_state=42),
              "LinearSVM", "decision_function")):
         oof_pred = np.zeros(len(y), dtype=int)
         oof_score = np.zeros(len(y), dtype=float)

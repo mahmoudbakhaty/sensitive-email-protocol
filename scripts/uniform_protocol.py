@@ -128,7 +128,8 @@ def main():
           flush=True)
 
     models = [
-        ("LinearSVM", lambda: LinearSVC(C=0.5, class_weight="balanced"),
+        ("LinearSVM", lambda: LinearSVC(C=0.5, class_weight="balanced",
+                                      random_state=42),
          word, lambda m, f: m.decision_function(f), False),
         ("LogReg", lambda: LogisticRegression(max_iter=2000,
                                               class_weight="balanced"),

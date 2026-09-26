@@ -46,6 +46,7 @@ import strengthen as S                                       # noqa: E402
 OUT = io_paths.result_out("RESULTS_CLASSICAL_SEEDS.json")
 FOLDS, VAL_FRAC = 5, 0.30
 SEEDS = [42, 43, 44, 45, 46]          # the encoder's seeds, not new ones
+SEED_SVC = 42                         # liblinear's own randomness
 
 
 def word_vec():
@@ -59,7 +60,13 @@ def char_vec():
 
 
 MODELS = (
-    ("LinearSVM", lambda: LinearSVC(C=0.5, class_weight="balanced"),
+    # random_state is set because liblinear's coordinate descent is
+    # randomised: without it this script is not bit-reproducible, and a
+    # rerun moved a ROC-AUC by 0.0001. A paper whose thesis includes
+    # "publish the fingerprint so two runs can be compared" cannot ship
+    # a script whose own output drifts between runs.
+    ("LinearSVM", lambda: LinearSVC(C=0.5, class_weight="balanced",
+                                    random_state=SEED_SVC),
      word_vec, lambda m, X: m.decision_function(X), False),
     ("LogReg", lambda: LogisticRegression(max_iter=2000,
                                           class_weight="balanced"),
