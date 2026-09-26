@@ -23,6 +23,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import io_paths                                          # noqa: E402
 
+import hashlib
 import io
 import json
 import os
@@ -58,6 +59,15 @@ def boot(y, pred, g, n=N_BOOT):
     return {"f1_ci95": q(f1s), "mcc_ci95": q(mccs)}
 
 
+def fingerprint(n, y, g):
+    """The fold assignment, hashed. Identical definition to final_run's, so
+    the two runs' partitions can be compared as strings rather than taken on
+    trust - which is what a reader was being asked to do."""
+    folds = list(GroupKFold(n_splits=FOLDS).split(np.zeros(n), y, g))
+    return hashlib.md5("|".join(",".join(map(str, te)) for _, te in folds)
+                       .encode()).hexdigest()[:16]
+
+
 def grid_for(pv, calibrated):
     if calibrated:
         return np.arange(0.05, 0.96, 0.01)
@@ -88,8 +98,11 @@ def run(make, feats, scorer, calibrated, y, g):
         thresholds.append(round(t, 4))
         folds_f1.append(round(float(f1_score(y[te], pred[te],
                                              zero_division=0)), 4))
+    per_message = {"pred": [int(v) for v in pred],
+                   "score": [round(float(v), 6) for v in score]}
     tn, fp, fn, tp = confusion_matrix(y, pred, labels=[0, 1]).ravel()
-    r = {"f1": round(float(f1_score(y, pred, zero_division=0)), 4),
+    r = {"per_message": per_message,
+         "f1": round(float(f1_score(y, pred, zero_division=0)), 4),
          "precision": round(float(precision_score(y, pred, zero_division=0)), 4),
          "recall": round(float(recall_score(y, pred, zero_division=0)), 4),
          "mcc": round(float(matthews_corrcoef(y, pred)), 4),
@@ -125,7 +138,19 @@ def main():
          char, lambda m, f: m.predict_proba(f)[:, 1], True),
     ]
 
+    # The fingerprint a reader needs to confirm these rows share the
+    # encoder's partition. It was absent, so Section VII-B's claim that every
+    # method sees the identical partition could only be taken on the code.
+    fp_strict = fingerprint(len(df), df.label.values, g)
+    PUBLISHED = "63e3aea5c3d37629"
+    assert fp_strict == PUBLISHED, (
+        "this run's partition is %s, the released one is %s - the classical "
+        "rows would not share the encoder's folds" % (fp_strict, PUBLISHED))
+    print("fold fingerprint %s (matches the released partition)" % fp_strict,
+          flush=True)
+
     out = {"environment": S.ENV,
+           "fold_fingerprint": fp_strict,
            "dataset": {"messages": int(len(df)),
                        "threads": int(df.thread_key.nunique())},
            "note": "every model under the encoder's treatment: fitted on the "

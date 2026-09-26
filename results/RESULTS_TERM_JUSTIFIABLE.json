@@ -1,0 +1,46 @@
+{
+ "note": "share of strict positives containing a term that, fitted out of fold, reaches a given precision on its own",
+ "messages": 1382,
+ "strict_positives": 250,
+ "vocabulary": 8984,
+ "min_docs": 5,
+ "folds": 5,
+ "levels": [
+  {
+   "precision": 0.5,
+   "positives_justifiable": 0.192,
+   "negatives_flagged": 0.1837,
+   "n_positives_justifiable": 48,
+   "example_term": "bases"
+  },
+  {
+   "precision": 0.6,
+   "positives_justifiable": 0.048,
+   "negatives_flagged": 0.0645,
+   "n_positives_justifiable": 12,
+   "example_term": "discriminatory"
+  },
+  {
+   "precision": 0.7,
+   "positives_justifiable": 0.012,
+   "negatives_flagged": 0.0124,
+   "n_positives_justifiable": 3,
+   "example_term": "darrell"
+  },
+  {
+   "precision": 0.8,
+   "positives_justifiable": 0.012,
+   "negatives_flagged": 0.0097,
+   "n_positives_justifiable": 3,
+   "example_term": "darrell"
+  },
+  {
+   "precision": 0.9,
+   "positives_justifiable": 0.004,
+   "negatives_flagged": 0.0035,
+   "n_positives_justifiable": 1,
+   "example_term": "spec"
+  }
+ ],
+ "verdict": "At a precision of 0.7 - a term that alone gets the label right seven times in ten - 1.2% of the strict positives contain one, and 1.2% of the negatives do too, which is most of what that number measures. At 0.9 the figure falls to 0.4% of positives. The construct is not a keyword task in disguise: the great majority of sensitive messages carry no term that would justify the label by being quoted. This is the machine half of the supervisor's test and an upper bound - a term can predict without justifying - so the human pass on the sample can only lower it. What the surviving terms are says the same thing from the other side: at 0.7 the example is 'darrell', which is a proper noun, and the level below it gives 'bases'. Terms that clear the bar do so by being incidental to a few threads, not by naming anything sensitive."
+}
