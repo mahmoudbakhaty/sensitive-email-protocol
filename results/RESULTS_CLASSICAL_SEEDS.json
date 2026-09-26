@@ -348,5 +348,5 @@
    "roc_auc_mean": 0.7024
   }
  },
- "verdict": "Over five shared partitions the encoder averages 0.3761 on the strict labels and the best classical arm 0.3991, against a single-partition 0.4099 and 0.3814 in Tables III and IV. Every seeded mean sits below its single-partition counterpart, which is what a table built on one favourable draw looks like from the other side. The ordering between the encoder and the classical arms is REVERSED - the encoder no longer leads."
+ "verdict": "Over five shared partitions the encoder averages 0.3761 on the strict labels and the best classical arm 0.3991, against a single-partition 0.4099 and 0.3814 in Tables III and IV. The encoder is the only arm whose seeded mean falls BELOW its single-partition figure; the three classical arms all rise, so the single partition was not uniformly favourable - it was favourable to the encoder. Note that this run differs from those tables in the splitter and in where the vectoriser is fitted as well as in the number of partitions, so the comparison that counts is the one inside this run: the encoder does not lead."
 }

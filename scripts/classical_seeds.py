@@ -165,13 +165,16 @@ def main():
     out["verdict"] = (
         "Over five shared partitions the encoder averages %.4f on the strict "
         "labels and the best classical arm %.4f, against a single-partition "
-        "0.4099 and 0.3814 in Tables III and IV. Every seeded mean sits below "
-        "its single-partition counterpart, which is what a table built on one "
-        "favourable draw looks like from the other side. The ordering between "
-        "the encoder and the classical arms is %s."
+        "0.4099 and 0.3814 in Tables III and IV. The encoder is the only "
+        "arm whose seeded mean falls BELOW its single-partition figure; the "
+        "three classical arms all rise, so the single partition was not "
+        "uniformly favourable - it was favourable to the encoder. Note that "
+        "this run differs from those tables in the splitter and in where the "
+        "vectoriser is fitted as well as in the number of partitions, so the "
+        "comparison that counts is the one inside this run: %s."
         % (s_enc, s_cls,
-           "unchanged" if s_enc > s_cls else "REVERSED - the encoder no "
-           "longer leads"))
+           "the encoder leads" if s_enc > s_cls else
+           "the encoder does not lead"))
     print("  " + out["verdict"], flush=True)
     json.dump(out, io.open(OUT, "w", encoding="utf-8"), indent=1)
     print(flush=True)
