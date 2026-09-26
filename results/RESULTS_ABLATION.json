@@ -1,0 +1,143 @@
+{
+ "note": "does each signal earn its place in the fusion?",
+ "dropped": {
+  "no_llm": "llm",
+  "no_encoder": "encoder",
+  "no_classical": "classical"
+ },
+ "labels": {
+  "strict": {
+   "classical": {
+    "delta_f1": 0.004,
+    "delta_roc_auc": 0.0016,
+    "fold_differences": [
+     0.0096,
+     0.0042,
+     0.0061,
+     0.0019,
+     -0.0061
+    ],
+    "folds_won": 4,
+    "signed_rank_p": 0.4375,
+    "min_attainable_p": 0.0625,
+    "mcnemar_p": 1.0,
+    "full_only_right": 17,
+    "reduced_only_right": 18,
+    "signed_rank_holm": false,
+    "mcnemar_holm": false
+   },
+   "encoder": {
+    "delta_f1": 0.0498,
+    "delta_roc_auc": 0.0436,
+    "fold_differences": [
+     -0.0104,
+     0.0289,
+     0.1057,
+     0.069,
+     0.0093
+    ],
+    "folds_won": 4,
+    "signed_rank_p": 0.1875,
+    "min_attainable_p": 0.0625,
+    "mcnemar_p": 0.0,
+    "full_only_right": 240,
+    "reduced_only_right": 93,
+    "signed_rank_holm": false,
+    "mcnemar_holm": true
+   },
+   "llm": {
+    "delta_f1": 0.05,
+    "delta_roc_auc": 0.0305,
+    "fold_differences": [
+     0.0741,
+     0.0878,
+     -0.0078,
+     0.0204,
+     0.0917
+    ],
+    "folds_won": 4,
+    "signed_rank_p": 0.125,
+    "min_attainable_p": 0.0625,
+    "mcnemar_p": 0.9011,
+    "full_only_right": 131,
+    "reduced_only_right": 128,
+    "signed_rank_holm": false,
+    "mcnemar_holm": false
+   }
+  },
+  "broad": {
+   "classical": {
+    "delta_f1": -0.001,
+    "delta_roc_auc": 0.0069,
+    "fold_differences": [
+     -0.0299,
+     0.0314,
+     -0.0025,
+     -0.0118,
+     0.026
+    ],
+    "folds_won": 2,
+    "signed_rank_p": 1.0,
+    "min_attainable_p": 0.0625,
+    "mcnemar_p": 0.0144,
+    "full_only_right": 36,
+    "reduced_only_right": 61,
+    "signed_rank_holm": false,
+    "mcnemar_holm": false
+   },
+   "encoder": {
+    "delta_f1": 0.0194,
+    "delta_roc_auc": 0.0297,
+    "fold_differences": [
+     -0.017,
+     0.0253,
+     -0.0044,
+     0.0484,
+     0.0497
+    ],
+    "folds_won": 3,
+    "signed_rank_p": 0.3125,
+    "min_attainable_p": 0.0625,
+    "mcnemar_p": 0.0,
+    "full_only_right": 188,
+    "reduced_only_right": 85,
+    "signed_rank_holm": false,
+    "mcnemar_holm": true
+   },
+   "llm": {
+    "delta_f1": 0.0213,
+    "delta_roc_auc": 0.0219,
+    "fold_differences": [
+     -0.0104,
+     0.0626,
+     0.0032,
+     0.0357,
+     0.0171
+    ],
+    "folds_won": 4,
+    "signed_rank_p": 0.1875,
+    "min_attainable_p": 0.0625,
+    "mcnemar_p": 0.1529,
+    "full_only_right": 119,
+    "reduced_only_right": 97,
+    "signed_rank_holm": false,
+    "mcnemar_holm": false
+   }
+  }
+ },
+ "multiplicity": {
+  "method": "Holm-Bonferroni",
+  "alpha": 0.05,
+  "comparisons": 12,
+  "survive": [
+   "strict/encoder/mcnemar",
+   "broad/encoder/mcnemar"
+  ]
+ },
+ "verdict": "By pooled F1 the LLM and the encoder are worth the same: removing either costs +0.0500 and +0.0498 on the strict labels, within 0.0002 of each other, while removing the classical model costs +0.0040, which is nothing. That reading does not survive the paired instruments. McNemar on the per-message decisions puts the encoder at 240 messages the full fusion alone gets right against 93 for the reduced one (p = 0.0000, and it survives Holm on both label sets); the LLM is at 131 against 128 (p = 0.9011), which is a coin. So the encoder's contribution is established and the LLM's is NOT: it moves which messages are right without making more of them right. The signed-rank test adds nothing either way - on five folds it cannot return below 0.0625, and no comparison reaches even that. 2 of 12 comparisons survive Holm, and both are the encoder's decision tests.",
+ "earns_its_place": {
+  "encoder": true,
+  "llm": false,
+  "classical": false
+ }
+}

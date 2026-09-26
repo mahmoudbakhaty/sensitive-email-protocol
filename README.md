@@ -52,6 +52,7 @@ These artifacts exist so both can be checked rather than taken on trust.
 **Also**
 
 - [Are the errors errors?](#are-the-errors-errors)
+- [Does each signal earn its place?](#does-each-signal-earn-its-place)
 <!-- /contents -->
 
 ## Headline numbers
@@ -932,6 +933,55 @@ session. Inserting the per-fold Platt step alone moves the same
 logistic-regression component from 0.3683 to 0.3909 while its pooled ROC-AUC
 falls from 0.6962 to 0.6317 - a different operating point, not a better
 model.
+
+## Does each signal earn its place?
+
+The title promises a hybrid **LLM-based** framework, so the question has to be
+answered rather than assumed. The first framework run compared the fusion
+against each component *alone*, which answers something else: a fusion beating
+its own parts says nothing about which part it needs.
+
+The run now also fits the same fusion with each signal **removed**, on the same
+validation threads with the threshold chosen there too. Within-run, no caveat
+about treatment.
+
+| labels | removed | dF1 | dROC | signed-rank p | McNemar p | full-only / reduced-only right | survives Holm |
+|---|---|---|---|---|---|---|---|
+| strict | llm | +0.0500 | +0.0305 | 0.1250 | 0.9011 | 131 / 128 | no |
+| strict | encoder | +0.0498 | +0.0436 | 0.1875 | 0.0000 | 240 / 93 | **yes** |
+| strict | classical | +0.0040 | +0.0016 | 0.4375 | 1.0000 | 17 / 18 | no |
+| broad | llm | +0.0213 | +0.0219 | 0.1875 | 0.1529 | 119 / 97 | no |
+| broad | encoder | +0.0194 | +0.0297 | 0.3125 | 0.0000 | 188 / 85 | **yes** |
+| broad | classical | -0.0010 | +0.0069 | 1.0000 | 0.0144 | 36 / 61 | no |
+
+Read the last three columns, not the first two.
+
+**By pooled F1 the LLM and the encoder look equally load-bearing** - removing
+either costs +0.0500 and +0.0498 on the strict labels, within 0.0002 of each other,
+while removing the bag of words costs +0.0040, which is nothing.
+
+**That reading does not survive the paired tests.** McNemar on the per-message
+decisions puts the encoder at 240 messages the full fusion alone gets right
+against 93 for the reduced one; the LLM is at 131 against 128, which is a coin.
+So the encoder's contribution is established and **the LLM's is not**: it
+changes *which* messages come out right without making *more* of them right.
+
+The signed-rank test says nothing either way, and could not: on five folds it
+cannot return below 0.0625 and no comparison reaches even that. That is why
+McNemar is here at all - and why the run had to be changed to save the
+per-message decisions, which the first one discarded.
+
+2 of 12 comparisons survive Holm-Bonferroni across all of them, and both are
+the encoder's decision tests.
+
+One more thing this run settles. It reproduces the first framework run
+**bit for bit** on every shared arm - same corpus fingerprint, same F1, MCC,
+ROC-AUC and PR-AUC for the LLM, the encoder, the classical model and the full
+fusion, on both label sets - in a different Kaggle session.
+
+```
+python scripts/ablation.py
+```
 
 ## Reference verification
 

@@ -1,0 +1,55 @@
+{
+ "note": "the TF-IDF vectoriser is fitted on the whole corpus in the released tables; this measures what that is worth",
+ "leak": "min_df, max_features and the IDF weights see the test fold (Kapoor and Narayanan L1.2)",
+ "one_sided": "affects only arms with a fitted vectoriser - every classical row; not RoBERTa, not the LLM",
+ "clean_already": "filter_system.py fits inside the fold",
+ "rows": [
+  {
+   "labels": "strict",
+   "model": "LinearSVM",
+   "f1_corpus_fit": 0.3814,
+   "f1_fold_internal": 0.3799,
+   "delta_f1": -0.0015,
+   "roc_corpus_fit": 0.7012,
+   "roc_fold_internal": 0.6995,
+   "delta_roc_auc": -0.0017,
+   "reproduces_release": true
+  },
+  {
+   "labels": "strict",
+   "model": "LogReg",
+   "f1_corpus_fit": 0.3683,
+   "f1_fold_internal": 0.3666,
+   "delta_f1": -0.0017,
+   "roc_corpus_fit": 0.6962,
+   "roc_fold_internal": 0.6932,
+   "delta_roc_auc": -0.003,
+   "reproduces_release": true
+  },
+  {
+   "labels": "broad",
+   "model": "LinearSVM",
+   "f1_corpus_fit": 0.55,
+   "f1_fold_internal": 0.543,
+   "delta_f1": -0.007,
+   "roc_corpus_fit": 0.7186,
+   "roc_fold_internal": 0.7161,
+   "delta_roc_auc": -0.0025,
+   "reproduces_release": true
+  },
+  {
+   "labels": "broad",
+   "model": "LogReg",
+   "f1_corpus_fit": 0.5438,
+   "f1_fold_internal": 0.5432,
+   "delta_f1": -0.0006,
+   "roc_corpus_fit": 0.7178,
+   "roc_fold_internal": 0.7147,
+   "delta_roc_auc": -0.0031,
+   "reproduces_release": true
+  }
+ ],
+ "worst_delta_f1": 0.007,
+ "against_thread_grouping_cost": 0.0207,
+ "verdict": "Fitting the vectoriser inside the fold moves the classical rows by at most 0.0070 F1, and every move is downward - the leak flattered them, as a one-sided leak must. That is 3 times smaller than the thread-grouping cost the ladder reports (0.0207) and well inside the bootstrap intervals the tables print, so no conclusion in the paper turns on it. It still has to be reported: a paper that names four contamination controls cannot leave a fifth route unaudited inside its own headline table, and the direction means the bag-of-words baselines were the ones being flattered."
+}
