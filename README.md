@@ -841,9 +841,11 @@ python scripts/fig_selective.py    # the risk-coverage figure
 ## The two control files, and why their numbers are higher
 
 `results/RESULTS_HYBRID_CONTROL.json` and `results/RESULTS_HYBRID_CPU.json`
-record a strict F1 of 0.4324 for an encoder-plus-character-n-gram fusion. The
-paper says nothing we tried on the strict labels exceeds 0.410. Both are
-correct, and the difference is the point of the experiments:
+record a strict F1 of 0.4324 for an encoder-plus-character-n-gram fusion, and
+`results/RESULTS_HYBRID.json` now records 0.4494 for the three-signal
+framework. The paper's sentence is about single models under the protocol of
+Tables III to V; these three are fusions, and the last two are not on that
+treatment at all. The difference is the point of the experiments:
 
 * The paper's figures select the decision threshold **only on held-out
   validation threads**. These two select it on the training fold, which is not
@@ -860,9 +862,35 @@ claims were cut from the paper on the supervisor's review; these files are
 released because the measurements behind that decision should be inspectable.
 
 The framework the thesis title promises, `scripts/hybrid_framework.py`, does
-select every threshold on validation threads. It is written and tested but
-**has not been run**: it needs a GPU and the weekly quota is exhausted. No
-number from it appears anywhere.
+select every threshold on validation threads. It **has now been run**, on a
+Kaggle T4 on 26 September; `results/RESULTS_HYBRID.json` is the record and
+`results/SCORES_HYBRID.json` the per-message scores.
+
+Read it carefully, because the headline is not the finding. On the strict
+labels the three-signal fusion reaches F1 0.4494 against a trivial floor of
+0.3064, ahead of the encoder's 0.4114, the LLM's 0.3991 and the classical
+model's 0.3909 - and ahead on all four measures under both label sets. That
+is a clean sweep, and this repository has already said what a clean sweep is
+worth: the intervals overlap ([0.4032, 0.4938] against [0.3649, 0.4609]), so
+it licenses no ranking. The project's own paired Wilcoxon over five folds
+returns p = 0.1875, which does not even reach the 0.0625 floor five folds
+allow.
+
+One thing does separate, and only one. A paired thread-cluster bootstrap of
+the difference - which the marginal intervals cannot express, because both
+arms are scored on the same messages - puts the fusion's ROC-AUC above the
+best component's on the strict labels by 0.0380, 95% [0.0141, 0.0630]
+(`results/RESULTS_HYBRID_PAIRED.json`, `scripts/hybrid_paired.py`). The
+corresponding PR-AUC difference includes zero, and so does every difference
+against the best component on the broad labels. So the entitled claim is
+better ranking on the strict labels, nothing about F1, and nothing on broad.
+
+These figures are also **not comparable with Tables III and IV**, whose rows
+are thresholded on uncalibrated scores over a coarser grid in a different
+session. Inserting the per-fold Platt step alone moves the same
+logistic-regression component from 0.3683 to 0.3909 while its pooled ROC-AUC
+falls from 0.6962 to 0.6317 - a different operating point, not a better
+model.
 
 ## Reference verification
 

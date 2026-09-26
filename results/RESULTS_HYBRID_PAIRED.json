@@ -1,0 +1,185 @@
+{
+ "note": "paired thread-cluster bootstrap of the difference between the fusion and each component, on the threshold-free measures only",
+ "limitation": "hybrid_framework.py saves out-of-fold scores but not per-fold thresholds or binary decisions, so no paired F1 or MCC is recoverable from this run",
+ "draws": 2000,
+ "seed": 42,
+ "labels": {
+  "strict": {
+   "reproduction_deviation": {
+    "llm": 0.000328,
+    "encoder": 2.8e-05,
+    "classical": 3.6e-05,
+    "hybrid": 4.8e-05
+   },
+   "llm_distinct_values": 415,
+   "n": 1382,
+   "llm": {
+    "roc_auc": {
+     "delta": 0.0775,
+     "ci95": [
+      0.0435,
+      0.1146
+     ],
+     "excludes_zero": true,
+     "share_above_zero": 1.0,
+     "draws": 2000
+    },
+    "pr_auc": {
+     "delta": 0.0666,
+     "ci95": [
+      0.0112,
+      0.1208
+     ],
+     "excludes_zero": true,
+     "share_above_zero": 0.991,
+     "draws": 2000
+    }
+   },
+   "encoder": {
+    "roc_auc": {
+     "delta": 0.038,
+     "ci95": [
+      0.0141,
+      0.063
+     ],
+     "excludes_zero": true,
+     "share_above_zero": 0.999,
+     "draws": 2000
+    },
+    "pr_auc": {
+     "delta": 0.0169,
+     "ci95": [
+      -0.0138,
+      0.047
+     ],
+     "excludes_zero": false,
+     "share_above_zero": 0.8705,
+     "draws": 2000
+    }
+   },
+   "classical": {
+    "roc_auc": {
+     "delta": 0.1121,
+     "ci95": [
+      0.0682,
+      0.1589
+     ],
+     "excludes_zero": true,
+     "share_above_zero": 1.0,
+     "draws": 2000
+    },
+    "pr_auc": {
+     "delta": 0.0897,
+     "ci95": [
+      0.04,
+      0.1436
+     ],
+     "excludes_zero": true,
+     "share_above_zero": 1.0,
+     "draws": 2000
+    }
+   }
+  },
+  "broad": {
+   "reproduction_deviation": {
+    "llm": 0.0031,
+    "encoder": 4e-05,
+    "classical": 5.5e-05,
+    "hybrid": 2.5e-05
+   },
+   "llm_distinct_values": 431,
+   "n": 1382,
+   "llm": {
+    "roc_auc": {
+     "delta": 0.0589,
+     "ci95": [
+      0.029,
+      0.0893
+     ],
+     "excludes_zero": true,
+     "share_above_zero": 1.0,
+     "draws": 2000
+    },
+    "pr_auc": {
+     "delta": 0.0653,
+     "ci95": [
+      0.0088,
+      0.1183
+     ],
+     "excludes_zero": true,
+     "share_above_zero": 0.9915,
+     "draws": 2000
+    }
+   },
+   "encoder": {
+    "roc_auc": {
+     "delta": 0.0332,
+     "ci95": [
+      0.0158,
+      0.0504
+     ],
+     "excludes_zero": true,
+     "share_above_zero": 1.0,
+     "draws": 2000
+    },
+    "pr_auc": {
+     "delta": 0.0206,
+     "ci95": [
+      -0.0022,
+      0.0437
+     ],
+     "excludes_zero": false,
+     "share_above_zero": 0.956,
+     "draws": 2000
+    }
+   },
+   "classical": {
+    "roc_auc": {
+     "delta": 0.0155,
+     "ci95": [
+      -0.0144,
+      0.0444
+     ],
+     "excludes_zero": false,
+     "share_above_zero": 0.8505,
+     "draws": 2000
+    },
+    "pr_auc": {
+     "delta": 0.0278,
+     "ci95": [
+      -0.0189,
+      0.0726
+     ],
+     "excludes_zero": false,
+     "share_above_zero": 0.878,
+     "draws": 2000
+    }
+   }
+  }
+ },
+ "separating": [
+  "strict/llm/roc_auc",
+  "strict/llm/pr_auc",
+  "strict/encoder/roc_auc",
+  "strict/classical/roc_auc",
+  "strict/classical/pr_auc",
+  "broad/llm/roc_auc",
+  "broad/llm/pr_auc",
+  "broad/encoder/roc_auc"
+ ],
+ "best_component": {
+  "strict": "encoder",
+  "broad": "classical"
+ },
+ "separates_from_best": {
+  "strict": {
+   "roc_auc": true,
+   "pr_auc": false
+  },
+  "broad": {
+   "roc_auc": false,
+   "pr_auc": false
+  }
+ },
+ "verdict": "against the best component of each label set (encoder on strict, classical on broad) the fusion separates on strict roc_auc. It does not separate on the others, and no claim about F1 or MCC can be made from this record at all, because the thresholds and decisions were not saved. Against the weaker components it separates more widely (8 of the 12 comparisons overall), which is a smaller thing to have shown."
+}

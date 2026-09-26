@@ -323,6 +323,8 @@ def run(df, lab, llm_all, OUT, SCORES):
     names = ["llm", "encoder", "classical", "hybrid"]
     oof_s = {n: np.zeros(len(y)) for n in names}
     oof_p = {n: np.zeros(len(y), dtype=int) for n in names}
+    thresholds = {n: [] for n in names}
+    folds_f1 = {n: [] for n in names}
     weights = []
 
     for fold, (tr, te) in enumerate(
@@ -387,6 +389,17 @@ def run(df, lab, llm_all, OUT, SCORES):
             thr = pick_threshold(y[va], v)
             oof_s[nm][te] = t
             oof_p[nm][te] = (t >= thr).astype(int)
+            # The per-fold threshold and the per-fold F1, kept because the
+            # first run did not keep them. Without them the project's own
+            # method comparison - a Wilcoxon over five paired folds, and
+            # McNemar on the decisions - cannot be run on this arm at all,
+            # and the paper compares methods that way everywhere else. A
+            # reconstruction from the scores cannot recover them: the
+            # threshold was chosen on validation rows this record does not
+            # carry.
+            thresholds[nm].append(round(float(thr), 4))
+            folds_f1[nm].append(round(float(f1_score(
+                y[te], oof_p[nm][te], zero_division=0)), 4))
 
         print("  fold %d/%d done (%.1f min)  weights %s"
               % (fold, FOLDS, (time.time() - t0) / 60.0, weights[-1]),
@@ -395,12 +408,17 @@ def run(df, lab, llm_all, OUT, SCORES):
     for nm in names:
         r = metrics(y, oof_p[nm], oof_s[nm], floor)
         r.update(thread_bootstrap(y, oof_p[nm], g))
+        r["folds_f1"] = folds_f1[nm]
+        r["thresholds"] = thresholds[nm]
         OUT["%s_%s" % (nm, lab)] = r
         print("  %-10s %-7s F1 %.4f  MCC %.4f  ROC %.4f  CI [%.3f, %.3f]"
               % (nm, lab, r["f1"], r["mcc"], r.get("roc_auc", float("nan")),
                  r["f1_ci95"][0], r["f1_ci95"][1]), flush=True)
     OUT["fusion_weights_%s" % lab] = weights
+    # Scores AND decisions. The decisions are what McNemar needs, and they
+    # cannot be recomputed from the scores without the validation rows.
     SCORES[lab] = {n: [round(float(v), 6) for v in oof_s[n]] for n in names}
+    SCORES["%s_pred" % lab] = {n: [int(v) for v in oof_p[n]] for n in names}
     # Checkpoint after each label set, because the broad pass can die on
     # Kaggle after the strict pass has already cost half an hour. Guarded on
     # the provenance block only main() builds: test_hybrid.py drives run()

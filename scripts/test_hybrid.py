@@ -21,6 +21,7 @@ import sys
 import types
 
 import numpy as np
+from sklearn.metrics import f1_score
 
 # Stand in for the GPU pieces before the module is imported.
 fake_torch = types.ModuleType("torch")
@@ -106,6 +107,34 @@ def main():
         assert r["tp"] + r["fp"] + r["fn"] + r["tn"] == len(df), \
             "%s: confusion matrix does not cover the dataset" % k
     print("four result records, each covering every message")
+
+    # The first framework run saved neither the per-fold F1 nor the
+    # thresholds nor the decisions, so the project's own method comparison -
+    # a Wilcoxon over five paired folds, and McNemar on the decisions - could
+    # not be run on it at all, while the paper compares methods that way
+    # everywhere else. None of the three can be reconstructed from the
+    # scores: the threshold was chosen on validation rows no record carries.
+    for k in ("llm_strict", "encoder_strict", "classical_strict",
+              "hybrid_strict"):
+        r = OUT[k]
+        for f in ("folds_f1", "thresholds"):
+            assert f in r, "%s missing %s - the paired test needs it" % (k, f)
+            assert len(r[f]) == H.FOLDS, (
+                "%s: %s has %d entries for %d folds"
+                % (k, f, len(r[f]), H.FOLDS))
+    pred = SCORES.get("strict_pred")
+    assert pred is not None, "decisions were not saved; McNemar needs them"
+    for nm in ("llm", "encoder", "classical", "hybrid"):
+        assert len(pred[nm]) == len(df), (
+            "%s: decisions do not cover the corpus" % nm)
+        assert set(pred[nm]) <= {0, 1}, "%s: decisions are not binary" % nm
+        # The saved decisions must be the ones the reported F1 came from.
+        got = round(float(f1_score(y_all, pred[nm], zero_division=0)), 4)
+        assert got == OUT["%s_strict" % nm]["f1"], (
+            "%s: saved decisions give F1 %.4f, the record reports %.4f"
+            % (nm, got, OUT["%s_strict" % nm]["f1"]))
+    print("per-fold F1, thresholds and decisions saved; the decisions "
+          "reproduce every reported F1")
 
     w = OUT["fusion_weights_strict"]
     assert len(w) == H.FOLDS, "one weight vector per fold expected"
