@@ -1,0 +1,241 @@
+{
+  "environment": {
+    "python": "3.12.13",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.0.2",
+    "scipy": "1.16.3",
+    "transformers": "5.0.0",
+    "torch": "2.10.0+cu128",
+    "gpu": "Tesla T4"
+  },
+  "llm_model": "Qwen/Qwen2.5-7B-Instruct",
+  "encoder_model": "roberta-base",
+  "dataset": {
+    "messages": 1382,
+    "threads": 1103
+  },
+  "note": "components calibrated on validation threads; fusion weights and thresholds fitted there too; test folds untouched",
+  "corpus_fingerprint": "ec419e602c6090b6",
+  "llm_strict": {
+    "f1": 0.3991,
+    "precision": 0.2779,
+    "recall": 0.708,
+    "mcc": 0.2329,
+    "tp": 177,
+    "fp": 460,
+    "fn": 73,
+    "tn": 672,
+    "trivial_floor": 0.3064,
+    "roc_auc": 0.6668,
+    "pr_auc": 0.291,
+    "f1_ci95": [
+      0.3591,
+      0.4386
+    ],
+    "mcc_ci95": [
+      0.1814,
+      0.2862
+    ]
+  },
+  "encoder_strict": {
+    "f1": 0.4114,
+    "precision": 0.3403,
+    "recall": 0.52,
+    "mcc": 0.256,
+    "tp": 130,
+    "fp": 252,
+    "fn": 120,
+    "tn": 880,
+    "trivial_floor": 0.3064,
+    "roc_auc": 0.7057,
+    "pr_auc": 0.3399,
+    "f1_ci95": [
+      0.3649,
+      0.4609
+    ],
+    "mcc_ci95": [
+      0.2017,
+      0.3134
+    ]
+  },
+  "classical_strict": {
+    "f1": 0.3909,
+    "precision": 0.2855,
+    "recall": 0.62,
+    "mcc": 0.2185,
+    "tp": 155,
+    "fp": 388,
+    "fn": 95,
+    "tn": 744,
+    "trivial_floor": 0.3064,
+    "roc_auc": 0.6317,
+    "pr_auc": 0.2661,
+    "f1_ci95": [
+      0.3467,
+      0.4345
+    ],
+    "mcc_ci95": [
+      0.1653,
+      0.2733
+    ]
+  },
+  "hybrid_strict": {
+    "f1": 0.4494,
+    "precision": 0.3439,
+    "recall": 0.648,
+    "mcc": 0.3046,
+    "tp": 162,
+    "fp": 309,
+    "fn": 88,
+    "tn": 823,
+    "trivial_floor": 0.3064,
+    "roc_auc": 0.7439,
+    "pr_auc": 0.3561,
+    "f1_ci95": [
+      0.4032,
+      0.4938
+    ],
+    "mcc_ci95": [
+      0.2489,
+      0.3571
+    ]
+  },
+  "fusion_weights_strict": [
+    {
+      "llm": 2.5617,
+      "encoder": 1.0355,
+      "classical": 1.0206
+    },
+    {
+      "llm": 2.565,
+      "encoder": 2.3932,
+      "classical": 0.9349
+    },
+    {
+      "llm": 2.1034,
+      "encoder": 2.8282,
+      "classical": 0.698
+    },
+    {
+      "llm": 2.6369,
+      "encoder": 3.066,
+      "classical": 0.857
+    },
+    {
+      "llm": 2.1472,
+      "encoder": 2.7727,
+      "classical": 0.4033
+    }
+  ],
+  "llm_broad": {
+    "f1": 0.5239,
+    "precision": 0.4131,
+    "recall": 0.7156,
+    "mcc": 0.248,
+    "tp": 302,
+    "fp": 429,
+    "fn": 120,
+    "tn": 531,
+    "trivial_floor": 0.4678,
+    "roc_auc": 0.6757,
+    "pr_auc": 0.4602,
+    "f1_ci95": [
+      0.4878,
+      0.5604
+    ],
+    "mcc_ci95": [
+      0.1919,
+      0.3018
+    ]
+  },
+  "encoder_broad": {
+    "f1": 0.5174,
+    "precision": 0.4222,
+    "recall": 0.6682,
+    "mcc": 0.2453,
+    "tp": 282,
+    "fp": 386,
+    "fn": 140,
+    "tn": 574,
+    "trivial_floor": 0.4678,
+    "roc_auc": 0.7001,
+    "pr_auc": 0.5018,
+    "f1_ci95": [
+      0.4774,
+      0.5552
+    ],
+    "mcc_ci95": [
+      0.1859,
+      0.2973
+    ]
+  },
+  "classical_broad": {
+    "f1": 0.5428,
+    "precision": 0.394,
+    "recall": 0.872,
+    "mcc": 0.2779,
+    "tp": 368,
+    "fp": 566,
+    "fn": 54,
+    "tn": 394,
+    "trivial_floor": 0.4678,
+    "roc_auc": 0.7172,
+    "pr_auc": 0.4929,
+    "f1_ci95": [
+      0.5089,
+      0.5778
+    ],
+    "mcc_ci95": [
+      0.2336,
+      0.3238
+    ]
+  },
+  "hybrid_broad": {
+    "f1": 0.5492,
+    "precision": 0.4219,
+    "recall": 0.7867,
+    "mcc": 0.2909,
+    "tp": 332,
+    "fp": 455,
+    "fn": 90,
+    "tn": 505,
+    "trivial_floor": 0.4678,
+    "roc_auc": 0.7333,
+    "pr_auc": 0.5225,
+    "f1_ci95": [
+      0.5137,
+      0.5838
+    ],
+    "mcc_ci95": [
+      0.2367,
+      0.3424
+    ]
+  },
+  "fusion_weights_broad": [
+    {
+      "llm": 1.8369,
+      "encoder": 2.4363,
+      "classical": 1.4912
+    },
+    {
+      "llm": 1.775,
+      "encoder": 2.9267,
+      "classical": 1.1785
+    },
+    {
+      "llm": 0.9985,
+      "encoder": 2.8515,
+      "classical": 1.2854
+    },
+    {
+      "llm": 1.3491,
+      "encoder": 2.2918,
+      "classical": 1.4165
+    },
+    {
+      "llm": 2.303,
+      "encoder": 2.6182,
+      "classical": 1.133
+    }
+  ]
+}
