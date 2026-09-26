@@ -1,0 +1,102 @@
+{
+ "note": "are the false positives the messages the annotators disagreed about?",
+ "n": 1382,
+ "contested": 172,
+ "contested_share_of_negatives": 0.1519,
+ "draws": 2000,
+ "seed": 42,
+ "models": {
+  "fine-tuned encoder": {
+   "false_positives": 262,
+   "false_negatives": 118,
+   "contested_share_of_fp": 0.2519,
+   "lift": 1.658,
+   "lift_ci95": [
+    1.316,
+    2.023
+   ],
+   "enriched": true,
+   "flag_rate_contested": 0.3837,
+   "flag_rate_agreed_harmless": 0.2042,
+   "median_words_fp": 225,
+   "median_words_fn": 240,
+   "median_words_corpus": 229
+  },
+  "logistic regression": {
+   "false_positives": 103,
+   "false_negatives": 175,
+   "contested_share_of_fp": 0.3592,
+   "lift": 2.364,
+   "lift_ci95": [
+    1.755,
+    3.019
+   ],
+   "enriched": true,
+   "flag_rate_contested": 0.2151,
+   "flag_rate_agreed_harmless": 0.0688,
+   "median_words_fp": 253,
+   "median_words_fn": 238,
+   "median_words_corpus": 229
+  },
+  "linear SVM": {
+   "false_positives": 68,
+   "false_negatives": 210,
+   "contested_share_of_fp": 0.3382,
+   "lift": 2.226,
+   "lift_ci95": [
+    1.554,
+    2.975
+   ],
+   "enriched": true,
+   "flag_rate_contested": 0.1337,
+   "flag_rate_agreed_harmless": 0.0469,
+   "median_words_fp": 299,
+   "median_words_fn": 234,
+   "median_words_corpus": 229
+  }
+ },
+ "examples": {
+  "false_positive_on_contested": [
+   {
+    "score": 0.9893,
+    "words": 153,
+    "thread": "humberto (beto) kuhn, resume",
+    "text": "<person> - please forward on to Barry when you get his e-mail address. <person> - I don't know Humberto personally, but looking over his resume, I thought he might be a fit in your organization. ---------------------- Forwarded by <person> ..."
+   },
+   {
+    "score": 0.9865,
+    "words": 162,
+    "thread": "job applicant",
+    "text": "any interest? ----- Forwarded by <person> on 09/24/2000 05:37 PM ----- Eric Thode 09/20/2000 11:46 AM <person> - <person> <person> cc: <person> <person> - job applicant Is this of interest to you? Eric ---------------------- Forwarded by <p..."
+   },
+   {
+    "score": 0.9837,
+    "words": 204,
+    "thread": "resume",
+    "text": "---------------------- Forwarded by <person> on 04/15/2001 07:59 PM --------------------------- <person> - <person> <person> - <person> cc: <person> <person> - RESUME I am sending you the resume of Jennifer Salisbury who is Energy Sec. here..."
+   }
+  ],
+  "false_negative": [
+   {
+    "score": 0.0055,
+    "words": 44,
+    "thread": "enterprise wide risk",
+    "text": "-----Original Message----- <person> - <person> Sent: Friday, June 01, 2001 1:56 PM <person> - <person> Subject: Enterprise Wide Risk Here is an outline of the possible scope/impacts for the EWRM effort as discussed: <Embedded Microsoft Powe..."
+   },
+   {
+    "score": 0.0073,
+    "words": 88,
+    "thread": "confidential & proprietaty - udated pannat value",
+    "text": "Mark: Per my voice mail. Jeff ----- Forwarded by <person> on 06/07/2001 05:15 PM ----- <person> 06/07/2001 04:32 PM <person> - <person> cc: <person> <person> - Confidential & Proprietaty - Udated PanNat Value As requested... Value of Deal (..."
+   },
+   {
+    "score": 0.0075,
+    "words": 123,
+    "thread": "ken lay's meeting with fox",
+    "text": "Jon -- Ricardo Charvel is pulling together the briefing for Ken, so please share the EBS activities/ agenda with him. Thanks ---------------------- Forwarded by <person> on 08/02/2000 03:03 PM --------------------------- Ken Rice@ENRON COMM..."
+   }
+  ]
+ },
+ "redaction": "Example bodies are quoted from the public Enron archive, which this artifact rebuilds rather than redistributes. Masked: the internal routing form, From/To/Cc lines, e-mail addresses, telephone numbers and long digit strings. NOT masked: first names appearing inside a sentence, which no pattern catches without a name list and which over-masking would take real content with. The examples are illustrative and nothing in the paper depends on them.",
+ "verdict": "every model's false positives are enriched for the messages the two annotators split on, by 1.66 to 2.36 times their share of the negatives, and every interval excludes one. A measurable part of what the metrics score as error is the model agreeing with the annotator who was outvoted."
+}

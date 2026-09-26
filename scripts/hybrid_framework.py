@@ -320,7 +320,18 @@ def run(df, lab, llm_all, OUT, SCORES):
     Xv = TfidfVectorizer(min_df=2, ngram_range=(1, 2), sublinear_tf=True,
                          max_features=50000).fit_transform(X)
 
-    names = ["llm", "encoder", "classical", "hybrid"]
+    # The leave-one-out arms answer the question the title raises and the
+    # first run could not: does each signal earn its place? They cost
+    # nothing - the components are already calibrated, so an arm is one more
+    # logistic regression on three columns of validation scores - and they
+    # are fitted on exactly the same validation threads, with the threshold
+    # chosen there too, so the comparison against the full fusion is
+    # within-run and needs no caveat about treatment.
+    ARMS = {"hybrid": ("llm", "encoder", "classical"),
+            "no_llm": ("encoder", "classical"),
+            "no_encoder": ("llm", "classical"),
+            "no_classical": ("llm", "encoder")}
+    names = ["llm", "encoder", "classical"] + sorted(ARMS)
     oof_s = {n: np.zeros(len(y)) for n in names}
     oof_p = {n: np.zeros(len(y), dtype=int) for n in names}
     thresholds = {n: [] for n in names}
@@ -371,21 +382,25 @@ def run(df, lab, llm_all, OUT, SCORES):
             cal[nm] = f
             sv[nm], st[nm] = f(v), f(t)
 
-        # Fuse on the validation threads only.
-        Fva = np.column_stack([sv[n] for n in ("llm", "encoder", "classical")])
-        Fte = np.column_stack([st[n] for n in ("llm", "encoder", "classical")])
-        fuse = LogisticRegression(max_iter=1000,
-                                  class_weight="balanced").fit(Fva, y[va])
-        h_va = fuse.predict_proba(Fva)[:, 1]
-        h_te = fuse.predict_proba(Fte)[:, 1]
-        weights.append({"llm": round(float(fuse.coef_[0][0]), 4),
-                        "encoder": round(float(fuse.coef_[0][1]), 4),
-                        "classical": round(float(fuse.coef_[0][2]), 4)})
+        # Fuse on the validation threads only, once per arm.
+        fused = {}
+        for arm, cols in ARMS.items():
+            Fva = np.column_stack([sv[n] for n in cols])
+            Fte = np.column_stack([st[n] for n in cols])
+            fu = LogisticRegression(max_iter=1000,
+                                    class_weight="balanced").fit(Fva, y[va])
+            fused[arm] = (fu.predict_proba(Fva)[:, 1],
+                          fu.predict_proba(Fte)[:, 1])
+            if arm == "hybrid":
+                weights.append(dict(
+                    (n, round(float(c), 4))
+                    for n, c in zip(cols, fu.coef_[0])))
 
-        for nm, v, t in (("llm", sv["llm"], st["llm"]),
-                         ("encoder", sv["encoder"], st["encoder"]),
-                         ("classical", sv["classical"], st["classical"]),
-                         ("hybrid", h_va, h_te)):
+        rows = [("llm", sv["llm"], st["llm"]),
+                ("encoder", sv["encoder"], st["encoder"]),
+                ("classical", sv["classical"], st["classical"])]
+        rows += [(a, fused[a][0], fused[a][1]) for a in sorted(ARMS)]
+        for nm, v, t in rows:
             thr = pick_threshold(y[va], v)
             oof_s[nm][te] = t
             oof_p[nm][te] = (t >= thr).astype(int)

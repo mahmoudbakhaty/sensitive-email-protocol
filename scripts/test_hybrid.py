@@ -141,9 +141,27 @@ def main():
     assert all(set(d) == {"llm", "encoder", "classical"} for d in w)
     print("fusion weights recorded per fold: %s" % w[0])
 
-    assert set(SCORES["strict"]) == {"llm", "encoder", "classical", "hybrid"}
+    want = {"llm", "encoder", "classical",
+            "hybrid", "no_llm", "no_encoder", "no_classical"}
+    assert set(SCORES["strict"]) == want, (
+        "arms are %s, expected %s"
+        % (sorted(SCORES["strict"]), sorted(want)))
     assert all(len(v) == len(df) for v in SCORES["strict"].values())
-    print("per-message scores kept for all four, %d each" % len(df))
+    print("per-message scores kept for all %d arms, %d each"
+          % (len(want), len(df)))
+
+    # The leave-one-out arms are the ablation. Each must be a real fusion of
+    # its own subset, not a copy of the full one: the first run had no
+    # ablation at all and the question the title raises went unanswered.
+    for arm in ("no_llm", "no_encoder", "no_classical"):
+        k = "%s_strict" % arm
+        assert k in OUT, "missing ablation arm: %s" % k
+        n_cm = sum(OUT[k][f] for f in ("tp", "fp", "fn", "tn"))
+        assert n_cm == len(df), (
+            "%s does not cover the corpus" % arm)
+        same = SCORES["strict"][arm] == SCORES["strict"]["hybrid"]
+        assert not same, "%s is identical to the full fusion" % arm
+    print("three leave-one-out arms, each distinct from the full fusion")
 
     print()
     print("framework bookkeeping verified; only the two models are stubbed")
