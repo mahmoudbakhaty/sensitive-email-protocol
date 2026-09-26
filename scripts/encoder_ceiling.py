@@ -67,8 +67,10 @@ def main():
         enc_by_text.setdefault(t, float(v))
     print("messages %d | encoder scores %d | distinct texts %d"
           % (len(texts), len(enc), len(enc_by_text)))
-    print("Platt calibration throughout - isotonic cannot hold the block "
-          "contract at all (RESULTS_WHY_BLOCK_FAILS.md)")
+    print("Platt calibration throughout - plain isotonic holds no external "
+          "block contract, and randomising the cut recovers the rate in "
+          "expectation but not per deployment "
+          "(RESULTS_WHY_BLOCK_FAILS.md, RESULTS_CALIBRATOR_REMEDIES.md)")
     print()
     print("  %-26s %8s %9s %13s %11s"
           % ("system", "request", "leak", "false block", "automated"))

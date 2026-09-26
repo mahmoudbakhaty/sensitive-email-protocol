@@ -87,15 +87,30 @@ threshold.
 
 ## The statement that stands
 
-> **Isotonic calibration cannot keep a rate guarantee.** It collapses a
+> **Plain isotonic calibration cannot keep a rate guarantee, and the standard
+> remedy buys expectation rather than confidence.** Isotonic collapses a
 > continuous score into a few dozen values; the threshold lands on one of them;
 > a large share of the data sits on it; and every one of those items is acted
 > on. Nine of nine external contracts broken, on three corpora spanning Brier
-> 0.009 to 0.152. Platt leaves thousands of distinct values, ties nothing to
-> the threshold, and holds eight of nine with the ninth missing by 0.0001.
+> 0.009 to 0.152.
+>
+> Randomising the cut across the tied block - the textbook conformal answer to
+> an atom on the threshold - recovers seven of those nine on the pooled mean.
+> It does not recover the guarantee. Every one of 40 draws holds in just one of
+> the nine cells, and at a 2% request the draws hold 50%, 72% and 50% of the
+> time. A deployment does not run forty times; it flips the coin once.
+>
+> Platt leaves thousands of distinct values, ties nothing to the threshold,
+> holds eight of nine with the ninth missing by 0.0001, and has no
+> draw-to-draw variance to report at all.
 
-This is the original claim, withdrawn on a faulty measurement and reinstated on
-a corrected one. Both the withdrawal and the reinstatement are recorded here
+The first sentence carried no qualifier until 26 September: it said isotonic
+cannot carry a rate guarantee, full stop, and neither standard remedy had been
+tried. Both are tried in `RESULTS_CALIBRATOR_REMEDIES.md`, which is generated
+from its own record, and the claim is narrowed to what they leave standing.
+
+This is the original claim, withdrawn on a faulty measurement, reinstated on a
+corrected one, and narrowed once the remedies were measured. Both the withdrawal and the reinstatement are recorded here
 rather than edited away, because the sequence is the point: a one-character
 comparison decided which of two opposite conclusions this release published.
 

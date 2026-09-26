@@ -1,0 +1,296 @@
+{
+ "requests": [
+  0.02,
+  0.05,
+  0.1
+ ],
+ "draws": 40,
+ "corpora": {
+  "SMS Spam": [
+   {
+    "arm": "isotonic, plain cut",
+    "requested": 0.02,
+    "delivered": 0.0307,
+    "held": false
+   },
+   {
+    "arm": "isotonic, plain cut",
+    "requested": 0.05,
+    "delivered": 0.0665,
+    "held": false
+   },
+   {
+    "arm": "isotonic, plain cut",
+    "requested": 0.1,
+    "delivered": 0.1661,
+    "held": false
+   },
+   {
+    "arm": "isotonic, randomised cut",
+    "requested": 0.02,
+    "delivered": 0.02,
+    "held": false,
+    "spread": [
+     0.0184,
+     0.0215
+    ],
+    "held_share": 0.5
+   },
+   {
+    "arm": "isotonic, randomised cut",
+    "requested": 0.05,
+    "delivered": 0.0485,
+    "held": true,
+    "spread": [
+     0.0456,
+     0.0512
+    ],
+    "held_share": 0.95
+   },
+   {
+    "arm": "isotonic, randomised cut",
+    "requested": 0.1,
+    "delivered": 0.0976,
+    "held": true,
+    "spread": [
+     0.0945,
+     0.1003
+    ],
+    "held_share": 0.95
+   },
+   {
+    "arm": "Venn-Abers, plain cut",
+    "requested": 0.02,
+    "delivered": 0.0242,
+    "held": false
+   },
+   {
+    "arm": "Venn-Abers, plain cut",
+    "requested": 0.05,
+    "delivered": 0.0557,
+    "held": false
+   },
+   {
+    "arm": "Venn-Abers, plain cut",
+    "requested": 0.1,
+    "delivered": 0.1017,
+    "held": false
+   },
+   {
+    "arm": "Platt, plain cut",
+    "requested": 0.02,
+    "delivered": 0.0201,
+    "held": false
+   },
+   {
+    "arm": "Platt, plain cut",
+    "requested": 0.05,
+    "delivered": 0.0468,
+    "held": true
+   },
+   {
+    "arm": "Platt, plain cut",
+    "requested": 0.1,
+    "delivered": 0.0992,
+    "held": true
+   }
+  ],
+  "tweet_eval hate": [
+   {
+    "arm": "isotonic, plain cut",
+    "requested": 0.02,
+    "delivered": 0.0243,
+    "held": false
+   },
+   {
+    "arm": "isotonic, plain cut",
+    "requested": 0.05,
+    "delivered": 0.0579,
+    "held": false
+   },
+   {
+    "arm": "isotonic, plain cut",
+    "requested": 0.1,
+    "delivered": 0.1098,
+    "held": false
+   },
+   {
+    "arm": "isotonic, randomised cut",
+    "requested": 0.02,
+    "delivered": 0.0197,
+    "held": true,
+    "spread": [
+     0.0182,
+     0.0209
+    ],
+    "held_share": 0.725
+   },
+   {
+    "arm": "isotonic, randomised cut",
+    "requested": 0.05,
+    "delivered": 0.0504,
+    "held": false,
+    "spread": [
+     0.0485,
+     0.0521
+    ],
+    "held_share": 0.275
+   },
+   {
+    "arm": "isotonic, randomised cut",
+    "requested": 0.1,
+    "delivered": 0.0966,
+    "held": true,
+    "spread": [
+     0.0947,
+     0.0985
+    ],
+    "held_share": 1.0
+   },
+   {
+    "arm": "Venn-Abers, plain cut",
+    "requested": 0.02,
+    "delivered": 0.0226,
+    "held": false
+   },
+   {
+    "arm": "Venn-Abers, plain cut",
+    "requested": 0.05,
+    "delivered": 0.0573,
+    "held": false
+   },
+   {
+    "arm": "Venn-Abers, plain cut",
+    "requested": 0.1,
+    "delivered": 0.1094,
+    "held": false
+   },
+   {
+    "arm": "Platt, plain cut",
+    "requested": 0.02,
+    "delivered": 0.018,
+    "held": true
+   },
+   {
+    "arm": "Platt, plain cut",
+    "requested": 0.05,
+    "delivered": 0.0481,
+    "held": true
+   },
+   {
+    "arm": "Platt, plain cut",
+    "requested": 0.1,
+    "delivered": 0.0935,
+    "held": true
+   }
+  ],
+  "Enron-Spam": [
+   {
+    "arm": "isotonic, plain cut",
+    "requested": 0.02,
+    "delivered": 0.0217,
+    "held": false
+   },
+   {
+    "arm": "isotonic, plain cut",
+    "requested": 0.05,
+    "delivered": 0.0595,
+    "held": false
+   },
+   {
+    "arm": "isotonic, plain cut",
+    "requested": 0.1,
+    "delivered": 0.6676,
+    "held": false
+   },
+   {
+    "arm": "isotonic, randomised cut",
+    "requested": 0.02,
+    "delivered": 0.02,
+    "held": true,
+    "spread": [
+     0.0194,
+     0.0204
+    ],
+    "held_share": 0.5
+   },
+   {
+    "arm": "isotonic, randomised cut",
+    "requested": 0.05,
+    "delivered": 0.0495,
+    "held": true,
+    "spread": [
+     0.0483,
+     0.0501
+    ],
+    "held_share": 0.95
+   },
+   {
+    "arm": "isotonic, randomised cut",
+    "requested": 0.1,
+    "delivered": 0.0983,
+    "held": true,
+    "spread": [
+     0.096,
+     0.101
+    ],
+    "held_share": 0.95
+   },
+   {
+    "arm": "Venn-Abers, plain cut",
+    "requested": 0.02,
+    "delivered": 0.02,
+    "held": true
+   },
+   {
+    "arm": "Venn-Abers, plain cut",
+    "requested": 0.05,
+    "delivered": 0.0504,
+    "held": false
+   },
+   {
+    "arm": "Venn-Abers, plain cut",
+    "requested": 0.1,
+    "delivered": 0.0997,
+    "held": true
+   },
+   {
+    "arm": "Platt, plain cut",
+    "requested": 0.02,
+    "delivered": 0.0194,
+    "held": true
+   },
+   {
+    "arm": "Platt, plain cut",
+    "requested": 0.05,
+    "delivered": 0.0493,
+    "held": true
+   },
+   {
+    "arm": "Platt, plain cut",
+    "requested": 0.1,
+    "delivered": 0.0974,
+    "held": true
+   }
+  ]
+ },
+ "summary": {
+  "isotonic, plain cut": [
+   0,
+   9
+  ],
+  "isotonic, randomised cut": [
+   7,
+   9
+  ],
+  "Venn-Abers, plain cut": [
+   2,
+   9
+  ],
+  "Platt, plain cut": [
+   8,
+   9
+  ]
+ },
+ "verdict": "the remedies help but do not rescue it: randomised cuts hold 7 of 9 and Venn-Abers 2 of 9, against plain isotonic's 0. The residue is the reportable part"
+}
