@@ -48,6 +48,10 @@ These artifacts exist so both can be checked rather than taken on trust.
 
 - [Why the block promise breaks, and the calibrator that fixes it](#why-the-block-promise-breaks-and-the-calibrator-that-fixes-it)
 - [What more labels buy, and which labels to buy](#what-more-labels-buy-and-which-labels-to-buy)
+
+**Also**
+
+- [Are the errors errors?](#are-the-errors-errors)
 <!-- /contents -->
 
 ## Headline numbers
@@ -808,6 +812,43 @@ those where it falls the other.
 ```
 python scripts/why_block_fails.py
 python scripts/calibrator_ties.py
+```
+
+## Are the errors errors?
+
+A message counts as sensitive under the strict labels only when BOTH
+annotators said so, so the 172 messages exactly one annotator called sensitive
+are scored as **negatives**. A model that flags one is recorded as wrong while
+a trained human agreed with it. Do the false positives concentrate there?
+
+They are 15.2% of all negatives. If the errors landed at that rate, the
+contested set would explain nothing.
+
+| model | FP | FN | contested in FP | lift | 95% CI |
+|---|---|---|---|---|---|
+| fine-tuned encoder | 262 | 118 | 25.2% | **1.66** | [1.32, 2.02] |
+| logistic regression | 103 | 175 | 35.9% | **2.36** | [1.75, 3.02] |
+| linear SVM | 68 | 210 | 33.8% | **2.23** | [1.55, 2.98] |
+
+Every lift excludes one, on a thread-clustered bootstrap over 2000 resamples.
+The encoder flags a contested message 38.4% of the time against 20.4% for a
+message both annotators called harmless.
+
+**It does not rescue the scores, and the script says so.** 196 of the encoder's
+262 false positives are messages both annotators called harmless, and the 118
+false negatives are not explained at all. The claim is only that part of the
+gap between the reported score and the annotator reference is a disagreement
+about the label rather than a failure of the classifier - which a benchmark
+with one annotator could not tell apart. No figure in the paper is adjusted
+for it.
+
+Examples are quoted redacted, and what is masked is stated rather than
+implied: routing identifiers, header lines, addresses and numbers go; first
+names inside a sentence stay, because no pattern removes those without taking
+real content with them.
+
+```
+python scripts/error_analysis.py
 ```
 
 ## Does it decline what the annotators argued over?
