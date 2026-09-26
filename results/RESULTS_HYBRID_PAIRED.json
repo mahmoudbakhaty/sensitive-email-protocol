@@ -22,7 +22,9 @@
      ],
      "excludes_zero": true,
      "share_above_zero": 1.0,
-     "draws": 2000
+     "p_two_sided": 0.0005,
+     "draws": 2000,
+     "holm_reject": true
     },
     "pr_auc": {
      "delta": 0.0666,
@@ -32,7 +34,9 @@
      ],
      "excludes_zero": true,
      "share_above_zero": 0.991,
-     "draws": 2000
+     "p_two_sided": 0.018,
+     "draws": 2000,
+     "holm_reject": false
     }
    },
    "encoder": {
@@ -44,7 +48,9 @@
      ],
      "excludes_zero": true,
      "share_above_zero": 0.999,
-     "draws": 2000
+     "p_two_sided": 0.002,
+     "draws": 2000,
+     "holm_reject": true
     },
     "pr_auc": {
      "delta": 0.0169,
@@ -54,7 +60,9 @@
      ],
      "excludes_zero": false,
      "share_above_zero": 0.8705,
-     "draws": 2000
+     "p_two_sided": 0.259,
+     "draws": 2000,
+     "holm_reject": false
     }
    },
    "classical": {
@@ -66,7 +74,9 @@
      ],
      "excludes_zero": true,
      "share_above_zero": 1.0,
-     "draws": 2000
+     "p_two_sided": 0.0005,
+     "draws": 2000,
+     "holm_reject": true
     },
     "pr_auc": {
      "delta": 0.0897,
@@ -76,7 +86,9 @@
      ],
      "excludes_zero": true,
      "share_above_zero": 1.0,
-     "draws": 2000
+     "p_two_sided": 0.0005,
+     "draws": 2000,
+     "holm_reject": true
     }
    }
   },
@@ -98,7 +110,9 @@
      ],
      "excludes_zero": true,
      "share_above_zero": 1.0,
-     "draws": 2000
+     "p_two_sided": 0.0005,
+     "draws": 2000,
+     "holm_reject": true
     },
     "pr_auc": {
      "delta": 0.0653,
@@ -108,7 +122,9 @@
      ],
      "excludes_zero": true,
      "share_above_zero": 0.9915,
-     "draws": 2000
+     "p_two_sided": 0.017,
+     "draws": 2000,
+     "holm_reject": false
     }
    },
    "encoder": {
@@ -120,7 +136,9 @@
      ],
      "excludes_zero": true,
      "share_above_zero": 1.0,
-     "draws": 2000
+     "p_two_sided": 0.0005,
+     "draws": 2000,
+     "holm_reject": true
     },
     "pr_auc": {
      "delta": 0.0206,
@@ -130,7 +148,9 @@
      ],
      "excludes_zero": false,
      "share_above_zero": 0.956,
-     "draws": 2000
+     "p_two_sided": 0.088,
+     "draws": 2000,
+     "holm_reject": false
     }
    },
    "classical": {
@@ -142,7 +162,9 @@
      ],
      "excludes_zero": false,
      "share_above_zero": 0.8505,
-     "draws": 2000
+     "p_two_sided": 0.299,
+     "draws": 2000,
+     "holm_reject": false
     },
     "pr_auc": {
      "delta": 0.0278,
@@ -152,10 +174,25 @@
      ],
      "excludes_zero": false,
      "share_above_zero": 0.878,
-     "draws": 2000
+     "p_two_sided": 0.244,
+     "draws": 2000,
+     "holm_reject": false
     }
    }
   }
+ },
+ "multiplicity": {
+  "method": "Holm-Bonferroni",
+  "alpha": 0.05,
+  "comparisons": 12,
+  "survive": [
+   "strict/llm/roc_auc",
+   "strict/encoder/roc_auc",
+   "strict/classical/roc_auc",
+   "strict/classical/pr_auc",
+   "broad/llm/roc_auc",
+   "broad/encoder/roc_auc"
+  ]
  },
  "separating": [
   "strict/llm/roc_auc",
@@ -181,5 +218,5 @@
    "pr_auc": false
   }
  },
- "verdict": "against the best component of each label set (encoder on strict, classical on broad) the fusion separates on strict roc_auc. It does not separate on the others, and no claim about F1 or MCC can be made from this record at all, because the thresholds and decisions were not saved. Against the weaker components it separates more widely (8 of the 12 comparisons overall), which is a smaller thing to have shown."
+ "verdict": "against the best component of each label set (encoder on strict, classical on broad) the fusion separates on strict roc_auc. It does not separate on the others, and no claim about F1 or MCC can be made from this record at all, because the thresholds and decisions were not saved. That survives Holm-Bonferroni across all 12 comparisons made here, of which 6 do. Against the weaker components it separates more widely, which is a smaller thing to have shown."
 }

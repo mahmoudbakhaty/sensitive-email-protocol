@@ -29,6 +29,16 @@ about a re-fitted fusion, and nothing about a different thread partition -
 RESULTS_ROBERTA_SEEDS.json shows the encoder alone moving 0.349 to 0.393
 across partitions, a spread wider than the gain being tested.
 
+WHAT THIS IS NOT. It was not pre-registered. The run finished first, its
+marginal intervals were seen to overlap, and this test was then chosen because
+it can express a difference that marginal intervals cannot. That ordering is a
+real weakness and naming it is the only honest treatment: a test picked after
+seeing the data is a weaker thing than a test named before. Two guards against
+the obvious abuse are in the code rather than in this paragraph - every one of
+the twelve comparisons is reported whether it separates or not, and all twelve
+go through one Holm-Bonferroni correction, so a single favourable cell cannot
+be quoted on its own.
+
     python scripts/hybrid_paired.py
 """
 import io
@@ -42,6 +52,7 @@ from sklearn.metrics import average_precision_score, roc_auc_score
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import io_paths                                              # noqa: E402
+import mapping_sensitivity as MS                             # noqa: E402
 import strengthen as S                                       # noqa: E402
 
 OUT = io_paths.result_out("RESULTS_HYBRID_PAIRED.json")
@@ -77,10 +88,16 @@ def paired(y, a, b, groups, n=N_BOOT, seed=SEED):
     def summarise(d):
         d = np.asarray(d)
         lo, hi = np.percentile(d, 2.5), np.percentile(d, 97.5)
+        above = float((d > 0).mean())
+        # Two-sided bootstrap p, floored at one draw: the resample cannot
+        # resolve a p below 1/draws, and quoting one would be an artefact of
+        # the draw count rather than a measurement.
+        pv = max(2.0 * min(above, 1.0 - above), 1.0 / len(d))
         return {"delta": round(float(d.mean()), 4),
                 "ci95": [round(float(lo), 4), round(float(hi), 4)],
                 "excludes_zero": bool(lo > 0 or hi < 0),
-                "share_above_zero": round(float((d > 0).mean()), 4),
+                "share_above_zero": round(above, 4),
+                "p_two_sided": round(pv, 4),
                 "draws": int(len(d))}
     return {"roc_auc": summarise(d_roc), "pr_auc": summarise(d_pr)}
 
@@ -163,6 +180,20 @@ def main():
                       flush=True)
         print(flush=True)
 
+    # Twelve comparisons are made here - three components, two measures, two
+    # label sets - and reading each at 5% would be the multiplicity this paper
+    # objects to elsewhere. Holm-Bonferroni is applied across all twelve at
+    # once, with the project's own implementation rather than a second one.
+    keys = [(lab, k, m) for lab in ("strict", "broad")
+            for k in COMPONENTS for m in ("roc_auc", "pr_auc")]
+    pv = [out["labels"][lab][k][m]["p_two_sided"] for lab, k, m in keys]
+    rej = MS.holm(pv)
+    for (lab, k, m), r in zip(keys, rej):
+        out["labels"][lab][k][m]["holm_reject"] = bool(r)
+    out["multiplicity"] = {
+        "method": "Holm-Bonferroni", "alpha": 0.05, "comparisons": len(keys),
+        "survive": ["%s/%s/%s" % t for t, r in zip(keys, rej) if r]}
+
     sep = [(lab, k, m)
            for lab, d in out["labels"].items()
            for k in COMPONENTS
@@ -177,7 +208,11 @@ def main():
     for lab in ("strict", "broad"):
         b = max(COMPONENTS, key=lambda k: rec["%s_%s" % (k, lab)]["f1"])
         best[lab] = b
-        decisive[lab] = {m: out["labels"][lab][b][m]["excludes_zero"]
+        # The decisive claim must survive the correction, not merely the
+        # marginal interval: a difference that clears 95% on its own and
+        # fails Holm across twelve is not a finding.
+        decisive[lab] = {m: bool(out["labels"][lab][b][m]["excludes_zero"]
+                                 and out["labels"][lab][b][m]["holm_reject"])
                          for m in ("roc_auc", "pr_auc")}
     out["best_component"] = best
     out["separates_from_best"] = decisive
@@ -189,12 +224,13 @@ def main():
         "against the best component of each label set (%s on strict, %s on "
         "broad) the fusion separates on %s. It does not separate on the "
         "others, and no claim about F1 or MCC can be made from this record "
-        "at all, because the thresholds and decisions were not saved. "
-        "Against the weaker components it separates more widely (%d of the "
-        "%d comparisons overall), which is a smaller thing to have shown."
+        "at all, because the thresholds and decisions were not saved. That "
+        "survives Holm-Bonferroni across all %d comparisons made here, of "
+        "which %d do. Against the weaker components it separates more "
+        "widely, which is a smaller thing to have shown."
         % (best["strict"], best["broad"],
            " and ".join(held) if held else "nothing",
-           len(sep), 2 * len(COMPONENTS) * 2))
+           len(keys), len(out["multiplicity"]["survive"])))
     print("  " + out["verdict"], flush=True)
     json.dump(out, io.open(OUT, "w", encoding="utf-8"), indent=1)
     print(flush=True)
