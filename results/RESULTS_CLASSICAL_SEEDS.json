@@ -1,0 +1,352 @@
+{
+ "note": "the classical baselines over the encoder's own seeded partitions, vectoriser fitted inside each fold",
+ "seeds": [
+  42,
+  43,
+  44,
+  45,
+  46
+ ],
+ "folds": 5,
+ "environment": {
+  "python": "3.14.0",
+  "scikit_learn": "1.9.1",
+  "numpy": "2.4.2"
+ },
+ "not_comparable_with": "Tables III and IV, which report one partition and fit the vectoriser on the whole corpus",
+ "strict": {
+  "LinearSVM": {
+   "runs": [
+    {
+     "seed": 42,
+     "f1": 0.3943,
+     "mcc": 0.2241,
+     "roc_auc": 0.6947
+    },
+    {
+     "seed": 43,
+     "f1": 0.3787,
+     "mcc": 0.2007,
+     "roc_auc": 0.6864
+    },
+    {
+     "seed": 44,
+     "f1": 0.4033,
+     "mcc": 0.2388,
+     "roc_auc": 0.7284
+    },
+    {
+     "seed": 45,
+     "f1": 0.393,
+     "mcc": 0.2216,
+     "roc_auc": 0.7055
+    },
+    {
+     "seed": 46,
+     "f1": 0.3832,
+     "mcc": 0.2144,
+     "roc_auc": 0.7022
+    }
+   ],
+   "f1_mean": 0.3905,
+   "f1_sd": 0.0097,
+   "f1_range": [
+    0.3787,
+    0.4033
+   ],
+   "mcc_mean": 0.2199,
+   "mcc_sd": 0.0139,
+   "mcc_range": [
+    0.2007,
+    0.2388
+   ],
+   "roc_auc_mean": 0.7034,
+   "roc_auc_sd": 0.0158,
+   "roc_auc_range": [
+    0.6864,
+    0.7284
+   ]
+  },
+  "LogReg": {
+   "runs": [
+    {
+     "seed": 42,
+     "f1": 0.3903,
+     "mcc": 0.2173,
+     "roc_auc": 0.6929
+    },
+    {
+     "seed": 43,
+     "f1": 0.3739,
+     "mcc": 0.1911,
+     "roc_auc": 0.6897
+    },
+    {
+     "seed": 44,
+     "f1": 0.3908,
+     "mcc": 0.22,
+     "roc_auc": 0.7235
+    },
+    {
+     "seed": 45,
+     "f1": 0.3876,
+     "mcc": 0.2131,
+     "roc_auc": 0.7042
+    },
+    {
+     "seed": 46,
+     "f1": 0.3883,
+     "mcc": 0.2329,
+     "roc_auc": 0.7046
+    }
+   ],
+   "f1_mean": 0.3862,
+   "f1_sd": 0.007,
+   "f1_range": [
+    0.3739,
+    0.3908
+   ],
+   "mcc_mean": 0.2149,
+   "mcc_sd": 0.0152,
+   "mcc_range": [
+    0.1911,
+    0.2329
+   ],
+   "roc_auc_mean": 0.703,
+   "roc_auc_sd": 0.0133,
+   "roc_auc_range": [
+    0.6897,
+    0.7235
+   ]
+  },
+  "CharNgram": {
+   "runs": [
+    {
+     "seed": 42,
+     "f1": 0.4005,
+     "mcc": 0.2332,
+     "roc_auc": 0.7029
+    },
+    {
+     "seed": 43,
+     "f1": 0.3909,
+     "mcc": 0.2183,
+     "roc_auc": 0.6971
+    },
+    {
+     "seed": 44,
+     "f1": 0.4008,
+     "mcc": 0.2393,
+     "roc_auc": 0.7202
+    },
+    {
+     "seed": 45,
+     "f1": 0.4073,
+     "mcc": 0.2435,
+     "roc_auc": 0.7074
+    },
+    {
+     "seed": 46,
+     "f1": 0.3962,
+     "mcc": 0.2278,
+     "roc_auc": 0.7119
+    }
+   ],
+   "f1_mean": 0.3991,
+   "f1_sd": 0.0061,
+   "f1_range": [
+    0.3909,
+    0.4073
+   ],
+   "mcc_mean": 0.2324,
+   "mcc_sd": 0.0099,
+   "mcc_range": [
+    0.2183,
+    0.2435
+   ],
+   "roc_auc_mean": 0.7079,
+   "roc_auc_sd": 0.0088,
+   "roc_auc_range": [
+    0.6971,
+    0.7202
+   ]
+  },
+  "encoder_from_its_own_record": {
+   "f1_mean": 0.3761,
+   "f1_sd": 0.0151,
+   "f1_range": [
+    0.349,
+    0.3929
+   ],
+   "roc_auc_mean": 0.6681
+  }
+ },
+ "broad": {
+  "LinearSVM": {
+   "runs": [
+    {
+     "seed": 42,
+     "f1": 0.525,
+     "mcc": 0.249,
+     "roc_auc": 0.7059
+    },
+    {
+     "seed": 43,
+     "f1": 0.5338,
+     "mcc": 0.2819,
+     "roc_auc": 0.7166
+    },
+    {
+     "seed": 44,
+     "f1": 0.5387,
+     "mcc": 0.2839,
+     "roc_auc": 0.7052
+    },
+    {
+     "seed": 45,
+     "f1": 0.519,
+     "mcc": 0.2497,
+     "roc_auc": 0.6936
+    },
+    {
+     "seed": 46,
+     "f1": 0.528,
+     "mcc": 0.2451,
+     "roc_auc": 0.7231
+    }
+   ],
+   "f1_mean": 0.5289,
+   "f1_sd": 0.0076,
+   "f1_range": [
+    0.519,
+    0.5387
+   ],
+   "mcc_mean": 0.2619,
+   "mcc_sd": 0.0192,
+   "mcc_range": [
+    0.2451,
+    0.2839
+   ],
+   "roc_auc_mean": 0.7089,
+   "roc_auc_sd": 0.0114,
+   "roc_auc_range": [
+    0.6936,
+    0.7231
+   ]
+  },
+  "LogReg": {
+   "runs": [
+    {
+     "seed": 42,
+     "f1": 0.5285,
+     "mcc": 0.247,
+     "roc_auc": 0.7054
+    },
+    {
+     "seed": 43,
+     "f1": 0.5471,
+     "mcc": 0.288,
+     "roc_auc": 0.7135
+    },
+    {
+     "seed": 44,
+     "f1": 0.539,
+     "mcc": 0.2821,
+     "roc_auc": 0.7024
+    },
+    {
+     "seed": 45,
+     "f1": 0.5189,
+     "mcc": 0.2324,
+     "roc_auc": 0.6918
+    },
+    {
+     "seed": 46,
+     "f1": 0.5261,
+     "mcc": 0.2416,
+     "roc_auc": 0.7169
+    }
+   ],
+   "f1_mean": 0.5319,
+   "f1_sd": 0.0111,
+   "f1_range": [
+    0.5189,
+    0.5471
+   ],
+   "mcc_mean": 0.2582,
+   "mcc_sd": 0.0251,
+   "mcc_range": [
+    0.2324,
+    0.288
+   ],
+   "roc_auc_mean": 0.706,
+   "roc_auc_sd": 0.0099,
+   "roc_auc_range": [
+    0.6918,
+    0.7169
+   ]
+  },
+  "CharNgram": {
+   "runs": [
+    {
+     "seed": 42,
+     "f1": 0.5495,
+     "mcc": 0.2914,
+     "roc_auc": 0.7106
+    },
+    {
+     "seed": 43,
+     "f1": 0.5503,
+     "mcc": 0.2953,
+     "roc_auc": 0.7138
+    },
+    {
+     "seed": 44,
+     "f1": 0.5416,
+     "mcc": 0.2823,
+     "roc_auc": 0.7031
+    },
+    {
+     "seed": 45,
+     "f1": 0.5308,
+     "mcc": 0.2606,
+     "roc_auc": 0.6897
+    },
+    {
+     "seed": 46,
+     "f1": 0.5366,
+     "mcc": 0.2655,
+     "roc_auc": 0.7146
+    }
+   ],
+   "f1_mean": 0.5418,
+   "f1_sd": 0.0084,
+   "f1_range": [
+    0.5308,
+    0.5503
+   ],
+   "mcc_mean": 0.279,
+   "mcc_sd": 0.0154,
+   "mcc_range": [
+    0.2606,
+    0.2953
+   ],
+   "roc_auc_mean": 0.7064,
+   "roc_auc_sd": 0.0104,
+   "roc_auc_range": [
+    0.6897,
+    0.7146
+   ]
+  },
+  "encoder_from_its_own_record": {
+   "f1_mean": 0.5308,
+   "f1_sd": 0.0089,
+   "f1_range": [
+    0.5165,
+    0.5398
+   ],
+   "roc_auc_mean": 0.7024
+  }
+ },
+ "verdict": "Over five shared partitions the encoder averages 0.3761 on the strict labels and the best classical arm 0.3991, against a single-partition 0.4099 and 0.3814 in Tables III and IV. Every seeded mean sits below its single-partition counterpart, which is what a table built on one favourable draw looks like from the other side. The ordering between the encoder and the classical arms is REVERSED - the encoder no longer leads."
+}
