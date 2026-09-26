@@ -1,0 +1,53 @@
+{
+ "note": "does the thread's context carry anything a message body does not?",
+ "context_chars": 4000,
+ "folds": 5,
+ "environment": {
+  "python": "3.14.0",
+  "scikit_learn": "1.9.1",
+  "numpy": "2.4.2"
+ },
+ "labels": {
+  "strict": {
+   "metadata only": {
+    "f1": 0.3032,
+    "mcc": 0.0094,
+    "roc_auc": 0.4909,
+    "trivial_floor": 0.3064
+   },
+   "text only": {
+    "f1": 0.3666,
+    "mcc": 0.1793,
+    "roc_auc": 0.6932,
+    "trivial_floor": 0.3064
+   },
+   "text plus thread context": {
+    "f1": 0.3743,
+    "mcc": 0.1965,
+    "roc_auc": 0.6844,
+    "trivial_floor": 0.3064
+   }
+  },
+  "broad": {
+   "metadata only": {
+    "f1": 0.4624,
+    "mcc": 0.0042,
+    "roc_auc": 0.5043,
+    "trivial_floor": 0.4678
+   },
+   "text only": {
+    "f1": 0.5432,
+    "mcc": 0.2777,
+    "roc_auc": 0.7147,
+    "trivial_floor": 0.4678
+   },
+   "text plus thread context": {
+    "f1": 0.5392,
+    "mcc": 0.269,
+    "roc_auc": 0.7068,
+    "trivial_floor": 0.4678
+   }
+  }
+ },
+ "verdict": "Metadata alone reaches F1 0.3032 against a floor of 0.3064, so thread structure carries almost nothing on its own and the text models are not quietly reading it. Adding the rest of the thread to the text changes F1 by +0.0077 on the strict labels. The context this task is named after is not worth much to a bag of words - which bounds what CHEAP context is worth, not what context is worth. An encoder given the thread is the experiment that would settle it, and it needs a GPU."
+}
